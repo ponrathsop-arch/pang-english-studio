@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phonics – Pang English Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #fdf8f3;
+  --pink: #f9a8c9;     --pink-light: #fde8f2;
+  --blue: #a8c8f0;     --blue-light: #e8f2fd;   --blue-soft: #deeefb;
+  --sage: #a8d4b4;     --sage-light: #e8f5ec;
+  --yellow: #f9d87a;   --yellow-light: #fef8e0;
+  --peach: #f8c5a0;    --peach-light: #fdeee4;
+  --lavender: #c8b8f0; --lavender-light: #f0ebfd;
+  --dark: #1e2840;     --text: #3d4a6b; --text-soft: #6b7a9b;
+  --shadow: 0 4px 24px rgba(45,58,94,0.08);
+  --shadow-hover: 0 8px 32px rgba(45,58,94,0.15);
+  --radius-lg: 28px;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+/* ══ BUBBLES ══ */
+.bubbles-layer { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+.bubble {
+  position: absolute; bottom: -80px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  box-shadow: inset 0 0 10px rgba(255,255,255,0.35);
+  animation: bubbleRise linear infinite;
+}
+@keyframes bubbleRise {
+  0%  { opacity:0; transform:translateY(0) translateX(0); }
+  8%  { opacity:var(--op); }
+  88% { opacity:var(--op); }
+  100%{ opacity:0; transform:translateY(-105vh) translateX(var(--drift,0px)); }
+}
+
+/* ══ NAV ══ */
+nav {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(253,248,243,0.95);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1.5px solid rgba(249,168,201,0.2);
+  padding: 0 28px;
+}
+.nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 12px; height: 62px; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+.logo-icon {
+  width: 52px; height: 52px; border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(249,216,122,0.4); flex-shrink: 0;
+  background: linear-gradient(135deg, var(--yellow) 0%, var(--peach) 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; position: relative; overflow: hidden;
+}
+.logo-icon img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; z-index: 2; }
+.logo-text h1 { font-family: 'Baloo 2', cursive; font-size: 17px; font-weight: 800; line-height: 1.1; color: var(--dark); }
+.logo-text h1 span { color: #f06fa4; }
+.logo-text p { font-size: 10px; font-weight: 600; color: var(--text-soft); letter-spacing: 0.04em; }
+.nav-links { display: flex; align-items: center; gap: 2px; list-style: none; margin-left: auto; }
+.nav-links a {
+  text-decoration: none; font-size: 12.5px; font-weight: 700; color: var(--text);
+  padding: 6px 10px; border-radius: 10px; transition: background 0.2s, color 0.2s; white-space: nowrap;
+}
+.nav-links a:hover { background: var(--pink-light); color: #d05090; }
+.nav-links a.active { background: var(--blue-light); color: #3a80c0; border-bottom: 2.5px solid var(--blue); border-radius: 10px 10px 5px 5px; }
+.btn-contact {
+  background: linear-gradient(135deg, #f06fa4 0%, #f9a8c9 100%) !important;
+  color: white !important; padding: 7px 16px !important; border-radius: 50px !important;
+  font-weight: 800 !important; box-shadow: 0 3px 12px rgba(240,111,164,0.3);
+}
+.btn-contact:hover { transform: translateY(-2px); color: white !important; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; margin-left: auto; background: none; border: none; }
+.hamburger span { width: 22px; height: 2.5px; background: var(--dark); border-radius: 2px; display: block; }
+.mobile-nav {
+  display: none; flex-direction: column;
+  background: rgba(253,248,243,0.98); backdrop-filter: blur(14px);
+  padding: 12px 24px 20px; border-bottom: 1.5px solid rgba(249,168,201,0.2);
+  position: sticky; top: 62px; z-index: 199;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a { text-decoration: none; font-size: 15px; font-weight: 700; color: var(--text); padding: 10px 14px; border-radius: 12px; transition: background 0.2s; }
+.mobile-nav a:hover { background: var(--pink-light); color: #d05090; }
+.mobile-nav .btn-contact { margin-top: 8px; text-align: center; display: block; background: linear-gradient(135deg, #f06fa4 0%, #f9a8c9 100%) !important; }
+
+/* ══ PAGE BANNER ══ */
+.page-banner {
+  background: linear-gradient(160deg, #e8f2fd 0%, #deeefb 55%, #f0ebfd 100%);
+  position: relative; overflow: hidden; padding: 44px 40px 40px; text-align: center;
+}
+.blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.28; pointer-events: none; }
+.star-deco { position: absolute; pointer-events: none; animation: twinkle 3s ease-in-out infinite; }
+@keyframes twinkle { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.6)} }
+.page-banner-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; animation: fadeUp 0.6s ease both; }
+.page-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--blue-light); border: 1.5px solid var(--blue);
+  border-radius: 50px; padding: 5px 16px; font-size: 12px; font-weight: 800;
+  color: #2a70b8; margin-bottom: 14px; animation: floatBadge 3s ease-in-out infinite;
+}
+@keyframes floatBadge { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+.page-title { font-family: 'Baloo 2', cursive; font-size: clamp(34px,5vw,54px); font-weight: 800; line-height: 1.1; color: var(--dark); margin-bottom: 8px; }
+.page-title span { color: #4a90d8; }
+.page-subtitle { font-size: 15px; font-weight: 600; color: var(--text-soft); }
+
+/* ══ MAIN ══ */
+.phonics-page { max-width: 900px; margin: 0 auto; padding: 52px 32px 72px; position: relative; z-index: 2; }
+
+/* ══ BIG MENU BANNER ══ */
+.menu-banner {
+  border-radius: 24px; margin-bottom: 20px;
+  overflow: hidden; box-shadow: var(--shadow);
+  transition: box-shadow 0.2s;
+  animation: fadeUp 0.5s ease both;
+}
+.menu-banner:nth-child(1){animation-delay:0.1s}
+.menu-banner:nth-child(2){animation-delay:0.2s}
+.menu-banner:nth-child(3){animation-delay:0.3s}
+.menu-banner:hover { box-shadow: var(--shadow-hover); }
+
+.menu-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 26px 32px; cursor: pointer; user-select: none;
+  transition: filter 0.2s; border: none; width: 100%; text-align: left;
+}
+.menu-header:hover { filter: brightness(1.04); }
+.menu-1 .menu-header { background: linear-gradient(135deg, #4a90d8 0%, #6cb0f0 100%); }
+.menu-2 .menu-header { background: linear-gradient(135deg, #e86090 0%, #f898c0 100%); }
+.menu-3 .menu-header { background: linear-gradient(135deg, #52b870 0%, #80d898 100%); }
+
+.menu-header-left { display: flex; align-items: center; gap: 18px; }
+.menu-number { font-family: 'Baloo 2', cursive; font-size: 36px; font-weight: 800; color: rgba(255,255,255,0.3); line-height: 1; }
+.menu-label { font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.75); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+.menu-title { font-family: 'Baloo 2', cursive; font-size: clamp(18px,2.5vw,26px); font-weight: 800; color: white; line-height: 1.1; }
+.menu-count { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.72); margin-top: 3px; }
+.menu-chevron { font-size: 22px; color: rgba(255,255,255,0.8); transition: transform 0.35s cubic-bezier(.34,1.56,.64,1); flex-shrink: 0; }
+.menu-banner.open .menu-chevron { transform: rotate(180deg); }
+
+.menu-body { background: white; max-height: 0; overflow: hidden; transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1); }
+.menu-banner.open .menu-body { max-height: 3000px; }
+.menu-body-inner { padding: 28px 32px 32px; }
+
+/* ══ VOWEL ACCORDION ══ */
+.vowel-accordion { margin-bottom: 12px; border-radius: 16px; overflow: hidden; border: 2px solid transparent; }
+.vowel-accordion.open { border-color: rgba(0,0,0,0.06); }
+
+.vowel-trigger {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; border: none; background: none; cursor: pointer;
+  padding: 10px 14px 10px 0; text-align: left;
+  transition: opacity 0.15s;
+}
+.vowel-trigger:hover { opacity: 0.85; }
+
+.vowel-trigger-left { display: flex; align-items: center; gap: 12px; }
+
+/* vowel badge */
+.vowel-badge {
+  font-family: 'Baloo 2', cursive; font-size: 16px; font-weight: 800;
+  color: white; padding: 7px 20px; border-radius: 50px;
+  display: inline-flex; align-items: center; gap: 8px;
+  white-space: nowrap;
+}
+.vowel-a { background: linear-gradient(135deg, #f06fa4, #f9a8c9); }
+.vowel-e { background: linear-gradient(135deg, #5cb85c, #90d890); }
+.vowel-i { background: linear-gradient(135deg, #4a90d8, #80c0f0); }
+.vowel-o { background: linear-gradient(135deg, #e8a030, #f8c870); }
+.vowel-u { background: linear-gradient(135deg, #9b7ae8, #c8b8f0); }
+
+/* small arrow toggle */
+.vowel-arrow {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: #f5f5f5; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: var(--text-soft); flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), background 0.2s;
+}
+.vowel-accordion.open .vowel-arrow { transform: rotate(180deg); background: var(--pink-light); color: #d05090; }
+
+/* vowel families body */
+.vowel-body { max-height: 0; overflow: hidden; transition: max-height 0.38s cubic-bezier(0.4,0,0.2,1); }
+.vowel-accordion.open .vowel-body { max-height: 400px; }
+.vowel-body-inner { padding: 12px 4px 16px; }
+
+/* ══ FAMILY PILLS ══ */
+.family-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+.family-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 18px; border-radius: 50px;
+  font-family: 'Baloo 2', cursive; font-size: 14px; font-weight: 800;
+  text-decoration: none; cursor: pointer;
+  transition: transform 0.2s cubic-bezier(.34,1.56,.64,1), box-shadow 0.2s;
+  box-shadow: 0 2px 10px rgba(45,58,94,0.1);
+  border: 2px solid transparent;
+}
+.family-pill:hover { transform: translateY(-3px) scale(1.06); box-shadow: 0 6px 18px rgba(45,58,94,0.16); }
+.pill-blue   { background: var(--blue-light);    color: #2a70b8; border-color: var(--blue); }
+.pill-pink   { background: var(--pink-light);    color: #c04880; border-color: var(--pink); }
+.pill-sage   { background: var(--sage-light);    color: #2a7840; border-color: var(--sage); }
+.pill-yellow { background: var(--yellow-light);  color: #906010; border-color: var(--yellow); }
+.pill-purple { background: var(--lavender-light);color: #6040b0; border-color: var(--lavender); }
+
+/* divider */
+.section-divider { height: 1.5px; background: #f5f0eb; margin: 6px 0 14px; }
+
+/* ══ BLEND ACCORDION (for Beginning Blends sub-groups) ══ */
+.blend-accordion { margin-bottom: 10px; border-radius: 14px; overflow: hidden; }
+
+.blend-trigger {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; border: none; cursor: pointer; text-align: left;
+  padding: 11px 16px; border-radius: 14px;
+  transition: background 0.2s;
+}
+.blend-trigger:hover { background: #f5f5f2; }
+
+.blend-trigger-left { display: flex; align-items: center; gap: 10px; }
+.blend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.blend-dot-s { background: #52b870; }
+.blend-dot-l { background: #4a90d8; }
+.blend-dot-r { background: #9b7ae8; }
+
+.blend-trigger-title {
+  font-family: 'Baloo 2', cursive; font-size: 16px; font-weight: 800; color: var(--dark);
+}
+.blend-trigger-count { font-size: 12px; font-weight: 600; color: var(--text-soft); margin-left: 6px; }
+
+.blend-arrow {
+  width: 28px; height: 28px; border-radius: 50%; background: #f0f0ee;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: var(--text-soft); flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), background 0.2s;
+}
+.blend-accordion.open .blend-arrow { transform: rotate(180deg); background: var(--sage-light); color: #2a7840; }
+
+.blend-body { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1); }
+.blend-accordion.open .blend-body { max-height: 300px; }
+.blend-body-inner { padding: 10px 4px 16px; }
+
+/* ending blends flat */
+.blend-flat-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* ══ FOOTER ══ */
+.footer-banner { background: #fffaf6; padding: 28px 40px 36px; }
+.footer-banner-inner {
+  max-width: 700px; margin: 0 auto; background: white;
+  border-radius: 24px; padding: 24px 32px;
+  text-align: center; box-shadow: var(--shadow);
+  border: 1.5px solid rgba(249,168,201,0.18);
+}
+.footer-deco { display: flex; justify-content: center; gap: 8px; margin-bottom: 8px; font-size: 16px; }
+.footer-banner p { font-family: 'Baloo 2', cursive; font-size: 15px; font-weight: 700; color: var(--text); }
+.footer-banner p .t-pink { color: #f06fa4; }
+.footer-hearts { margin-top: 10px; font-size: 15px; display: flex; justify-content: center; gap: 4px; }
+footer { background: var(--dark); color: rgba(255,255,255,0.5); text-align: center; padding: 20px 40px; font-size: 12.5px; font-weight: 600; }
+footer span { color: rgba(249,168,201,0.8); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+@media(max-width:768px){
+  nav{padding:0 16px;} .nav-links{display:none;} .hamburger{display:flex;}
+  .page-banner{padding:32px 20px 28px;}
+  .phonics-page{padding:36px 16px 56px;}
+  .menu-header{padding:20px 22px;}
+  .menu-body-inner{padding:20px 18px 24px;}
+  .menu-number{font-size:28px;}
+}
+@media(max-width:480px){
+  .family-pill{font-size:13px;padding:7px 14px;}
+  .menu-title{font-size:17px;}
+  .vowel-badge{font-size:14px;padding:6px 16px;}
+}
+</style>
+</head>
+<body>
+
+<div class="bubbles-layer" id="bubblesLayer"></div>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-inner">
+    <a href="https://ponrathsop-arch.github.io/pang-english-studio/" class="logo">
+      <div class="logo-icon">
+        <span>📖</span>
+        <img src="../images/logo.png" alt="logo">
+      </div>
+      <div class="logo-text">
+        <h1><span>Pang</span> English Studio</h1>
+        <p>Learn&nbsp;•&nbsp;Read&nbsp;•&nbsp;Play&nbsp;•&nbsp;Grow</p>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/">Home</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/stories/">Stories</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/phonics/" class="active">Phonics</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/">Vocabulary</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/grammar/">Grammar</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/games/">Games</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/worksheets/">Worksheets</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/about/">About</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/contact/" class="btn-contact">✉ Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/">Home</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/stories/">Stories</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/phonics/">Phonics</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/">Vocabulary</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/grammar/">Grammar</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/games/">Games</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/worksheets/">Worksheets</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/about/">About</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/contact/" class="btn-contact">✉ Contact</a>
+</nav>
+
+<!-- ══ PAGE BANNER ══ -->
+<section class="page-banner">
+  <div class="blob" style="width:300px;height:300px;background:#deeefb;top:-80px;left:-60px;"></div>
+  <div class="blob" style="width:260px;height:260px;background:#f0ebfd;top:20px;right:-50px;"></div>
+  <div class="star-deco" style="top:20%;left:8%;font-size:18px;">⭐</div>
+  <div class="star-deco" style="top:30%;right:10%;font-size:13px;color:#f9d87a;animation-delay:1s;">✦</div>
+  <div class="star-deco" style="top:14%;right:24%;font-size:11px;color:#f9a8c9;animation-delay:2s;">✦</div>
+  <div class="page-banner-inner">
+    <div class="page-badge">🔤 Let's read together</div>
+    <h1 class="page-title"><span>Phonics</span></h1>
+    <p class="page-subtitle">Choose a section to start practising sounds and word families.</p>
+  </div>
+</section>
+
+<!-- ══ PHONICS MENUS ══ -->
+<main class="phonics-page">
+
+  <!-- ─── MENU 1: CVC ─── -->
+  <div class="menu-banner menu-1" id="menu1">
+    <button class="menu-header" onclick="toggleMenu('menu1')">
+      <div class="menu-header-left">
+        <div class="menu-number">1</div>
+        <div class="menu-info">
+          <div class="menu-label">CVC Words</div>
+          <div class="menu-title">Short Vowel Words</div>
+          <div class="menu-count">5 vowels · 36 word families</div>
+        </div>
+      </div>
+      <span class="menu-chevron">▾</span>
+    </button>
+
+    <div class="menu-body">
+      <div class="menu-body-inner">
+
+        <!-- Short A — open by default -->
+        <div class="vowel-accordion open" id="vowel-a">
+          <button class="vowel-trigger" onclick="toggleVowel('vowel-a')">
+            <div class="vowel-trigger-left">
+              <span class="vowel-badge vowel-a">🅐 Short A</span>
+            </div>
+            <span class="vowel-arrow">▾</span>
+          </button>
+          <div class="vowel-body">
+            <div class="vowel-body-inner">
+              <div class="family-grid">
+                <a href="cvc/ab-family/" class="family-pill pill-pink">AB Family</a>
+                <a href="cvc/ad-family/" class="family-pill pill-pink">AD Family</a>
+                <a href="cvc/ag-family/" class="family-pill pill-pink">AG Family</a>
+                <a href="cvc/am-family/" class="family-pill pill-pink">AM Family</a>
+                <a href="cvc/an-family/" class="family-pill pill-pink">AN Family</a>
+                <a href="cvc/ap-family/" class="family-pill pill-pink">AP Family</a>
+                <a href="cvc/at-family/" class="family-pill pill-pink">AT Family</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Short E — collapsed -->
+        <div class="vowel-accordion" id="vowel-e">
+          <button class="vowel-trigger" onclick="toggleVowel('vowel-e')">
+            <div class="vowel-trigger-left">
+              <span class="vowel-badge vowel-e">🅔 Short E</span>
+            </div>
+            <span class="vowel-arrow">▾</span>
+          </button>
+          <div class="vowel-body">
+            <div class="vowel-body-inner">
+              <div class="family-grid">
+                <a href="cvc/eb-family/"  class="family-pill pill-sage">EB Family</a>
+                <a href="cvc/ed-family/"  class="family-pill pill-sage">ED Family</a>
+                <a href="cvc/eg-family/"  class="family-pill pill-sage">EG Family</a>
+                <a href="cvc/ell-family/" class="family-pill pill-sage">ELL Family</a>
+                <a href="cvc/en-family/"  class="family-pill pill-sage">EN Family</a>
+                <a href="cvc/et-family/"  class="family-pill pill-sage">ET Family</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Short I — collapsed -->
+        <div class="vowel-accordion" id="vowel-i">
+          <button class="vowel-trigger" onclick="toggleVowel('vowel-i')">
+            <div class="vowel-trigger-left">
+              <span class="vowel-badge vowel-i">🅘 Short I</span>
+            </div>
+            <span class="vowel-arrow">▾</span>
+          </button>
+          <div class="vowel-body">
+            <div class="vowel-body-inner">
+              <div class="family-grid">
+                <a href="cvc/ib-family/" class="family-pill pill-blue">IB Family</a>
+                <a href="cvc/id-family/" class="family-pill pill-blue">ID Family</a>
+                <a href="cvc/ig-family/" class="family-pill pill-blue">IG Family</a>
+                <a href="cvc/im-family/" class="family-pill pill-blue">IM Family</a>
+                <a href="cvc/in-family/" class="family-pill pill-blue">IN Family</a>
+                <a href="cvc/ip-family/" class="family-pill pill-blue">IP Family</a>
+                <a href="cvc/it-family/" class="family-pill pill-blue">IT Family</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Short O — collapsed -->
+        <div class="vowel-accordion" id="vowel-o">
+          <button class="vowel-trigger" onclick="toggleVowel('vowel-o')">
+            <div class="vowel-trigger-left">
+              <span class="vowel-badge vowel-o">🅞 Short O</span>
+            </div>
+            <span class="vowel-arrow">▾</span>
+          </button>
+          <div class="vowel-body">
+            <div class="vowel-body-inner">
+              <div class="family-grid">
+                <a href="cvc/ob-family/" class="family-pill pill-yellow">OB Family</a>
+                <a href="cvc/od-family/" class="family-pill pill-yellow">OD Family</a>
+                <a href="cvc/og-family/" class="family-pill pill-yellow">OG Family</a>
+                <a href="cvc/op-family/" class="family-pill pill-yellow">OP Family</a>
+                <a href="cvc/ot-family/" class="family-pill pill-yellow">OT Family</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Short U — collapsed -->
+        <div class="vowel-accordion" id="vowel-u">
+          <button class="vowel-trigger" onclick="toggleVowel('vowel-u')">
+            <div class="vowel-trigger-left">
+              <span class="vowel-badge vowel-u">🅤 Short U</span>
+            </div>
+            <span class="vowel-arrow">▾</span>
+          </button>
+          <div class="vowel-body">
+            <div class="vowel-body-inner">
+              <div class="family-grid">
+                <a href="cvc/ub-family/" class="family-pill pill-purple">UB Family</a>
+                <a href="cvc/ud-family/" class="family-pill pill-purple">UD Family</a>
+                <a href="cvc/ug-family/" class="family-pill pill-purple">UG Family</a>
+                <a href="cvc/um-family/" class="family-pill pill-purple">UM Family</a>
+                <a href="cvc/un-family/" class="family-pill pill-purple">UN Family</a>
+                <a href="cvc/ut-family/" class="family-pill pill-purple">UT Family</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── MENU 2: ENDING BLENDS ─── -->
+  <div class="menu-banner menu-2" id="menu2">
+    <button class="menu-header" onclick="toggleMenu('menu2')">
+      <div class="menu-header-left">
+        <div class="menu-number">2</div>
+        <div class="menu-info">
+          <div class="menu-label">CVCC Words</div>
+          <div class="menu-title">Ending Blends</div>
+          <div class="menu-count">10 word families</div>
+        </div>
+      </div>
+      <span class="menu-chevron">▾</span>
+    </button>
+    <div class="menu-body">
+      <div class="menu-body-inner">
+        <div class="blend-flat-grid">
+          <a href="ending-blends/nd-family/" class="family-pill pill-pink">ND Family</a>
+          <a href="ending-blends/nt-family/" class="family-pill pill-pink">NT Family</a>
+          <a href="ending-blends/mp-family/" class="family-pill pill-pink">MP Family</a>
+          <a href="ending-blends/st-family/" class="family-pill pill-pink">ST Family</a>
+          <a href="ending-blends/sk-family/" class="family-pill pill-pink">SK Family</a>
+          <a href="ending-blends/lk-family/" class="family-pill pill-pink">LK Family</a>
+          <a href="ending-blends/ft-family/" class="family-pill pill-pink">FT Family</a>
+          <a href="ending-blends/lp-family/" class="family-pill pill-pink">LP Family</a>
+          <a href="ending-blends/lf-family/" class="family-pill pill-pink">LF Family</a>
+          <a href="ending-blends/ct-family/" class="family-pill pill-pink">CT Family</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── MENU 3: BEGINNING BLENDS ─── -->
+  <div class="menu-banner menu-3" id="menu3">
+    <button class="menu-header" onclick="toggleMenu('menu3')">
+      <div class="menu-header-left">
+        <div class="menu-number">3</div>
+        <div class="menu-info">
+          <div class="menu-label">CCVC Words</div>
+          <div class="menu-title">Beginning Blends</div>
+          <div class="menu-count">S-Blends · L-Blends · R-Blends · 18 blends total</div>
+        </div>
+      </div>
+      <span class="menu-chevron">▾</span>
+    </button>
+    <div class="menu-body">
+      <div class="menu-body-inner">
+
+        <!-- S-Blends — open by default inside this menu -->
+        <div class="blend-accordion open" id="blend-s">
+          <button class="blend-trigger" onclick="toggleBlend('blend-s')">
+            <div class="blend-trigger-left">
+              <span class="blend-dot blend-dot-s"></span>
+              <span class="blend-trigger-title">S-Blends</span>
+              <span class="blend-trigger-count">6 blends</span>
+            </div>
+            <span class="blend-arrow">▾</span>
+          </button>
+          <div class="blend-body">
+            <div class="blend-body-inner">
+              <div class="family-grid">
+                <a href="beginning-blends/st-blend/" class="family-pill pill-sage">ST Blend</a>
+                <a href="beginning-blends/sp-blend/" class="family-pill pill-sage">SP Blend</a>
+                <a href="beginning-blends/sn-blend/" class="family-pill pill-sage">SN Blend</a>
+                <a href="beginning-blends/sl-blend/" class="family-pill pill-sage">SL Blend</a>
+                <a href="beginning-blends/sm-blend/" class="family-pill pill-sage">SM Blend</a>
+                <a href="beginning-blends/sw-blend/" class="family-pill pill-sage">SW Blend</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- L-Blends — collapsed -->
+        <div class="blend-accordion" id="blend-l">
+          <button class="blend-trigger" onclick="toggleBlend('blend-l')">
+            <div class="blend-trigger-left">
+              <span class="blend-dot blend-dot-l"></span>
+              <span class="blend-trigger-title">L-Blends</span>
+              <span class="blend-trigger-count">5 blends</span>
+            </div>
+            <span class="blend-arrow">▾</span>
+          </button>
+          <div class="blend-body">
+            <div class="blend-body-inner">
+              <div class="family-grid">
+                <a href="beginning-blends/bl-blend/" class="family-pill pill-blue">BL Blend</a>
+                <a href="beginning-blends/cl-blend/" class="family-pill pill-blue">CL Blend</a>
+                <a href="beginning-blends/fl-blend/" class="family-pill pill-blue">FL Blend</a>
+                <a href="beginning-blends/gl-blend/" class="family-pill pill-blue">GL Blend</a>
+                <a href="beginning-blends/pl-blend/" class="family-pill pill-blue">PL Blend</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- R-Blends — collapsed -->
+        <div class="blend-accordion" id="blend-r">
+          <button class="blend-trigger" onclick="toggleBlend('blend-r')">
+            <div class="blend-trigger-left">
+              <span class="blend-dot blend-dot-r"></span>
+              <span class="blend-trigger-title">R-Blends</span>
+              <span class="blend-trigger-count">7 blends</span>
+            </div>
+            <span class="blend-arrow">▾</span>
+          </button>
+          <div class="blend-body">
+            <div class="blend-body-inner">
+              <div class="family-grid">
+                <a href="beginning-blends/br-blend/" class="family-pill pill-purple">BR Blend</a>
+                <a href="beginning-blends/cr-blend/" class="family-pill pill-purple">CR Blend</a>
+                <a href="beginning-blends/dr-blend/" class="family-pill pill-purple">DR Blend</a>
+                <a href="beginning-blends/fr-blend/" class="family-pill pill-purple">FR Blend</a>
+                <a href="beginning-blends/gr-blend/" class="family-pill pill-purple">GR Blend</a>
+                <a href="beginning-blends/pr-blend/" class="family-pill pill-purple">PR Blend</a>
+                <a href="beginning-blends/tr-blend/" class="family-pill pill-purple">TR Blend</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<section class="footer-banner">
+  <div class="footer-banner-inner">
+    <div class="footer-deco">⭐ ☁️ 🌈 ☁️ ⭐</div>
+    <p>For kids to learn, because kids deserve to have <span class="t-pink">fun</span> while learning.</p>
+    <div class="footer-hearts">❤️ 🧡 💛 💚 💙 💜</div>
+  </div>
+</section>
+<footer>© 2026 <span>Pang English Studio</span> · Learn · Read · Play · Grow ⭐</footer>
+
+<script>
+// ── Mobile nav ──
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobileNav').classList.toggle('open');
+});
+
+// ── Big menu toggle (one open at a time) ──
+function toggleMenu(id) {
+  const banner = document.getElementById(id);
+  const isOpen = banner.classList.contains('open');
+  document.querySelectorAll('.menu-banner').forEach(b => b.classList.remove('open'));
+  if (!isOpen) banner.classList.add('open');
+}
+
+// ── Vowel accordion (independent — multiple can be open) ──
+function toggleVowel(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// ── Blend sub-group accordion (independent) ──
+function toggleBlend(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// Open Menu 1 by default
+toggleMenu('menu1');
+
+// ── Bubbles ──
+const bubbleTints = [
+  'rgba(168,200,240,0.25)','rgba(249,168,201,0.22)',
+  'rgba(200,184,240,0.25)','rgba(168,212,180,0.22)',
+  'rgba(249,216,122,0.2)','rgba(220,230,255,0.18)',
+];
+function makeBubble() {
+  const layer = document.getElementById('bubblesLayer');
+  if (!layer) return;
+  const el = document.createElement('div');
+  el.className = 'bubble';
+  const size = 24 + Math.random() * 56;
+  el.style.width = el.style.height = size + 'px';
+  const tint = bubbleTints[Math.floor(Math.random() * bubbleTints.length)];
+  el.style.background = `radial-gradient(circle at 32% 28%, rgba(255,255,255,0.7) 0%, ${tint} 55%, rgba(255,255,255,0.03) 100%)`;
+  el.style.left = (2 + Math.random() * 96) + '%';
+  const op = 0.25 + Math.random() * 0.25;
+  el.style.setProperty('--op', op);
+  el.style.setProperty('--drift', ((Math.random()-0.5)*70)+'px');
+  const dur = 28 + Math.random() * 32;
+  el.style.animationDuration = dur + 's';
+  el.style.animationDelay = -(Math.random() * dur) + 's';
+  layer.appendChild(el);
+  setTimeout(() => el.remove(), dur * 2.5 * 1000);
+}
+for (let i = 0; i < 20; i++) makeBubble();
+setInterval(makeBubble, 3000);
+</script>
+</body>
+</html>
