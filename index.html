@@ -6,702 +6,385 @@
 <title>Pang English Studio – Learn • Read • Play • Grow</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --cream: #fdf8f3;
-    --cream2: #fef9f5;
-    --pink: #f9a8c9;
-    --pink-light: #fde8f2;
-    --pink-soft: #fef0f7;
-    --blue: #a8c8f0;
-    --blue-light: #e8f2fd;
-    --blue-soft: #deeefb;
-    --sage: #a8d4b4;
-    --sage-light: #e8f5ec;
-    --sage-soft: #d8f0df;
-    --yellow: #f9d87a;
-    --yellow-light: #fef8e0;
-    --yellow-soft: #fff3c4;
-    --peach: #f8c5a0;
-    --peach-light: #fdeee4;
-    --lavender: #c8b8f0;
-    --lavender-light: #f0ebfd;
-    --navy: #2d3a5e;
-    --dark: #1e2840;
-    --text: #3d4a6b;
-    --text-soft: #6b7a9b;
-    --white: #ffffff;
-    --shadow: 0 4px 24px rgba(45,58,94,0.08);
-    --shadow-hover: 0 8px 32px rgba(45,58,94,0.14);
-    --radius: 20px;
-    --radius-lg: 28px;
-    --radius-sm: 12px;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--cream);
-    color: var(--text);
-    overflow-x: hidden;
-  }
-
-  /* ── DECORATIVE BLOBS ── */
-  .blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(60px);
-    opacity: 0.35;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* ══════════════════════════════
-     NAV
-  ══════════════════════════════ */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(253,248,243,0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1.5px solid rgba(249,168,201,0.18);
-    padding: 0 40px;
-  }
-
-  .nav-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    height: 72px;
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    flex-shrink: 0;
-  }
-
-  .logo-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 4px 14px rgba(249,216,122,0.45);
-    flex-shrink: 0;
-    background: linear-gradient(135deg, var(--yellow) 0%, var(--peach) 100%);
-  }
-
-  .logo-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .logo-text h1 {
-    font-family: 'Baloo 2', cursive;
-    font-size: 18px;
-    font-weight: 800;
-    line-height: 1.1;
-    color: var(--dark);
-  }
-
-  .logo-text h1 span { color: #f06fa4; }
-
-  .logo-text p {
-    font-size: 10.5px;
-    font-weight: 600;
-    color: var(--text-soft);
-    letter-spacing: 0.04em;
-  }
-
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    list-style: none;
-    margin-left: auto;
-  }
-
-  .nav-links a {
-    text-decoration: none;
-    font-size: 13.5px;
-    font-weight: 700;
-    color: var(--text);
-    padding: 7px 13px;
-    border-radius: 10px;
-    transition: background 0.2s, color 0.2s;
-  }
-
-  .nav-links a:hover, .nav-links a.active {
-    background: var(--pink-light);
-    color: #d05090;
-  }
-
-  .nav-links a.active { border-bottom: 2.5px solid #f06fa4; border-radius: 10px 10px 6px 6px; }
-
-  .btn-contact {
-    background: linear-gradient(135deg, #f06fa4 0%, #f9a8c9 100%);
-    color: white !important;
-    padding: 9px 20px !important;
-    border-radius: 50px !important;
-    font-weight: 800 !important;
-    font-size: 13px !important;
-    box-shadow: 0 4px 14px rgba(240,111,164,0.35);
-    transition: transform 0.2s, box-shadow 0.2s !important;
-    flex-shrink: 0;
-  }
-
-  .btn-contact:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(240,111,164,0.45) !important;
-    background: linear-gradient(135deg, #e05898 0%, #f798bb 100%) !important;
-    color: white !important;
-  }
-
-  /* ══════════════════════════════
-     HERO
-  ══════════════════════════════ */
-  .hero {
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 64px 40px 56px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 40px;
-    overflow: visible;
-  }
-
-  .hero-left { position: relative; z-index: 1; }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--yellow-light);
-    border: 1.5px solid var(--yellow);
-    border-radius: 50px;
-    padding: 6px 16px;
-    font-size: 12.5px;
-    font-weight: 800;
-    color: #a07810;
-    margin-bottom: 22px;
-    animation: floatBadge 3s ease-in-out infinite;
-  }
-
-  @keyframes floatBadge {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
-  }
-
-  .hero-title {
-    font-family: 'Baloo 2', cursive;
-    font-size: clamp(36px, 4vw, 54px);
-    font-weight: 800;
-    line-height: 1.15;
-    color: var(--dark);
-    margin-bottom: 18px;
-  }
-
-  .hero-title .t-pink { color: #f06fa4; }
-  .hero-title .t-purple { color: #9b7ae8; }
-
-  .hero-sub {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-soft);
-    line-height: 1.7;
-    max-width: 400px;
-    margin-bottom: 32px;
-  }
-
-  .quote-bubble {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    background: white;
-    border: 2px dashed #f9d87a;
-    border-radius: 50px;
-    padding: 12px 24px;
-    font-size: 15px;
-    font-weight: 800;
-    color: var(--dark);
-    box-shadow: 0 4px 16px rgba(249,216,122,0.25);
-  }
-
-  .quote-bubble .t-pink { color: #f06fa4; }
-
-  .hero-right {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .hero-illustration {
-    position: relative;
-    width: 100%;
-    max-width: 520px;
-  }
-
-  .hero-oval {
-    width: 100%;
-    padding-top: 90%;
-    background: linear-gradient(160deg, #e8effe 0%, #deeefb 60%, #f0e8fd 100%);
-    border-radius: 55% 55% 52% 52% / 60% 60% 50% 50%;
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* Girl + dog SVG illustration */
-  .hero-scene {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    padding-bottom: 0;
-  }
-
-  /* Speech bubbles */
-  .speech {
-    position: absolute;
-    border-radius: 50px;
-    padding: 8px 18px;
-    font-family: 'Baloo 2', cursive;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--dark);
-    box-shadow: var(--shadow);
-    animation: floatUp 4s ease-in-out infinite;
-  }
-
-  .speech-read {
-    background: var(--yellow-soft);
-    top: 20%;
-    left: 5%;
-    animation-delay: 0s;
-  }
-
-  .speech-learn {
-    background: var(--pink-soft);
-    top: 14%;
-    right: 4%;
-    animation-delay: 1.2s;
-  }
-
-  .speech-play {
-    background: #d9f7f0;
-    top: 46%;
-    right: 2%;
-    animation-delay: 2.4s;
-  }
-
-  @keyframes floatUp {
-    0%, 100% { transform: translateY(0) rotate(-1deg); }
-    50% { transform: translateY(-8px) rotate(1deg); }
-  }
-
-  /* floating deco */
-  .deco {
-    position: absolute;
-    pointer-events: none;
-    animation: spin 20s linear infinite;
-  }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .star-deco {
-    position: absolute;
-    font-size: 18px;
-    pointer-events: none;
-    animation: twinkle 3s ease-in-out infinite;
-  }
-
-  @keyframes twinkle {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.7); }
-  }
-
-  /* ══════════════════════════════
-     ILLUSTRATION SVG
-  ══════════════════════════════ */
-
-  /* ══════════════════════════════
-     EXPLORE SECTION
-  ══════════════════════════════ */
-  .explore {
-    background: white;
-    padding: 72px 40px 80px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .explore::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--pink), var(--blue), var(--sage), var(--yellow), var(--peach), var(--lavender));
-  }
-
-  .section-header {
-    text-align: center;
-    margin-bottom: 52px;
-  }
-
-  .section-header h2 {
-    font-family: 'Baloo 2', cursive;
-    font-size: clamp(28px, 3vw, 38px);
-    font-weight: 800;
-    color: var(--dark);
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .section-header p {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-soft);
-  }
-
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 18px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .card {
-    background: white;
-    border-radius: var(--radius-lg);
-    padding: 32px 20px 28px;
-    text-align: center;
-    box-shadow: var(--shadow);
-    cursor: pointer;
-    transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s;
-    position: relative;
-    overflow: hidden;
-    border: 2px solid transparent;
-  }
-
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 5px;
-    border-radius: 4px 4px 0 0;
-  }
-
-  .card:hover {
-    transform: translateY(-6px) scale(1.02);
-    box-shadow: var(--shadow-hover);
-  }
-
-  .card-1 { background: var(--blue-light); border-color: var(--blue); }
-  .card-1::before { background: var(--blue); }
-  .card-1:hover { border-color: #78aadc; }
-
-  .card-2 { background: var(--pink-light); border-color: var(--pink); }
-  .card-2::before { background: var(--pink); }
-  .card-2:hover { border-color: #e890bb; }
-
-  .card-3 { background: var(--lavender-light); border-color: var(--lavender); }
-  .card-3::before { background: var(--lavender); }
-  .card-3:hover { border-color: #a898dc; }
-
-  .card-4 { background: var(--yellow-light); border-color: var(--yellow); }
-  .card-4::before { background: var(--yellow); }
-  .card-4:hover { border-color: #e8c45a; }
-
-  .card-5 { background: var(--sage-light); border-color: var(--sage); }
-  .card-5::before { background: var(--sage); }
-  .card-5:hover { border-color: #88bc98; }
-
-  .card-6 { background: var(--peach-light); border-color: var(--peach); }
-  .card-6::before { background: var(--peach); }
-  .card-6:hover { border-color: #e8a888; }
-
-  .card-icon {
-    width: 72px;
-    height: 72px;
-    margin: 0 auto 18px;
-    border-radius: 20px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .card-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-    padding: 10px;
-  }
-
-  .card-1 .card-icon { background: var(--blue-soft); }
-  .card-2 .card-icon { background: var(--pink-soft); }
-  .card-3 .card-icon { background: var(--lavender-light); }
-  .card-4 .card-icon { background: var(--yellow-soft); }
-  .card-5 .card-icon { background: var(--sage-soft); }
-  .card-6 .card-icon { background: var(--peach-light); }
-
-  .card h3 {
-    font-family: 'Baloo 2', cursive;
-    font-size: 16px;
-    font-weight: 800;
-    color: var(--dark);
-    margin-bottom: 8px;
-  }
-
-  .card p {
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--text-soft);
-    line-height: 1.55;
-    margin-bottom: 18px;
-  }
-
-  .card-arrow {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: white;
-    box-shadow: 0 2px 10px rgba(45,58,94,0.12);
-    font-size: 14px;
-    color: var(--text);
-    transition: background 0.2s, transform 0.2s;
-  }
-
-  .card:hover .card-arrow {
-    transform: translateX(3px);
-  }
-
-  .card-1:hover .card-arrow { background: var(--blue); color: white; }
-  .card-2:hover .card-arrow { background: var(--pink); color: white; }
-  .card-3:hover .card-arrow { background: var(--lavender); color: white; }
-  .card-4:hover .card-arrow { background: var(--yellow); color: var(--dark); }
-  .card-5:hover .card-arrow { background: var(--sage); color: white; }
-  .card-6:hover .card-arrow { background: var(--peach); color: white; }
-
-  /* ══════════════════════════════
-     WHY SECTION
-  ══════════════════════════════ */
-  .why {
-    background: var(--cream);
-    padding: 72px 40px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .why-grid {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 52px;
-  }
-
-  .why-card {
-    background: white;
-    border-radius: var(--radius-lg);
-    padding: 36px 28px;
-    box-shadow: var(--shadow);
-    text-align: center;
-    transition: transform 0.25s cubic-bezier(.34,1.56,.64,1);
-  }
-
-  .why-card:hover { transform: translateY(-5px); }
-
-  .why-icon {
-    font-size: 42px;
-    margin-bottom: 16px;
-    display: block;
-  }
-
-  .why-card h3 {
-    font-family: 'Baloo 2', cursive;
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--dark);
-    margin-bottom: 10px;
-  }
-
-  .why-card p {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-soft);
-    line-height: 1.65;
-  }
-
-  /* ══════════════════════════════
-     FOOTER BANNER
-  ══════════════════════════════ */
-  .footer-banner {
-    background: var(--cream2);
-    padding: 56px 40px;
-  }
-
-  .footer-banner-inner {
-    max-width: 900px;
-    margin: 0 auto;
-    background: white;
-    border-radius: 32px;
-    padding: 48px 40px;
-    text-align: center;
-    box-shadow: var(--shadow);
-    position: relative;
-    overflow: hidden;
-    border: 2px solid rgba(249,168,201,0.2);
-  }
-
-  .footer-banner-inner::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at top left, rgba(249,216,122,0.1) 0%, transparent 60%),
-                radial-gradient(ellipse at bottom right, rgba(249,168,201,0.1) 0%, transparent 60%);
-    pointer-events: none;
-  }
-
-  .footer-deco {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    font-size: 22px;
-  }
-
-  .footer-banner h2 {
-    font-family: 'Baloo 2', cursive;
-    font-size: clamp(22px, 2.5vw, 30px);
-    font-weight: 800;
-    color: var(--dark);
-    line-height: 1.4;
-    position: relative;
-  }
-
-  .footer-banner h2 .t-pink { color: #f06fa4; }
-
-  .footer-hearts {
-    margin-top: 20px;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-  }
-
-  footer {
-    background: var(--dark);
-    color: rgba(255,255,255,0.55);
-    text-align: center;
-    padding: 24px 40px;
-    font-size: 13px;
-    font-weight: 600;
-  }
-
-  footer span { color: rgba(249,168,201,0.8); }
-
-  /* ══════════════════════════════
-     RESPONSIVE
-  ══════════════════════════════ */
-  @media (max-width: 1024px) {
-    .cards-grid { grid-template-columns: repeat(3, 1fr); }
-  }
-
-  @media (max-width: 768px) {
-    nav { padding: 0 20px; }
-    .nav-links { display: none; }
-    .hero { grid-template-columns: 1fr; padding: 40px 24px; gap: 32px; }
-    .hero-right { order: -1; }
-    .hero-oval { max-width: 380px; margin: 0 auto; }
-    .explore { padding: 56px 24px; }
-    .cards-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-    .why { padding: 56px 24px; }
-    .why-grid { grid-template-columns: 1fr; }
-    .footer-banner { padding: 40px 20px; }
-    .footer-banner-inner { padding: 40px 24px; }
-  }
-
-  @media (max-width: 480px) {
-    .cards-grid { grid-template-columns: repeat(2, 1fr); }
-    .logo-text h1 { font-size: 15px; }
-  }
-
-  /* ── page load animation ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .hero-left > * {
-    animation: fadeUp 0.6s ease both;
-  }
-  .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
-  .hero-left > *:nth-child(2) { animation-delay: 0.22s; }
-  .hero-left > *:nth-child(3) { animation-delay: 0.34s; }
-  .hero-left > *:nth-child(4) { animation-delay: 0.46s; }
-
-  .hero-right { animation: fadeUp 0.7s 0.18s ease both; }
-
-  .card { animation: fadeUp 0.5s ease both; }
-  .card:nth-child(1) { animation-delay: 0.05s; }
-  .card:nth-child(2) { animation-delay: 0.12s; }
-  .card:nth-child(3) { animation-delay: 0.19s; }
-  .card:nth-child(4) { animation-delay: 0.26s; }
-  .card:nth-child(5) { animation-delay: 0.33s; }
-  .card:nth-child(6) { animation-delay: 0.40s; }
-
-  /* hamburger */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 8px;
-    margin-left: auto;
-  }
-
-  .hamburger span {
-    width: 24px;
-    height: 2.5px;
-    background: var(--dark);
-    border-radius: 2px;
-    transition: 0.3s;
-  }
-
-  @media (max-width: 768px) {
-    .hamburger { display: flex; }
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #fdf8f3;
+  --pink: #f9a8c9;
+  --pink-light: #fde8f2;
+  --pink-soft: #fef0f7;
+  --blue: #a8c8f0;
+  --blue-light: #e8f2fd;
+  --blue-soft: #deeefb;
+  --sage: #a8d4b4;
+  --sage-light: #e8f5ec;
+  --sage-soft: #d8f0df;
+  --yellow: #f9d87a;
+  --yellow-light: #fef8e0;
+  --yellow-soft: #fff3c4;
+  --peach: #f8c5a0;
+  --peach-light: #fdeee4;
+  --lavender: #c8b8f0;
+  --lavender-light: #f0ebfd;
+  --dark: #1e2840;
+  --text: #3d4a6b;
+  --text-soft: #6b7a9b;
+  --shadow: 0 4px 24px rgba(45,58,94,0.08);
+  --shadow-hover: 0 8px 32px rgba(45,58,94,0.15);
+  --radius-lg: 28px;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+/* ══ NAV ══ */
+nav {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(253,248,243,0.95);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1.5px solid rgba(249,168,201,0.2);
+  padding: 0 28px;
+}
+.nav-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; gap: 12px; height: 62px;
+}
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+.logo-icon {
+  width: 52px; height: 52px; border-radius: 14px; overflow: hidden;
+  box-shadow: 0 3px 12px rgba(249,216,122,0.4); flex-shrink: 0;
+  background: linear-gradient(135deg, var(--yellow) 0%, var(--peach) 100%);
+  display: flex; align-items: center; justify-content: center; font-size: 26px;
+}
+.logo-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.logo-text h1 { font-family: 'Baloo 2', cursive; font-size: 17px; font-weight: 800; line-height: 1.1; color: var(--dark); }
+.logo-text h1 span { color: #f06fa4; }
+.logo-text p { font-size: 10px; font-weight: 600; color: var(--text-soft); letter-spacing: 0.04em; }
+.nav-links { display: flex; align-items: center; gap: 2px; list-style: none; margin-left: auto; }
+.nav-links a {
+  text-decoration: none; font-size: 12.5px; font-weight: 700; color: var(--text);
+  padding: 6px 10px; border-radius: 10px; transition: background 0.2s, color 0.2s; white-space: nowrap;
+}
+.nav-links a:hover, .nav-links a.active { background: var(--pink-light); color: #d05090; }
+.nav-links a.active { border-bottom: 2.5px solid #f06fa4; border-radius: 10px 10px 5px 5px; }
+.btn-contact {
+  background: linear-gradient(135deg, #f06fa4 0%, #f9a8c9 100%) !important;
+  color: white !important; padding: 7px 16px !important; border-radius: 50px !important;
+  font-weight: 800 !important; box-shadow: 0 3px 12px rgba(240,111,164,0.3);
+  transition: transform 0.2s, box-shadow 0.2s !important;
+}
+.btn-contact:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(240,111,164,0.4) !important; color: white !important; }
+
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 8px; margin-left: auto; background: none; border: none;
+}
+.hamburger span { width: 22px; height: 2.5px; background: var(--dark); border-radius: 2px; display: block; transition: 0.3s; }
+
+.mobile-nav {
+  display: none; flex-direction: column;
+  background: rgba(253,248,243,0.98); backdrop-filter: blur(14px);
+  padding: 12px 24px 20px; border-bottom: 1.5px solid rgba(249,168,201,0.2);
+  position: sticky; top: 62px; z-index: 199;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a {
+  text-decoration: none; font-size: 15px; font-weight: 700;
+  color: var(--text); padding: 10px 14px; border-radius: 12px; transition: background 0.2s;
+}
+.mobile-nav a:hover { background: var(--pink-light); color: #d05090; }
+.mobile-nav .btn-contact { margin-top: 8px; text-align: center; display: block; background: linear-gradient(135deg, #f06fa4 0%, #f9a8c9 100%) !important; }
+
+/* ══ HERO ══ */
+.hero-section {
+  background: linear-gradient(160deg, #fdf8f3 0%, #fef3f8 55%, #f5f0fd 100%);
+  position: relative; overflow: hidden;
+}
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(60px); opacity: 0.28; pointer-events: none;
+}
+.hero {
+  position: relative; max-width: 1200px; margin: 0 auto;
+  padding: 32px 40px 28px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; gap: 28px; z-index: 1;
+}
+.hero-left { position: relative; z-index: 1; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--yellow-light); border: 1.5px solid var(--yellow);
+  border-radius: 50px; padding: 5px 14px; font-size: 11.5px; font-weight: 800;
+  color: #a07810; margin-bottom: 14px; animation: floatBadge 3s ease-in-out infinite;
+}
+@keyframes floatBadge { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+
+.hero-title {
+  font-family: 'Baloo 2', cursive; font-size: clamp(28px, 3.2vw, 46px);
+  font-weight: 800; line-height: 1.15; color: var(--dark); margin-bottom: 12px;
+}
+.hero-title .t-pink { color: #f06fa4; }
+.hero-title .t-purple { color: #9b7ae8; }
+.hero-sub {
+  font-size: 14.5px; font-weight: 600; color: var(--text-soft);
+  line-height: 1.65; max-width: 370px; margin-bottom: 22px;
+}
+.quote-bubble {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: white; border: 2px dashed #f9d87a; border-radius: 50px;
+  padding: 9px 20px; font-size: 13.5px; font-weight: 800; color: var(--dark);
+  box-shadow: 0 3px 12px rgba(249,216,122,0.2);
+}
+.quote-bubble .t-pink { color: #f06fa4; }
+
+.hero-right { position: relative; z-index: 1; display: flex; justify-content: center; align-items: center; }
+.hero-illustration { position: relative; width: 100%; max-width: 460px; }
+
+.hero-oval {
+  width: 100%; padding-top: 88%;
+  background: linear-gradient(160deg, #e8effe 0%, #deeefb 60%, #f0e8fd 100%);
+  border-radius: 55% 55% 52% 52% / 60% 60% 50% 50%;
+  position: relative; overflow: hidden;
+}
+.hero-scene {
+  position: absolute; inset: 0;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.hero-scene img { width: 100%; height: 100%; object-fit: contain; object-position: bottom; display: block; }
+
+/* ── BUBBLES ── */
+.bubbles-layer {
+  position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1;
+}
+.bubble {
+  position: absolute; bottom: -80px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  box-shadow: inset 0 0 10px rgba(255,255,255,0.35), 0 2px 12px rgba(180,200,255,0.08);
+  animation: bubbleRise linear infinite;
+}
+@keyframes bubbleRise {
+  0%   { opacity: 0;    transform: translateY(0)      translateX(0); }
+  8%   { opacity: var(--op); }
+  88%  { opacity: var(--op); }
+  100% { opacity: 0;    transform: translateY(-105vh) translateX(var(--drift,0px)); }
+}
+
+/* speech bubbles */
+.speech {
+  position: absolute; border-radius: 50px; padding: 7px 15px;
+  font-family: 'Baloo 2', cursive; font-size: 13px; font-weight: 700;
+  color: var(--dark); box-shadow: var(--shadow); animation: floatUp 4s ease-in-out infinite; z-index: 3;
+}
+.speech-read  { background: var(--yellow-soft); top: 20%; left: 4%;  animation-delay: 0s; }
+.speech-learn { background: var(--pink-soft);   top: 13%; right: 3%; animation-delay: 1.2s; }
+.speech-play  { background: #d9f7f0;             top: 46%; right: 1%; animation-delay: 2.4s; }
+@keyframes floatUp { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-8px) rotate(1deg)} }
+
+.star-deco { position: absolute; pointer-events: none; animation: twinkle 3s ease-in-out infinite; z-index: 2; }
+@keyframes twinkle { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.6)} }
+
+/* ══ EXPLORE SECTION ══ */
+.explore {
+  background: #fffaf6; padding: 60px 0 0;
+  position: relative; overflow: hidden;
+}
+.explore::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--pink), var(--blue), var(--sage), var(--yellow), var(--peach), var(--lavender));
+}
+
+.section-header { text-align: center; margin-bottom: 36px; padding: 0 24px; }
+.section-header h2 {
+  font-family: 'Baloo 2', cursive; font-size: clamp(26px, 3vw, 36px);
+  font-weight: 800; color: var(--dark); margin-bottom: 8px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.section-header p { font-size: 15px; font-weight: 600; color: var(--text-soft); }
+
+/* ── Scrollable card track ── */
+.cards-track-wrap {
+  position: relative;
+}
+.cards-track-outer {
+  overflow-x: auto; overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* firefox */
+  padding: 12px 40px 28px;
+  scroll-snap-type: x mandatory;
+}
+.cards-track-outer::-webkit-scrollbar { display: none; }
+.cards-track {
+  display: flex; gap: 20px;
+  width: max-content;
+}
+
+/* Scroll arrow buttons */
+.scroll-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 40px; height: 40px; border-radius: 50%;
+  background: white; border: none; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(45,58,94,0.14);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: var(--text); z-index: 10;
+  transition: background 0.2s, transform 0.2s; flex-shrink: 0;
+}
+.scroll-btn:hover { background: var(--pink-light); color: #d05090; transform: translateY(-50%) scale(1.08); }
+.scroll-btn.left  { left: 6px; }
+.scroll-btn.right { right: 6px; }
+
+/* Cards */
+.card {
+  background: white; border-radius: var(--radius-lg);
+  padding: 28px 22px 24px; text-align: center;
+  box-shadow: var(--shadow); cursor: pointer;
+  transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s;
+  position: relative; overflow: hidden;
+  border: 2px solid transparent;
+  scroll-snap-align: start;
+  width: 200px; flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: center;
+}
+.card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 5px; border-radius: 4px 4px 0 0;
+}
+.card:hover { transform: translateY(-6px) scale(1.02); box-shadow: var(--shadow-hover); }
+
+.card-1 { background: var(--blue-light);    border-color: var(--blue); }
+.card-1::before { background: var(--blue); }
+.card-2 { background: var(--pink-light);    border-color: var(--pink); }
+.card-2::before { background: var(--pink); }
+.card-3 { background: var(--lavender-light);border-color: var(--lavender); }
+.card-3::before { background: var(--lavender); }
+.card-4 { background: var(--yellow-light);  border-color: var(--yellow); }
+.card-4::before { background: var(--yellow); }
+.card-5 { background: var(--sage-light);    border-color: var(--sage); }
+.card-5::before { background: var(--sage); }
+.card-6 { background: var(--peach-light);   border-color: var(--peach); }
+.card-6::before { background: var(--peach); }
+
+.card-icon {
+  width: 88px; height: 88px; margin: 0 auto 16px;
+  border-radius: 22px; overflow: hidden; position: relative; flex-shrink: 0;
+}
+.card-icon img { width: 100%; height: 100%; object-fit: contain; display: block; padding: 10px; }
+.card-1 .card-icon { background: var(--blue-soft); }
+.card-2 .card-icon { background: var(--pink-soft); }
+.card-3 .card-icon { background: var(--lavender-light); }
+.card-4 .card-icon { background: var(--yellow-soft); }
+.card-5 .card-icon { background: var(--sage-soft); }
+.card-6 .card-icon { background: var(--peach-light); }
+
+.card h3 { font-family: 'Baloo 2', cursive; font-size: 16px; font-weight: 800; color: var(--dark); margin-bottom: 7px; }
+.card p  { font-size: 12px; font-weight: 600; color: var(--text-soft); line-height: 1.5; margin-bottom: 16px; flex: 1; }
+
+.card-arrow {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 50%; background: white;
+  box-shadow: 0 2px 10px rgba(45,58,94,0.12); font-size: 14px; color: var(--text);
+  transition: background 0.2s, transform 0.2s; flex-shrink: 0;
+}
+.card:hover .card-arrow { transform: translateX(3px); }
+.card-1:hover .card-arrow { background: var(--blue);    color: white; }
+.card-2:hover .card-arrow { background: var(--pink);    color: white; }
+.card-3:hover .card-arrow { background: var(--lavender);color: white; }
+.card-4:hover .card-arrow { background: var(--yellow);  color: var(--dark); }
+.card-5:hover .card-arrow { background: var(--sage);    color: white; }
+.card-6:hover .card-arrow { background: var(--peach);   color: white; }
+
+/* ── Garden decoration ── */
+.garden {
+  position: relative; height: 130px; margin-top: 0; overflow: visible; pointer-events: none;
+}
+.grass-base {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 48px; background: #7ec87a; border-radius: 0;
+}
+.grass-top {
+  position: absolute; bottom: 44px; left: 0; right: 0; height: 0;
+}
+
+/* ── FOOTER BANNER ── */
+.footer-banner {
+  background: #fffaf6; padding: 32px 40px 40px;
+}
+.footer-banner-inner {
+  max-width: 700px; margin: 0 auto; background: white;
+  border-radius: 24px; padding: 28px 32px;
+  text-align: center; box-shadow: var(--shadow);
+  border: 1.5px solid rgba(249,168,201,0.18);
+  position: relative; overflow: hidden;
+}
+.footer-banner-inner::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at top left, rgba(249,216,122,0.08) 0%, transparent 60%),
+              radial-gradient(ellipse at bottom right, rgba(249,168,201,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+.footer-deco { display: flex; justify-content: center; gap: 8px; margin-bottom: 10px; font-size: 18px; }
+.footer-banner p {
+  font-family: 'Baloo 2', cursive; font-size: clamp(14px, 2vw, 17px);
+  font-weight: 700; color: var(--text); line-height: 1.5; position: relative;
+}
+.footer-banner p .t-pink { color: #f06fa4; }
+.footer-hearts { margin-top: 12px; font-size: 16px; display: flex; justify-content: center; gap: 4px; }
+
+footer {
+  background: var(--dark); color: rgba(255,255,255,0.5);
+  text-align: center; padding: 20px 40px; font-size: 12.5px; font-weight: 600;
+}
+footer span { color: rgba(249,168,201,0.8); }
+
+/* ══ PAGE LOAD ANIMATIONS ══ */
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.hero-left > * { animation: fadeUp 0.55s ease both; }
+.hero-left > *:nth-child(1){animation-delay:0.08s}
+.hero-left > *:nth-child(2){animation-delay:0.18s}
+.hero-left > *:nth-child(3){animation-delay:0.28s}
+.hero-left > *:nth-child(4){animation-delay:0.38s}
+.hero-right { animation: fadeUp 0.65s 0.15s ease both; }
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 1024px) {
+  .cards-track-outer { padding: 12px 52px 28px; }
+}
+
+@media (max-width: 768px) {
+  nav { padding: 0 16px; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .hero { grid-template-columns: 1fr; padding: 24px 20px 20px; gap: 20px; }
+  .hero-right { order: -1; }
+  .hero-illustration { max-width: 320px; margin: 0 auto; }
+  .explore { padding: 48px 0 0; }
+  .cards-track-outer { padding: 10px 44px 24px; }
+  .card { width: 175px; }
+  .footer-banner { padding: 24px 20px 32px; }
+  .footer-banner-inner { padding: 22px 20px; }
+  .scroll-btn { width: 34px; height: 34px; font-size: 14px; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 20px 16px 16px; }
+  .hero-illustration { max-width: 280px; }
+  .card { width: 160px; padding: 22px 16px 20px; }
+  .card-icon { width: 76px; height: 76px; }
+  .cards-track-outer { padding: 10px 40px 22px; }
+}
 </style>
 </head>
 <body>
 
-<!-- ═══ NAV ═══ -->
+<!-- ══ BUBBLES — fixed to whole page ══ -->
+<div class="bubbles-layer" id="bubblesLayer"></div>
+
+<!-- ══ NAV ══ -->
 <nav>
   <div class="nav-inner">
     <a href="#" class="logo">
       <div class="logo-icon">
-        <img src="images/logo.png" alt="Pang English Studio logo">
+        <img src="images/logo.png" alt="Pang English Studio logo" onerror="this.style.display='none'">
+        <span style="font-size:26px;position:absolute;">📖</span>
       </div>
       <div class="logo-text">
         <h1><span>Pang</span> English Studio</h1>
@@ -721,26 +404,37 @@
       <li><a href="#" class="btn-contact">✉ Contact</a></li>
     </ul>
 
-    <div class="hamburger" onclick="this.classList.toggle('open')">
+    <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
-    </div>
+    </button>
   </div>
 </nav>
 
-<!-- ═══ HERO ═══ -->
-<section style="background: linear-gradient(160deg, #fdf8f3 0%, #fef3f8 50%, #f5f0fd 100%); position:relative; overflow:hidden;">
+<!-- Mobile nav -->
+<nav class="mobile-nav" id="mobileNav">
+  <a href="#">Home</a>
+  <a href="#">Stories</a>
+  <a href="#">Phonics</a>
+  <a href="#">Vocabulary</a>
+  <a href="#">Grammar</a>
+  <a href="#">Games</a>
+  <a href="#">Worksheets</a>
+  <a href="#">About</a>
+  <a href="#" class="btn-contact">✉ Contact</a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero-section">
 
   <!-- bg blobs -->
-  <div class="blob" style="width:400px;height:400px;background:#fde8f2;top:-100px;left:-80px;"></div>
-  <div class="blob" style="width:350px;height:350px;background:#e8effe;top:60px;right:-60px;"></div>
-  <div class="blob" style="width:250px;height:250px;background:#e8f5ec;bottom:-40px;left:30%;"></div>
+  <div class="blob" style="width:380px;height:380px;background:#fde8f2;top:-80px;left:-60px;"></div>
+  <div class="blob" style="width:320px;height:320px;background:#e8effe;top:40px;right:-50px;"></div>
+  <div class="blob" style="width:220px;height:220px;background:#e8f5ec;bottom:-30px;left:35%;"></div>
 
   <div class="hero">
     <!-- LEFT -->
     <div class="hero-left">
-      <div class="hero-badge">
-        ⭐ Free for young learners &nbsp;🌈
-      </div>
+      <div class="hero-badge">⭐ For young learners 🌈</div>
 
       <h1 class="hero-title">
         Learn today,<br>
@@ -748,32 +442,28 @@
         <span class="t-purple">grow</span> forever!
       </h1>
 
-      <p class="hero-sub">
-        Fun and free English stories, games, and activities made for young learners.
-      </p>
+      <p class="hero-sub">Fun stories, games, and activities made for young learners.</p>
 
       <div class="quote-bubble">
         ⭐ Small steps. <span class="t-pink">Big dreams.</span> 🌈
       </div>
     </div>
 
-    <!-- RIGHT – Illustration -->
+    <!-- RIGHT -->
     <div class="hero-right">
       <div class="hero-illustration">
-        <!-- speech bubbles -->
         <div class="speech speech-read">💬 Read</div>
         <div class="speech speech-learn">📚 Learn</div>
         <div class="speech speech-play">🎮 Play</div>
 
-        <!-- stars -->
-        <div class="star-deco" style="top:8%;left:38%;animation-delay:0s;">⭐</div>
-        <div class="star-deco" style="top:30%;left:2%;animation-delay:0.8s;font-size:12px;color:#f9d87a;">✦</div>
-        <div class="star-deco" style="top:55%;right:14%;animation-delay:1.6s;font-size:11px;color:#a8c8f0;">✦</div>
-        <div class="star-deco" style="top:10%;right:28%;animation-delay:2.4s;font-size:13px;color:#c8b8f0;">✦</div>
+        <div class="star-deco" style="top:8%;left:38%;font-size:16px;">⭐</div>
+        <div class="star-deco" style="top:30%;left:2%;font-size:11px;color:#f9d87a;animation-delay:0.8s;">✦</div>
+        <div class="star-deco" style="top:55%;right:14%;font-size:10px;color:#a8c8f0;animation-delay:1.6s;">✦</div>
+        <div class="star-deco" style="top:10%;right:28%;font-size:12px;color:#c8b8f0;animation-delay:2.4s;">✦</div>
 
         <div class="hero-oval">
           <div class="hero-scene">
-            <img src="images/hero.png" alt="Girl and dog reading story time" style="width:100%;height:100%;object-fit:contain;object-position:bottom;display:block;">
+            <img src="images/hero.png" alt="Girl and dog reading story time">
           </div>
         </div>
       </div>
@@ -781,102 +471,353 @@
   </div>
 </section>
 
-<!-- ═══ EXPLORE & LEARN ═══ -->
+<!-- ══ EXPLORE & LEARN ══ -->
 <section class="explore">
   <div class="section-header">
     <h2>✨ Explore and Learn! ✨</h2>
     <p>Lots of fun ways to learn English step by step.</p>
   </div>
 
-  <div class="cards-grid">
-    <div class="card card-1">
-      <div class="card-icon"><img src="images/icon-phonics.png" alt="Phonics"></div>
-      <h3>Phonics</h3>
-      <p>Fun phonics practice for early readers. CVC, CCVC & more.</p>
-      <div class="card-arrow">→</div>
+  <div class="cards-track-wrap">
+    <button class="scroll-btn left" id="scrollLeft" aria-label="Scroll left">‹</button>
+
+    <div class="cards-track-outer" id="cardsTrack">
+      <div class="cards-track">
+
+        <div class="card card-1">
+          <div class="card-icon"><img src="images/icon-phonics.png" alt="Phonics"></div>
+          <h3>Phonics</h3>
+          <p>Fun phonics practice for early readers. CVC, CCVC & more.</p>
+          <div class="card-arrow">→</div>
+        </div>
+
+        <div class="card card-2">
+          <div class="card-icon"><img src="images/icon-vocab.png" alt="Vocabulary"></div>
+          <h3>Vocabulary</h3>
+          <p>Theme-based words with pictures and activities.</p>
+          <div class="card-arrow">→</div>
+        </div>
+
+        <div class="card card-3">
+          <div class="card-icon"><img src="images/icon-grammar.png" alt="Grammar"></div>
+          <h3>Grammar</h3>
+          <p>Easy grammar lessons for young learners to grow.</p>
+          <div class="card-arrow">→</div>
+        </div>
+
+        <div class="card card-4">
+          <div class="card-icon"><img src="images/icon-stories.png" alt="Stories"></div>
+          <h3>Stories</h3>
+          <p>Short stories to build reading and imagination.</p>
+          <div class="card-arrow">→</div>
+        </div>
+
+        <div class="card card-5">
+          <div class="card-icon"><img src="images/icon-games.png" alt="Games"></div>
+          <h3>Games</h3>
+          <p>Interactive games to learn and have fun together.</p>
+          <div class="card-arrow">→</div>
+        </div>
+
+        <div class="card card-6">
+          <div class="card-icon"><img src="images/icon-worksheets.png" alt="Worksheets"></div>
+          <h3>Worksheets</h3>
+          <p>Printable worksheets for every level and skill.</p>
+          <div class="card-arrow">→</div>
+        </div>
+
+      </div>
     </div>
 
-    <div class="card card-2">
-      <div class="card-icon"><img src="images/icon-vocab.png" alt="Vocabulary"></div>
-      <h3>Vocabulary</h3>
-      <p>Theme-based words with pictures and activities.</p>
-      <div class="card-arrow">→</div>
-    </div>
+    <button class="scroll-btn right" id="scrollRight" aria-label="Scroll right">›</button>
+  </div>
 
-    <div class="card card-3">
-      <div class="card-icon"><img src="images/icon-grammar.png" alt="Grammar"></div>
-      <h3>Grammar</h3>
-      <p>Easy grammar lessons for young learners to grow.</p>
-      <div class="card-arrow">→</div>
-    </div>
-
-    <div class="card card-4">
-      <div class="card-icon"><img src="images/icon-stories.png" alt="Stories"></div>
-      <h3>Stories</h3>
-      <p>Short stories to build reading and imagination.</p>
-      <div class="card-arrow">→</div>
-    </div>
-
-    <div class="card card-5">
-      <div class="card-icon"><img src="images/icon-games.png" alt="Games"></div>
-      <h3>Games</h3>
-      <p>Interactive games to learn and have fun together.</p>
-      <div class="card-arrow">→</div>
-    </div>
-
-    <div class="card card-6">
-      <div class="card-icon"><img src="images/icon-worksheets.png" alt="Worksheets"></div>
-      <h3>Worksheets</h3>
-      <p>Printable worksheets for every level and skill.</p>
-      <div class="card-arrow">→</div>
-    </div>
+  <!-- ── Garden decoration ── -->
+  <div class="garden" id="garden">
+    <!-- SVG garden rendered by JS below -->
   </div>
 </section>
 
-<!-- ═══ WHY ═══ -->
-<section class="why">
-  <div class="section-header">
-    <h2>💛 Why Pang English Studio?</h2>
-    <p>A warm, safe, and joyful place for every young learner.</p>
-  </div>
-
-  <div class="why-grid">
-    <div class="why-card">
-      <span class="why-icon">👩‍🏫</span>
-      <h3>Teacher-Made</h3>
-      <p>Every activity is crafted with love by an experienced English teacher who understands how young learners grow.</p>
-    </div>
-    <div class="why-card">
-      <span class="why-icon">🌟</span>
-      <h3>Play-Based Learning</h3>
-      <p>Children learn best when they're having fun. Our activities blend play and learning seamlessly.</p>
-    </div>
-    <div class="why-card">
-      <span class="why-icon">🆓</span>
-      <h3>Always Free</h3>
-      <p>Every story, game, and worksheet is completely free — because every child deserves great English resources.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ FOOTER BANNER ═══ -->
+<!-- ══ FOOTER BANNER ══ -->
 <section class="footer-banner">
   <div class="footer-banner-inner">
-    <div class="footer-deco">
-      ⭐ ☁️ 🌈 ☁️ ⭐
-    </div>
-    <h2>
-      Free for kids to learn,<br>
-      because kids deserve to have <span class="t-pink">fun</span> while learning.
-    </h2>
+    <div class="footer-deco">⭐ ☁️ 🌈 ☁️ ⭐</div>
+    <p>For kids to learn, because kids deserve to have <span class="t-pink">fun</span> while learning.</p>
     <div class="footer-hearts">❤️ 🧡 💛 💚 💙 💜</div>
   </div>
 </section>
 
-<!-- ═══ FOOTER ═══ -->
+<!-- ══ FOOTER ══ -->
 <footer>
   © 2025 <span>Pang English Studio</span> · Learn · Read · Play · Grow ⭐
 </footer>
 
+<script>
+// ── Mobile nav toggle ──
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobileNav').classList.toggle('open');
+});
+
+// ── Card scroll buttons ──
+const track = document.getElementById('cardsTrack');
+const scrollAmount = 220;
+document.getElementById('scrollLeft').addEventListener('click', () => {
+  track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+});
+document.getElementById('scrollRight').addEventListener('click', () => {
+  track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+});
+
+// ── Bubbles (slow, transparent, whole page) ──
+const bubbleTints = [
+  'rgba(249,168,201,0.25)', // pink
+  'rgba(168,200,240,0.25)', // blue
+  'rgba(249,216,122,0.22)', // yellow
+  'rgba(200,184,240,0.25)', // lavender
+  'rgba(168,212,180,0.22)', // sage
+  'rgba(248,197,160,0.22)', // peach
+  'rgba(220,230,255,0.18)', // white-blue
+];
+
+function makeBubble() {
+  const layer = document.getElementById('bubblesLayer');
+  if (!layer) return;
+  const el = document.createElement('div');
+  el.className = 'bubble';
+  const size = 24 + Math.random() * 56; // 24–80px
+  el.style.width  = size + 'px';
+  el.style.height = size + 'px';
+  const tint = bubbleTints[Math.floor(Math.random() * bubbleTints.length)];
+  el.style.background = `radial-gradient(circle at 32% 28%, rgba(255,255,255,0.7) 0%, ${tint} 55%, rgba(255,255,255,0.03) 100%)`;
+  el.style.left = (2 + Math.random() * 96) + '%';
+  const op = 0.28 + Math.random() * 0.28; // 0.28–0.56
+  el.style.setProperty('--op', op);
+  const drift = (Math.random() - 0.5) * 70;
+  el.style.setProperty('--drift', drift + 'px');
+  const dur = 28 + Math.random() * 32; // 28–60s very slow
+  el.style.animationDuration = dur + 's';
+  el.style.animationDelay   = -(Math.random() * dur) + 's';
+  layer.appendChild(el);
+  setTimeout(() => el.remove(), dur * 2.5 * 1000);
+}
+
+for (let i = 0; i < 22; i++) makeBubble();
+setInterval(makeBubble, 2800);
+
+// ── Garden SVG + animated butterflies ──
+(function buildGarden() {
+  const garden = document.getElementById('garden');
+  const W = Math.max(window.innerWidth, 800);
+  const H = 120;
+
+  let svg = `<svg width="100%" height="${H}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">`;
+
+  svg += `<defs>
+    <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e8f5ec" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#b8e8b0" stop-opacity="0.35"/>
+    </linearGradient>
+  </defs>`;
+  svg += `<rect width="${W}" height="${H}" fill="url(#skyG)"/>`;
+
+  // ground
+  svg += `<rect x="0" y="${H-40}" width="${W}" height="40" fill="#7ec87a"/>`;
+  svg += `<rect x="0" y="${H-40}" width="${W}" height="9" fill="#6ab868"/>`;
+
+  // grass blades
+  const bladeCount = Math.floor(W / 16);
+  for (let i = 0; i < bladeCount; i++) {
+    const x = (i / bladeCount) * W + Math.random() * 12 - 6;
+    const bh = 12 + Math.random() * 22;
+    const lean = (Math.random() - 0.5) * 10;
+    const green = Math.random() > 0.5 ? '#4aa84a' : '#5cb85c';
+    svg += `<path d="M${x} ${H-40} Q${x+lean} ${H-40-bh*0.55} ${x+lean*1.4} ${H-40-bh}" stroke="${green}" stroke-width="${1.2+Math.random()*0.8}" fill="none" stroke-linecap="round"/>`;
+  }
+
+  // flowers
+  for (let i = 0; i < 20; i++) {
+    const fx = 24 + (i / 20) * (W - 48) + Math.random() * 20 - 10;
+    const fy = H - 40 - 7;
+    const colors = ['#f9a8c9','#f9d87a','#a8c8f0','#f8c5a0','#c8b8f0','#ffffff'];
+    const fc = colors[Math.floor(Math.random() * colors.length)];
+    const fs = 4 + Math.random() * 3;
+    svg += `<line x1="${fx}" y1="${fy}" x2="${fx}" y2="${H-40}" stroke="#5cb85c" stroke-width="1.5"/>`;
+    for (let p = 0; p < 5; p++) {
+      const angle = (p / 5) * Math.PI * 2;
+      svg += `<circle cx="${fx + Math.cos(angle)*fs}" cy="${fy + Math.sin(angle)*fs}" r="${fs*0.72}" fill="${fc}" opacity="0.9"/>`;
+    }
+    svg += `<circle cx="${fx}" cy="${fy}" r="${fs*0.48}" fill="#f9d87a"/>`;
+  }
+
+  // mushrooms
+  for (let m = 0; m < 5; m++) {
+    const mx = 70 + (m / 5) * (W - 140) + Math.random() * 30;
+    const my = H - 40;
+    const mh = 15 + Math.random() * 8;
+    const mw = 13 + Math.random() * 5;
+    const mcap = Math.random() > 0.5 ? '#e85858' : '#f9a8c9';
+    svg += `<rect x="${mx-4}" y="${my-mh+7}" width="8" height="${mh-7}" rx="3" fill="#f5e0c0"/>`;
+    svg += `<ellipse cx="${mx}" cy="${my-mh+9}" rx="${mw/2}" ry="${mh*0.44}" fill="${mcap}"/>`;
+    svg += `<circle cx="${mx-3}" cy="${my-mh+8}" r="2" fill="white" opacity="0.8"/>`;
+    svg += `<circle cx="${mx+3}" cy="${my-mh+6}" r="1.4" fill="white" opacity="0.8"/>`;
+  }
+
+  // ── RABBITS ──
+  function drawRabbit(rx, ry, flipped) {
+    const sc = flipped ? -1 : 1;
+    svg += `<g transform="translate(${rx},${ry}) scale(${sc},1)">`;
+    svg += `<ellipse cx="0" cy="0" rx="14" ry="11" fill="white"/>`;
+    svg += `<ellipse cx="12" cy="-10" rx="10" ry="9" fill="white"/>`;
+    svg += `<ellipse cx="8" cy="-22" rx="3.5" ry="9" fill="white"/>`;
+    svg += `<ellipse cx="8" cy="-22" rx="2" ry="6" fill="#f9c8d0"/>`;
+    svg += `<ellipse cx="15" cy="-21" rx="3.5" ry="9" fill="white"/>`;
+    svg += `<ellipse cx="15" cy="-21" rx="2" ry="6" fill="#f9c8d0"/>`;
+    svg += `<circle cx="14" cy="-11" r="2" fill="#1a1a1a"/>`;
+    svg += `<circle cx="14.6" cy="-11.6" r="0.7" fill="white"/>`;
+    svg += `<ellipse cx="12" cy="-8" rx="2.5" ry="1.5" fill="#f9a8c9"/>`;
+    svg += `<path d="M10 -7 Q12 -5 14 -7" stroke="#e06080" stroke-width="1" fill="none" stroke-linecap="round"/>`;
+    svg += `<circle cx="-13" cy="-1" r="5" fill="white"/>`;
+    svg += `<ellipse cx="-4" cy="10" rx="5" ry="3" fill="#f0e8e8"/>`;
+    svg += `<ellipse cx="5" cy="10" rx="5" ry="3" fill="#f0e8e8"/>`;
+    svg += `</g>`;
+  }
+
+  drawRabbit(W * 0.13, H - 32, false);
+  drawRabbit(W * 0.48, H - 32, true);
+  drawRabbit(W * 0.88, H - 32, false);
+
+  // ── DOGS (yorkshire terrier style) ──
+  function drawDog(dx, dy, flipped) {
+    const sc = flipped ? -1 : 1;
+    svg += `<g transform="translate(${dx},${dy}) scale(${sc},1)">`;
+    // body
+    svg += `<ellipse cx="0" cy="0" rx="16" ry="12" fill="#c8904a"/>`;
+    svg += `<ellipse cx="0" cy="-3" rx="14" ry="9" fill="#d4a060"/>`;
+    // head
+    svg += `<ellipse cx="15" cy="-11" rx="11" ry="10" fill="#b87838"/>`;
+    svg += `<ellipse cx="15" cy="-16" rx="9" ry="7" fill="#c8904a"/>`;
+    // ears
+    svg += `<ellipse cx="8" cy="-18" rx="5" ry="8" fill="#8b5e2a" transform="rotate(-15,8,-18)"/>`;
+    svg += `<ellipse cx="8" cy="-18" rx="3" ry="5.5" fill="#c8904a" transform="rotate(-15,8,-18)"/>`;
+    svg += `<ellipse cx="21" cy="-18" rx="5" ry="8" fill="#8b5e2a" transform="rotate(15,21,-18)"/>`;
+    svg += `<ellipse cx="21" cy="-18" rx="3" ry="5.5" fill="#c8904a" transform="rotate(15,21,-18)"/>`;
+    // face
+    svg += `<circle cx="12" cy="-12" r="2.2" fill="#1a1a1a"/>`;
+    svg += `<circle cx="12.6" cy="-12.6" r="0.8" fill="white"/>`;
+    svg += `<circle cx="19" cy="-12" r="2.2" fill="#1a1a1a"/>`;
+    svg += `<circle cx="19.6" cy="-12.6" r="0.8" fill="white"/>`;
+    // nose
+    svg += `<ellipse cx="15" cy="-7" rx="3" ry="2" fill="#2a1a0a"/>`;
+    // tongue
+    svg += `<path d="M13 -4 Q15 -1 17 -4" stroke="#7a3a2a" stroke-width="1.2" fill="none" stroke-linecap="round"/>`;
+    svg += `<ellipse cx="15" cy="-2" rx="2.5" ry="1.8" fill="#f08080"/>`;
+    // tail (wagging up)
+    svg += `<path d="M-14 -3 Q-24 -16 -20 -24" stroke="#c8904a" stroke-width="5" fill="none" stroke-linecap="round"/>`;
+    // paws
+    svg += `<ellipse cx="-7" cy="11" rx="6" ry="3.5" fill="#b87838"/>`;
+    svg += `<ellipse cx="5" cy="11" rx="6" ry="3.5" fill="#b87838"/>`;
+    // bow on head
+    svg += `<ellipse cx="9" cy="-21" rx="4" ry="2.5" fill="#f9d87a" transform="rotate(-20,9,-21)"/>`;
+    svg += `<ellipse cx="15" cy="-22" rx="4" ry="2.5" fill="#f9d87a" transform="rotate(20,15,-22)"/>`;
+    svg += `<circle cx="12" cy="-22" r="2" fill="#f9c844"/>`;
+    svg += `</g>`;
+  }
+
+  drawDog(W * 0.30, H - 32, false);
+  drawDog(W * 0.68, H - 32, true);
+
+  svg += `</svg>`;
+  garden.innerHTML = svg;
+
+  // ── Animated butterflies (HTML divs with CSS, not SVG so they can animate) ──
+  const butterflyColors = ['#f9a8c9','#a8c8f0','#f9d87a','#c8b8f0','#a8d4b4'];
+  const gardenRect = garden.getBoundingClientRect();
+  const gardenH = 120;
+
+  // inject butterfly CSS once
+  if (!document.getElementById('bfStyle')) {
+    const st = document.createElement('style');
+    st.id = 'bfStyle';
+    st.textContent = `
+      .butterfly {
+        position: absolute; pointer-events: none;
+        animation: bfFly linear infinite;
+      }
+      .bf-wing-l, .bf-wing-r {
+        position: absolute; top: 0;
+        animation: bfFlap ease-in-out infinite alternate;
+        transform-origin: right center;
+      }
+      .bf-wing-r { transform-origin: left center; animation-direction: alternate-reverse; }
+      @keyframes bfFlap {
+        0%   { transform: scaleX(1) rotate(-10deg); }
+        100% { transform: scaleX(0.2) rotate(10deg); }
+      }
+      @keyframes bfFly {
+        0%   { transform: translate(0px, 0px); }
+        20%  { transform: translate(var(--mx1), var(--my1)); }
+        45%  { transform: translate(var(--mx2), var(--my2)); }
+        70%  { transform: translate(var(--mx3), var(--my3)); }
+        100% { transform: translate(0px, 0px); }
+      }
+    `;
+    document.head.appendChild(st);
+  }
+
+  const gardenEl = document.getElementById('garden');
+  gardenEl.style.position = 'relative';
+
+  for (let b = 0; b < 5; b++) {
+    const color = butterflyColors[b % butterflyColors.length];
+    const wSize = 10 + Math.random() * 6;
+    const hSize = wSize * 0.7;
+    const startX = 60 + Math.random() * (window.innerWidth - 120);
+    const startY = 10 + Math.random() * 50;
+
+    const bf = document.createElement('div');
+    bf.className = 'butterfly';
+    bf.style.left = startX + 'px';
+    bf.style.top  = startY + 'px';
+    bf.style.width  = (wSize * 2 + 4) + 'px';
+    bf.style.height = hSize + 'px';
+
+    const dur = 6 + Math.random() * 8;
+    bf.style.animationDuration = dur + 's';
+    bf.style.animationDelay = -(Math.random() * dur) + 's';
+    // random path offsets
+    const rx = () => (Math.random() - 0.5) * 120;
+    const ry = () => (Math.random() - 0.5) * 40;
+    bf.style.setProperty('--mx1', rx() + 'px');
+    bf.style.setProperty('--my1', ry() + 'px');
+    bf.style.setProperty('--mx2', rx() + 'px');
+    bf.style.setProperty('--my2', ry() + 'px');
+    bf.style.setProperty('--mx3', rx() + 'px');
+    bf.style.setProperty('--my3', ry() + 'px');
+
+    const flapDur = (0.3 + Math.random() * 0.25) + 's';
+
+    // left wing
+    const wl = document.createElement('div');
+    wl.className = 'bf-wing-l';
+    wl.style.cssText = `width:${wSize}px;height:${hSize}px;right:${wSize+2}px;border-radius:50% 0 50% 50%;background:${color};opacity:0.9;`;
+    wl.style.animationDuration = flapDur;
+
+    // right wing
+    const wr = document.createElement('div');
+    wr.className = 'bf-wing-r';
+    wr.style.cssText = `width:${wSize}px;height:${hSize}px;left:${wSize+2}px;border-radius:0 50% 50% 50%;background:${color};opacity:0.9;`;
+    wr.style.animationDuration = flapDur;
+
+    // body
+    const body = document.createElement('div');
+    body.style.cssText = `position:absolute;left:${wSize}px;top:${hSize*0.1}px;width:4px;height:${hSize*0.8}px;background:#5a3a1a;border-radius:2px;`;
+
+    bf.appendChild(wl);
+    bf.appendChild(wr);
+    bf.appendChild(body);
+    gardenEl.appendChild(bf);
+  }
+})();
+</script>
 </body>
 </html>
