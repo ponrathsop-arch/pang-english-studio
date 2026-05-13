@@ -37,6 +37,23 @@
 html { scroll-behavior: smooth; }
 body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
 
+/* ══ BUBBLES ══ */
+.bubbles-layer {
+  position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1;
+}
+.bubble {
+  position: absolute; bottom: -80px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  box-shadow: inset 0 0 10px rgba(255,255,255,0.35), 0 2px 12px rgba(180,200,255,0.08);
+  animation: bubbleRise linear infinite;
+}
+@keyframes bubbleRise {
+  0%   { opacity: 0;    transform: translateY(0)      translateX(0); }
+  8%   { opacity: var(--op); }
+  88%  { opacity: var(--op); }
+  100% { opacity: 0;    transform: translateY(-105vh) translateX(var(--drift,0px)); }
+}
+
 /* ══ NAV ══ */
 nav {
   position: sticky; top: 0; z-index: 200;
@@ -50,23 +67,33 @@ nav {
   display: flex; align-items: center; gap: 12px; height: 62px;
 }
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+
+/* Logo fix — image on top, emoji hidden behind */
 .logo-icon {
-  width: 52px; height: 52px; border-radius: 14px; overflow: hidden;
+  width: 52px; height: 52px; border-radius: 14px;
   box-shadow: 0 3px 12px rgba(249,216,122,0.4); flex-shrink: 0;
   background: linear-gradient(135deg, var(--yellow) 0%, var(--peach) 100%);
-  display: flex; align-items: center; justify-content: center; font-size: 26px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; position: relative; overflow: hidden;
 }
-.logo-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.logo-icon img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  display: block; z-index: 2;
+}
+.logo-icon .logo-emoji { position: relative; z-index: 1; }
+
 .logo-text h1 { font-family: 'Baloo 2', cursive; font-size: 17px; font-weight: 800; line-height: 1.1; color: var(--dark); }
 .logo-text h1 span { color: #f06fa4; }
 .logo-text p { font-size: 10px; font-weight: 600; color: var(--text-soft); letter-spacing: 0.04em; }
+
 .nav-links { display: flex; align-items: center; gap: 2px; list-style: none; margin-left: auto; }
 .nav-links a {
   text-decoration: none; font-size: 12.5px; font-weight: 700; color: var(--text);
   padding: 6px 10px; border-radius: 10px; transition: background 0.2s, color 0.2s; white-space: nowrap;
 }
-.nav-links a:hover, .nav-links a.active { background: var(--pink-light); color: #d05090; }
-.nav-links a.active { border-bottom: 2.5px solid #f06fa4; border-radius: 10px 10px 5px 5px; }
+.nav-links a:hover { background: var(--pink-light); color: #d05090; }
+.nav-links a.active { background: var(--pink-light); color: #d05090; border-bottom: 2.5px solid #f06fa4; border-radius: 10px 10px 5px 5px; }
 .btn-contact {
   background: linear-gradient(135deg, #f06fa4 0%, #f9a8c9 100%) !important;
   color: white !important; padding: 7px 16px !important; border-radius: 50px !important;
@@ -104,69 +131,91 @@ nav {
   position: absolute; border-radius: 50%;
   filter: blur(60px); opacity: 0.28; pointer-events: none;
 }
+
+/* Hero is now smaller — less padding, tighter grid */
 .hero {
   position: relative; max-width: 1200px; margin: 0 auto;
-  padding: 32px 40px 28px;
+  padding: 24px 40px 20px;
   display: grid; grid-template-columns: 1fr 1fr;
-  align-items: center; gap: 28px; z-index: 1;
+  align-items: center; gap: 24px; z-index: 2;
 }
 .hero-left { position: relative; z-index: 1; }
+
 .hero-badge {
   display: inline-flex; align-items: center; gap: 7px;
   background: var(--yellow-light); border: 1.5px solid var(--yellow);
   border-radius: 50px; padding: 5px 14px; font-size: 11.5px; font-weight: 800;
-  color: #a07810; margin-bottom: 14px; animation: floatBadge 3s ease-in-out infinite;
+  color: #a07810; margin-bottom: 12px; animation: floatBadge 3s ease-in-out infinite;
 }
 @keyframes floatBadge { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
 
 .hero-title {
-  font-family: 'Baloo 2', cursive; font-size: clamp(28px, 3.2vw, 46px);
-  font-weight: 800; line-height: 1.15; color: var(--dark); margin-bottom: 12px;
+  font-family: 'Baloo 2', cursive; font-size: clamp(24px, 2.8vw, 40px);
+  font-weight: 800; line-height: 1.15; color: var(--dark); margin-bottom: 10px;
 }
 .hero-title .t-pink { color: #f06fa4; }
 .hero-title .t-purple { color: #9b7ae8; }
+
 .hero-sub {
-  font-size: 14.5px; font-weight: 600; color: var(--text-soft);
-  line-height: 1.65; max-width: 370px; margin-bottom: 22px;
+  font-size: 14px; font-weight: 600; color: var(--text-soft);
+  line-height: 1.65; max-width: 360px; margin-bottom: 18px;
 }
+
 .quote-bubble {
   display: inline-flex; align-items: center; gap: 10px;
   background: white; border: 2px dashed #f9d87a; border-radius: 50px;
-  padding: 9px 20px; font-size: 13.5px; font-weight: 800; color: var(--dark);
-  box-shadow: 0 3px 12px rgba(249,216,122,0.2);
+  padding: 9px 20px; font-size: 13px; font-weight: 800; color: var(--dark);
+  box-shadow: 0 3px 12px rgba(249,216,122,0.2); margin-bottom: 20px;
 }
 .quote-bubble .t-pink { color: #f06fa4; }
 
-.hero-right { position: relative; z-index: 1; display: flex; justify-content: center; align-items: center; }
-.hero-illustration { position: relative; width: 100%; max-width: 460px; }
-
-.hero-oval {
-  width: 100%; padding-top: 88%;
-  background: linear-gradient(160deg, #e8effe 0%, #deeefb 60%, #f0e8fd 100%);
-  border-radius: 55% 55% 52% 52% / 60% 60% 50% 50%;
-  position: relative; overflow: hidden;
+/* ── Swoosh scroll button ── */
+.swoosh-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, #f06fa4 0%, #c8b8f0 100%);
+  color: white; border: none; cursor: pointer;
+  padding: 11px 24px; border-radius: 50px;
+  font-family: 'Baloo 2', cursive; font-size: 14px; font-weight: 800;
+  box-shadow: 0 4px 18px rgba(240,111,164,0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  animation: floatBadge 2.5s ease-in-out infinite;
 }
-.hero-scene {
-  position: absolute; inset: 0;
+.swoosh-btn:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 8px 28px rgba(240,111,164,0.45);
+}
+.swoosh-btn .arrow-down {
+  font-size: 18px;
+  animation: bounceDown 1.2s ease-in-out infinite;
+}
+@keyframes bounceDown {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(4px); }
+}
+
+/* ── Hero right — bigger illustration ── */
+.hero-right { position: relative; z-index: 1; display: flex; justify-content: center; align-items: center; }
+.hero-illustration { position: relative; width: 100%; max-width: 500px; }
+
+/* No oval — just the image sitting naturally, bigger */
+.hero-img-wrap {
+  width: 100%;
+  position: relative;
   display: flex; align-items: flex-end; justify-content: center;
 }
-.hero-scene img { width: 100%; height: 100%; object-fit: contain; object-position: bottom; display: block; }
-
-/* ── BUBBLES ── */
-.bubbles-layer {
-  position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1;
+.hero-img-wrap img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 12px 32px rgba(45,58,94,0.12));
+  animation: floatHero 5s ease-in-out infinite;
 }
-.bubble {
-  position: absolute; bottom: -80px; border-radius: 50%;
-  border: 1.5px solid rgba(255,255,255,0.5);
-  box-shadow: inset 0 0 10px rgba(255,255,255,0.35), 0 2px 12px rgba(180,200,255,0.08);
-  animation: bubbleRise linear infinite;
-}
-@keyframes bubbleRise {
-  0%   { opacity: 0;    transform: translateY(0)      translateX(0); }
-  8%   { opacity: var(--op); }
-  88%  { opacity: var(--op); }
-  100% { opacity: 0;    transform: translateY(-105vh) translateX(var(--drift,0px)); }
+@keyframes floatHero {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
 }
 
 /* speech bubbles */
@@ -175,9 +224,9 @@ nav {
   font-family: 'Baloo 2', cursive; font-size: 13px; font-weight: 700;
   color: var(--dark); box-shadow: var(--shadow); animation: floatUp 4s ease-in-out infinite; z-index: 3;
 }
-.speech-read  { background: var(--yellow-soft); top: 20%; left: 4%;  animation-delay: 0s; }
-.speech-learn { background: var(--pink-soft);   top: 13%; right: 3%; animation-delay: 1.2s; }
-.speech-play  { background: #d9f7f0;             top: 46%; right: 1%; animation-delay: 2.4s; }
+.speech-read  { background: var(--yellow-soft); top: 22%; left: 0%;  animation-delay: 0s; }
+.speech-learn { background: var(--pink-soft);   top: 10%; right: 2%; animation-delay: 1.2s; }
+.speech-play  { background: #d9f7f0;             top: 48%; right: 0%; animation-delay: 2.4s; }
 @keyframes floatUp { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-8px) rotate(1deg)} }
 
 .star-deco { position: absolute; pointer-events: none; animation: twinkle 3s ease-in-out infinite; z-index: 2; }
@@ -202,21 +251,17 @@ nav {
 .section-header p { font-size: 15px; font-weight: 600; color: var(--text-soft); }
 
 /* ── Scrollable card track ── */
-.cards-track-wrap {
-  position: relative;
-}
+.cards-track-wrap { position: relative; }
 .cards-track-outer {
   overflow-x: auto; overflow-y: visible;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; /* firefox */
-  padding: 12px 40px 28px;
+  scrollbar-width: none;
+  padding: 12px 60px 28px;
   scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
 }
 .cards-track-outer::-webkit-scrollbar { display: none; }
-.cards-track {
-  display: flex; gap: 20px;
-  width: max-content;
-}
+.cards-track { display: flex; gap: 20px; width: max-content; }
 
 /* Scroll arrow buttons */
 .scroll-btn {
@@ -226,11 +271,11 @@ nav {
   box-shadow: 0 4px 16px rgba(45,58,94,0.14);
   display: flex; align-items: center; justify-content: center;
   font-size: 16px; color: var(--text); z-index: 10;
-  transition: background 0.2s, transform 0.2s; flex-shrink: 0;
+  transition: background 0.2s, transform 0.2s;
 }
-.scroll-btn:hover { background: var(--pink-light); color: #d05090; transform: translateY(-50%) scale(1.08); }
-.scroll-btn.left  { left: 6px; }
-.scroll-btn.right { right: 6px; }
+.scroll-btn:hover { background: var(--pink-light); color: #d05090; transform: translateY(-50%) scale(1.1); }
+.scroll-btn.left  { left: 8px; }
+.scroll-btn.right { right: 8px; }
 
 /* Cards */
 .card {
@@ -296,18 +341,9 @@ nav {
 .garden {
   position: relative; height: 130px; margin-top: 0; overflow: visible; pointer-events: none;
 }
-.grass-base {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  height: 48px; background: #7ec87a; border-radius: 0;
-}
-.grass-top {
-  position: absolute; bottom: 44px; left: 0; right: 0; height: 0;
-}
 
 /* ── FOOTER BANNER ── */
-.footer-banner {
-  background: #fffaf6; padding: 32px 40px 40px;
-}
+.footer-banner { background: #fffaf6; padding: 32px 40px 40px; }
 .footer-banner-inner {
   max-width: 700px; margin: 0 auto; background: white;
   border-radius: 24px; padding: 28px 32px;
@@ -332,6 +368,7 @@ nav {
 footer {
   background: var(--dark); color: rgba(255,255,255,0.5);
   text-align: center; padding: 20px 40px; font-size: 12.5px; font-weight: 600;
+  position: relative; z-index: 2;
 }
 footer span { color: rgba(249,168,201,0.8); }
 
@@ -342,20 +379,20 @@ footer span { color: rgba(249,168,201,0.8); }
 .hero-left > *:nth-child(2){animation-delay:0.18s}
 .hero-left > *:nth-child(3){animation-delay:0.28s}
 .hero-left > *:nth-child(4){animation-delay:0.38s}
+.hero-left > *:nth-child(5){animation-delay:0.46s}
 .hero-right { animation: fadeUp 0.65s 0.15s ease both; }
 
 /* ══ RESPONSIVE ══ */
 @media (max-width: 1024px) {
   .cards-track-outer { padding: 12px 52px 28px; }
 }
-
 @media (max-width: 768px) {
   nav { padding: 0 16px; }
   .nav-links { display: none; }
   .hamburger { display: flex; }
-  .hero { grid-template-columns: 1fr; padding: 24px 20px 20px; gap: 20px; }
+  .hero { grid-template-columns: 1fr; padding: 20px 20px 16px; gap: 16px; }
   .hero-right { order: -1; }
-  .hero-illustration { max-width: 320px; margin: 0 auto; }
+  .hero-img-wrap img { max-width: 340px; }
   .explore { padding: 48px 0 0; }
   .cards-track-outer { padding: 10px 44px 24px; }
   .card { width: 175px; }
@@ -363,10 +400,9 @@ footer span { color: rgba(249,168,201,0.8); }
   .footer-banner-inner { padding: 22px 20px; }
   .scroll-btn { width: 34px; height: 34px; font-size: 14px; }
 }
-
 @media (max-width: 480px) {
-  .hero { padding: 20px 16px 16px; }
-  .hero-illustration { max-width: 280px; }
+  .hero { padding: 16px 16px 12px; }
+  .hero-img-wrap img { max-width: 290px; }
   .card { width: 160px; padding: 22px 16px 20px; }
   .card-icon { width: 76px; height: 76px; }
   .cards-track-outer { padding: 10px 40px 22px; }
@@ -375,16 +411,16 @@ footer span { color: rgba(249,168,201,0.8); }
 </head>
 <body>
 
-<!-- ══ BUBBLES — fixed to whole page ══ -->
+<!-- ══ BUBBLES ══ -->
 <div class="bubbles-layer" id="bubblesLayer"></div>
 
 <!-- ══ NAV ══ -->
 <nav>
   <div class="nav-inner">
-    <a href="#" class="logo">
+    <a href="https://ponrathsop-arch.github.io/pang-english-studio/" class="logo">
       <div class="logo-icon">
-        <img src="images/logo.png" alt="Pang English Studio logo" onerror="this.style.display='none'">
-        <span style="font-size:26px;position:absolute;">📖</span>
+        <span class="logo-emoji">📖</span>
+        <img src="images/logo.png" alt="Pang English Studio logo">
       </div>
       <div class="logo-text">
         <h1><span>Pang</span> English Studio</h1>
@@ -393,15 +429,15 @@ footer span { color: rgba(249,168,201,0.8); }
     </a>
 
     <ul class="nav-links">
-      <li><a href="#" class="active">Home</a></li>
-      <li><a href="#">Stories</a></li>
-      <li><a href="#">Phonics</a></li>
-      <li><a href="#">Vocabulary</a></li>
-      <li><a href="#">Grammar</a></li>
-      <li><a href="#">Games</a></li>
-      <li><a href="#">Worksheets</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#" class="btn-contact">✉ Contact</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/" class="active">Home</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/stories/">Stories</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/phonics/">Phonics</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/">Vocabulary</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/grammar/">Grammar</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/games/">Games</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/worksheets/">Worksheets</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/about/">About</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/contact/" class="btn-contact">✉ Contact</a></li>
     </ul>
 
     <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -412,24 +448,22 @@ footer span { color: rgba(249,168,201,0.8); }
 
 <!-- Mobile nav -->
 <nav class="mobile-nav" id="mobileNav">
-  <a href="#">Home</a>
-  <a href="#">Stories</a>
-  <a href="#">Phonics</a>
-  <a href="#">Vocabulary</a>
-  <a href="#">Grammar</a>
-  <a href="#">Games</a>
-  <a href="#">Worksheets</a>
-  <a href="#">About</a>
-  <a href="#" class="btn-contact">✉ Contact</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/">Home</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/stories/">Stories</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/phonics/">Phonics</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/">Vocabulary</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/grammar/">Grammar</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/games/">Games</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/worksheets/">Worksheets</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/about/">About</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/contact/" class="btn-contact">✉ Contact</a>
 </nav>
 
 <!-- ══ HERO ══ -->
 <section class="hero-section">
-
-  <!-- bg blobs -->
-  <div class="blob" style="width:380px;height:380px;background:#fde8f2;top:-80px;left:-60px;"></div>
-  <div class="blob" style="width:320px;height:320px;background:#e8effe;top:40px;right:-50px;"></div>
-  <div class="blob" style="width:220px;height:220px;background:#e8f5ec;bottom:-30px;left:35%;"></div>
+  <div class="blob" style="width:360px;height:360px;background:#fde8f2;top:-80px;left:-60px;"></div>
+  <div class="blob" style="width:300px;height:300px;background:#e8effe;top:40px;right:-50px;"></div>
+  <div class="blob" style="width:200px;height:200px;background:#e8f5ec;bottom:-30px;left:35%;"></div>
 
   <div class="hero">
     <!-- LEFT -->
@@ -447,24 +481,27 @@ footer span { color: rgba(249,168,201,0.8); }
       <div class="quote-bubble">
         ⭐ Small steps. <span class="t-pink">Big dreams.</span> 🌈
       </div>
+
+      <!-- Swoosh scroll button -->
+      <a href="#explore" class="swoosh-btn" id="swooshBtn">
+        Explore &amp; Learn <span class="arrow-down">↓</span>
+      </a>
     </div>
 
-    <!-- RIGHT -->
+    <!-- RIGHT — new illustration: teacher + kids + dog -->
     <div class="hero-right">
       <div class="hero-illustration">
         <div class="speech speech-read">💬 Read</div>
         <div class="speech speech-learn">📚 Learn</div>
         <div class="speech speech-play">🎮 Play</div>
 
-        <div class="star-deco" style="top:8%;left:38%;font-size:16px;">⭐</div>
-        <div class="star-deco" style="top:30%;left:2%;font-size:11px;color:#f9d87a;animation-delay:0.8s;">✦</div>
-        <div class="star-deco" style="top:55%;right:14%;font-size:10px;color:#a8c8f0;animation-delay:1.6s;">✦</div>
-        <div class="star-deco" style="top:10%;right:28%;font-size:12px;color:#c8b8f0;animation-delay:2.4s;">✦</div>
+        <div class="star-deco" style="top:6%;left:36%;font-size:16px;">⭐</div>
+        <div class="star-deco" style="top:28%;left:1%;font-size:11px;color:#f9d87a;animation-delay:0.8s;">✦</div>
+        <div class="star-deco" style="top:52%;right:12%;font-size:10px;color:#a8c8f0;animation-delay:1.6s;">✦</div>
+        <div class="star-deco" style="top:8%;right:26%;font-size:12px;color:#c8b8f0;animation-delay:2.4s;">✦</div>
 
-        <div class="hero-oval">
-          <div class="hero-scene">
-            <img src="images/hero.png" alt="Girl and dog reading story time">
-          </div>
+        <div class="hero-img-wrap">
+          <img src="images/hero.png" alt="Teacher reading story time with children and dog">
         </div>
       </div>
     </div>
@@ -472,7 +509,7 @@ footer span { color: rgba(249,168,201,0.8); }
 </section>
 
 <!-- ══ EXPLORE & LEARN ══ -->
-<section class="explore">
+<section class="explore" id="explore">
   <div class="section-header">
     <h2>✨ Explore and Learn! ✨</h2>
     <p>Lots of fun ways to learn English step by step.</p>
@@ -532,10 +569,8 @@ footer span { color: rgba(249,168,201,0.8); }
     <button class="scroll-btn right" id="scrollRight" aria-label="Scroll right">›</button>
   </div>
 
-  <!-- ── Garden decoration ── -->
-  <div class="garden" id="garden">
-    <!-- SVG garden rendered by JS below -->
-  </div>
+  <!-- Garden decoration -->
+  <div class="garden" id="garden"></div>
 </section>
 
 <!-- ══ FOOTER BANNER ══ -->
@@ -549,58 +584,71 @@ footer span { color: rgba(249,168,201,0.8); }
 
 <!-- ══ FOOTER ══ -->
 <footer>
-  © 2025 <span>Pang English Studio</span> · Learn · Read · Play · Grow ⭐
+  © 2026 <span>Pang English Studio</span> · Learn · Read · Play · Grow ⭐
 </footer>
 
 <script>
-// ── Mobile nav toggle ──
+// ── Mobile nav ──
 document.getElementById('hamburger').addEventListener('click', () => {
   document.getElementById('mobileNav').classList.toggle('open');
 });
 
+// ── Swoosh scroll with easing ──
+document.getElementById('swooshBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  const target = document.getElementById('explore');
+  if (!target) return;
+  const start = window.scrollY;
+  const end = target.getBoundingClientRect().top + window.scrollY - 70;
+  const duration = 900;
+  let startTime = null;
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2;
+  }
+  function step(timestamp) {
+    if (!startTime) startTime = timestamp;
+    const progress = Math.min((timestamp - startTime) / duration, 1);
+    window.scrollTo(0, start + (end - start) * easeInOutCubic(progress));
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+});
+
 // ── Card scroll buttons ──
 const track = document.getElementById('cardsTrack');
-const scrollAmount = 220;
 document.getElementById('scrollLeft').addEventListener('click', () => {
-  track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  track.scrollBy({ left: -230, behavior: 'smooth' });
 });
 document.getElementById('scrollRight').addEventListener('click', () => {
-  track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  track.scrollBy({ left: 230, behavior: 'smooth' });
 });
 
-// ── Bubbles (slow, transparent, whole page) ──
+// ── Bubbles ──
 const bubbleTints = [
-  'rgba(249,168,201,0.25)', // pink
-  'rgba(168,200,240,0.25)', // blue
-  'rgba(249,216,122,0.22)', // yellow
-  'rgba(200,184,240,0.25)', // lavender
-  'rgba(168,212,180,0.22)', // sage
-  'rgba(248,197,160,0.22)', // peach
-  'rgba(220,230,255,0.18)', // white-blue
+  'rgba(249,168,201,0.25)','rgba(168,200,240,0.25)',
+  'rgba(249,216,122,0.22)','rgba(200,184,240,0.25)',
+  'rgba(168,212,180,0.22)','rgba(248,197,160,0.22)',
+  'rgba(220,230,255,0.18)',
 ];
-
 function makeBubble() {
   const layer = document.getElementById('bubblesLayer');
   if (!layer) return;
   const el = document.createElement('div');
   el.className = 'bubble';
-  const size = 24 + Math.random() * 56; // 24–80px
-  el.style.width  = size + 'px';
-  el.style.height = size + 'px';
+  const size = 24 + Math.random() * 56;
+  el.style.width = el.style.height = size + 'px';
   const tint = bubbleTints[Math.floor(Math.random() * bubbleTints.length)];
   el.style.background = `radial-gradient(circle at 32% 28%, rgba(255,255,255,0.7) 0%, ${tint} 55%, rgba(255,255,255,0.03) 100%)`;
   el.style.left = (2 + Math.random() * 96) + '%';
-  const op = 0.28 + Math.random() * 0.28; // 0.28–0.56
+  const op = 0.28 + Math.random() * 0.28;
   el.style.setProperty('--op', op);
-  const drift = (Math.random() - 0.5) * 70;
-  el.style.setProperty('--drift', drift + 'px');
-  const dur = 28 + Math.random() * 32; // 28–60s very slow
+  el.style.setProperty('--drift', ((Math.random()-0.5)*70) + 'px');
+  const dur = 28 + Math.random() * 32;
   el.style.animationDuration = dur + 's';
-  el.style.animationDelay   = -(Math.random() * dur) + 's';
+  el.style.animationDelay = -(Math.random() * dur) + 's';
   layer.appendChild(el);
   setTimeout(() => el.remove(), dur * 2.5 * 1000);
 }
-
 for (let i = 0; i < 22; i++) makeBubble();
 setInterval(makeBubble, 2800);
 
@@ -609,213 +657,148 @@ setInterval(makeBubble, 2800);
   const garden = document.getElementById('garden');
   const W = Math.max(window.innerWidth, 800);
   const H = 120;
-
   let svg = `<svg width="100%" height="${H}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">`;
-
-  svg += `<defs>
-    <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#e8f5ec" stop-opacity="0"/>
-      <stop offset="100%" stop-color="#b8e8b0" stop-opacity="0.35"/>
-    </linearGradient>
-  </defs>`;
+  svg += `<defs><linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#e8f5ec" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#b8e8b0" stop-opacity="0.35"/>
+  </linearGradient></defs>`;
   svg += `<rect width="${W}" height="${H}" fill="url(#skyG)"/>`;
-
-  // ground
   svg += `<rect x="0" y="${H-40}" width="${W}" height="40" fill="#7ec87a"/>`;
   svg += `<rect x="0" y="${H-40}" width="${W}" height="9" fill="#6ab868"/>`;
 
-  // grass blades
+  // grass
   const bladeCount = Math.floor(W / 16);
   for (let i = 0; i < bladeCount; i++) {
     const x = (i / bladeCount) * W + Math.random() * 12 - 6;
     const bh = 12 + Math.random() * 22;
     const lean = (Math.random() - 0.5) * 10;
-    const green = Math.random() > 0.5 ? '#4aa84a' : '#5cb85c';
-    svg += `<path d="M${x} ${H-40} Q${x+lean} ${H-40-bh*0.55} ${x+lean*1.4} ${H-40-bh}" stroke="${green}" stroke-width="${1.2+Math.random()*0.8}" fill="none" stroke-linecap="round"/>`;
+    svg += `<path d="M${x} ${H-40} Q${x+lean} ${H-40-bh*0.55} ${x+lean*1.4} ${H-40-bh}" stroke="${Math.random()>.5?'#4aa84a':'#5cb85c'}" stroke-width="${1.2+Math.random()*0.8}" fill="none" stroke-linecap="round"/>`;
   }
 
   // flowers
   for (let i = 0; i < 20; i++) {
-    const fx = 24 + (i / 20) * (W - 48) + Math.random() * 20 - 10;
-    const fy = H - 40 - 7;
-    const colors = ['#f9a8c9','#f9d87a','#a8c8f0','#f8c5a0','#c8b8f0','#ffffff'];
-    const fc = colors[Math.floor(Math.random() * colors.length)];
-    const fs = 4 + Math.random() * 3;
+    const fx = 24 + (i/20)*(W-48) + Math.random()*20-10;
+    const fy = H-40-7;
+    const fc = ['#f9a8c9','#f9d87a','#a8c8f0','#f8c5a0','#c8b8f0','#ffffff'][Math.floor(Math.random()*6)];
+    const fs = 4 + Math.random()*3;
     svg += `<line x1="${fx}" y1="${fy}" x2="${fx}" y2="${H-40}" stroke="#5cb85c" stroke-width="1.5"/>`;
-    for (let p = 0; p < 5; p++) {
-      const angle = (p / 5) * Math.PI * 2;
-      svg += `<circle cx="${fx + Math.cos(angle)*fs}" cy="${fy + Math.sin(angle)*fs}" r="${fs*0.72}" fill="${fc}" opacity="0.9"/>`;
-    }
-    svg += `<circle cx="${fx}" cy="${fy}" r="${fs*0.48}" fill="#f9d87a"/>`;
+    for (let p=0;p<5;p++){const a=(p/5)*Math.PI*2;svg+=`<circle cx="${fx+Math.cos(a)*fs}" cy="${fy+Math.sin(a)*fs}" r="${fs*.72}" fill="${fc}" opacity="0.9"/>`;}
+    svg += `<circle cx="${fx}" cy="${fy}" r="${fs*.48}" fill="#f9d87a"/>`;
   }
 
   // mushrooms
-  for (let m = 0; m < 5; m++) {
-    const mx = 70 + (m / 5) * (W - 140) + Math.random() * 30;
-    const my = H - 40;
-    const mh = 15 + Math.random() * 8;
-    const mw = 13 + Math.random() * 5;
-    const mcap = Math.random() > 0.5 ? '#e85858' : '#f9a8c9';
-    svg += `<rect x="${mx-4}" y="${my-mh+7}" width="8" height="${mh-7}" rx="3" fill="#f5e0c0"/>`;
-    svg += `<ellipse cx="${mx}" cy="${my-mh+9}" rx="${mw/2}" ry="${mh*0.44}" fill="${mcap}"/>`;
-    svg += `<circle cx="${mx-3}" cy="${my-mh+8}" r="2" fill="white" opacity="0.8"/>`;
-    svg += `<circle cx="${mx+3}" cy="${my-mh+6}" r="1.4" fill="white" opacity="0.8"/>`;
+  for (let m=0;m<5;m++){
+    const mx=70+(m/5)*(W-140)+Math.random()*30, my=H-40;
+    const mh=15+Math.random()*8, mw=13+Math.random()*5;
+    const mc=Math.random()>.5?'#e85858':'#f9a8c9';
+    svg+=`<rect x="${mx-4}" y="${my-mh+7}" width="8" height="${mh-7}" rx="3" fill="#f5e0c0"/>`;
+    svg+=`<ellipse cx="${mx}" cy="${my-mh+9}" rx="${mw/2}" ry="${mh*.44}" fill="${mc}"/>`;
+    svg+=`<circle cx="${mx-3}" cy="${my-mh+8}" r="2" fill="white" opacity="0.8"/>`;
+    svg+=`<circle cx="${mx+3}" cy="${my-mh+6}" r="1.4" fill="white" opacity="0.8"/>`;
   }
 
-  // ── RABBITS ──
-  function drawRabbit(rx, ry, flipped) {
-    const sc = flipped ? -1 : 1;
-    svg += `<g transform="translate(${rx},${ry}) scale(${sc},1)">`;
-    svg += `<ellipse cx="0" cy="0" rx="14" ry="11" fill="white"/>`;
-    svg += `<ellipse cx="12" cy="-10" rx="10" ry="9" fill="white"/>`;
-    svg += `<ellipse cx="8" cy="-22" rx="3.5" ry="9" fill="white"/>`;
-    svg += `<ellipse cx="8" cy="-22" rx="2" ry="6" fill="#f9c8d0"/>`;
-    svg += `<ellipse cx="15" cy="-21" rx="3.5" ry="9" fill="white"/>`;
-    svg += `<ellipse cx="15" cy="-21" rx="2" ry="6" fill="#f9c8d0"/>`;
-    svg += `<circle cx="14" cy="-11" r="2" fill="#1a1a1a"/>`;
-    svg += `<circle cx="14.6" cy="-11.6" r="0.7" fill="white"/>`;
-    svg += `<ellipse cx="12" cy="-8" rx="2.5" ry="1.5" fill="#f9a8c9"/>`;
-    svg += `<path d="M10 -7 Q12 -5 14 -7" stroke="#e06080" stroke-width="1" fill="none" stroke-linecap="round"/>`;
-    svg += `<circle cx="-13" cy="-1" r="5" fill="white"/>`;
-    svg += `<ellipse cx="-4" cy="10" rx="5" ry="3" fill="#f0e8e8"/>`;
-    svg += `<ellipse cx="5" cy="10" rx="5" ry="3" fill="#f0e8e8"/>`;
-    svg += `</g>`;
+  // rabbits
+  function drawRabbit(rx,ry,fl){
+    svg+=`<g transform="translate(${rx},${ry}) scale(${fl?-1:1},1)">`;
+    svg+=`<ellipse cx="0" cy="0" rx="14" ry="11" fill="white"/>`;
+    svg+=`<ellipse cx="12" cy="-10" rx="10" ry="9" fill="white"/>`;
+    svg+=`<ellipse cx="8" cy="-22" rx="3.5" ry="9" fill="white"/>`;
+    svg+=`<ellipse cx="8" cy="-22" rx="2" ry="6" fill="#f9c8d0"/>`;
+    svg+=`<ellipse cx="15" cy="-21" rx="3.5" ry="9" fill="white"/>`;
+    svg+=`<ellipse cx="15" cy="-21" rx="2" ry="6" fill="#f9c8d0"/>`;
+    svg+=`<circle cx="14" cy="-11" r="2" fill="#1a1a1a"/>`;
+    svg+=`<circle cx="14.6" cy="-11.6" r="0.7" fill="white"/>`;
+    svg+=`<ellipse cx="12" cy="-8" rx="2.5" ry="1.5" fill="#f9a8c9"/>`;
+    svg+=`<path d="M10 -7 Q12 -5 14 -7" stroke="#e06080" stroke-width="1" fill="none" stroke-linecap="round"/>`;
+    svg+=`<circle cx="-13" cy="-1" r="5" fill="white"/>`;
+    svg+=`<ellipse cx="-4" cy="10" rx="5" ry="3" fill="#f0e8e8"/>`;
+    svg+=`<ellipse cx="5" cy="10" rx="5" ry="3" fill="#f0e8e8"/>`;
+    svg+=`</g>`;
   }
+  drawRabbit(W*.13,H-32,false);
+  drawRabbit(W*.48,H-32,true);
+  drawRabbit(W*.88,H-32,false);
 
-  drawRabbit(W * 0.13, H - 32, false);
-  drawRabbit(W * 0.48, H - 32, true);
-  drawRabbit(W * 0.88, H - 32, false);
-
-  // ── DOGS (yorkshire terrier style) ──
-  function drawDog(dx, dy, flipped) {
-    const sc = flipped ? -1 : 1;
-    svg += `<g transform="translate(${dx},${dy}) scale(${sc},1)">`;
-    // body
-    svg += `<ellipse cx="0" cy="0" rx="16" ry="12" fill="#c8904a"/>`;
-    svg += `<ellipse cx="0" cy="-3" rx="14" ry="9" fill="#d4a060"/>`;
-    // head
-    svg += `<ellipse cx="15" cy="-11" rx="11" ry="10" fill="#b87838"/>`;
-    svg += `<ellipse cx="15" cy="-16" rx="9" ry="7" fill="#c8904a"/>`;
-    // ears
-    svg += `<ellipse cx="8" cy="-18" rx="5" ry="8" fill="#8b5e2a" transform="rotate(-15,8,-18)"/>`;
-    svg += `<ellipse cx="8" cy="-18" rx="3" ry="5.5" fill="#c8904a" transform="rotate(-15,8,-18)"/>`;
-    svg += `<ellipse cx="21" cy="-18" rx="5" ry="8" fill="#8b5e2a" transform="rotate(15,21,-18)"/>`;
-    svg += `<ellipse cx="21" cy="-18" rx="3" ry="5.5" fill="#c8904a" transform="rotate(15,21,-18)"/>`;
-    // face
-    svg += `<circle cx="12" cy="-12" r="2.2" fill="#1a1a1a"/>`;
-    svg += `<circle cx="12.6" cy="-12.6" r="0.8" fill="white"/>`;
-    svg += `<circle cx="19" cy="-12" r="2.2" fill="#1a1a1a"/>`;
-    svg += `<circle cx="19.6" cy="-12.6" r="0.8" fill="white"/>`;
-    // nose
-    svg += `<ellipse cx="15" cy="-7" rx="3" ry="2" fill="#2a1a0a"/>`;
-    // tongue
-    svg += `<path d="M13 -4 Q15 -1 17 -4" stroke="#7a3a2a" stroke-width="1.2" fill="none" stroke-linecap="round"/>`;
-    svg += `<ellipse cx="15" cy="-2" rx="2.5" ry="1.8" fill="#f08080"/>`;
-    // tail (wagging up)
-    svg += `<path d="M-14 -3 Q-24 -16 -20 -24" stroke="#c8904a" stroke-width="5" fill="none" stroke-linecap="round"/>`;
-    // paws
-    svg += `<ellipse cx="-7" cy="11" rx="6" ry="3.5" fill="#b87838"/>`;
-    svg += `<ellipse cx="5" cy="11" rx="6" ry="3.5" fill="#b87838"/>`;
-    // bow on head
-    svg += `<ellipse cx="9" cy="-21" rx="4" ry="2.5" fill="#f9d87a" transform="rotate(-20,9,-21)"/>`;
-    svg += `<ellipse cx="15" cy="-22" rx="4" ry="2.5" fill="#f9d87a" transform="rotate(20,15,-22)"/>`;
-    svg += `<circle cx="12" cy="-22" r="2" fill="#f9c844"/>`;
-    svg += `</g>`;
+  // dogs
+  function drawDog(dx,dy,fl){
+    svg+=`<g transform="translate(${dx},${dy}) scale(${fl?-1:1},1)">`;
+    svg+=`<ellipse cx="0" cy="0" rx="16" ry="12" fill="#c8904a"/>`;
+    svg+=`<ellipse cx="0" cy="-3" rx="14" ry="9" fill="#d4a060"/>`;
+    svg+=`<ellipse cx="15" cy="-11" rx="11" ry="10" fill="#b87838"/>`;
+    svg+=`<ellipse cx="15" cy="-16" rx="9" ry="7" fill="#c8904a"/>`;
+    svg+=`<ellipse cx="8" cy="-18" rx="5" ry="8" fill="#8b5e2a" transform="rotate(-15,8,-18)"/>`;
+    svg+=`<ellipse cx="8" cy="-18" rx="3" ry="5.5" fill="#c8904a" transform="rotate(-15,8,-18)"/>`;
+    svg+=`<ellipse cx="21" cy="-18" rx="5" ry="8" fill="#8b5e2a" transform="rotate(15,21,-18)"/>`;
+    svg+=`<ellipse cx="21" cy="-18" rx="3" ry="5.5" fill="#c8904a" transform="rotate(15,21,-18)"/>`;
+    svg+=`<circle cx="12" cy="-12" r="2.2" fill="#1a1a1a"/>`;
+    svg+=`<circle cx="12.6" cy="-12.6" r="0.8" fill="white"/>`;
+    svg+=`<circle cx="19" cy="-12" r="2.2" fill="#1a1a1a"/>`;
+    svg+=`<circle cx="19.6" cy="-12.6" r="0.8" fill="white"/>`;
+    svg+=`<ellipse cx="15" cy="-7" rx="3" ry="2" fill="#2a1a0a"/>`;
+    svg+=`<path d="M13 -4 Q15 -1 17 -4" stroke="#7a3a2a" stroke-width="1.2" fill="none" stroke-linecap="round"/>`;
+    svg+=`<ellipse cx="15" cy="-2" rx="2.5" ry="1.8" fill="#f08080"/>`;
+    svg+=`<path d="M-14 -3 Q-24 -16 -20 -24" stroke="#c8904a" stroke-width="5" fill="none" stroke-linecap="round"/>`;
+    svg+=`<ellipse cx="-7" cy="11" rx="6" ry="3.5" fill="#b87838"/>`;
+    svg+=`<ellipse cx="5" cy="11" rx="6" ry="3.5" fill="#b87838"/>`;
+    svg+=`<ellipse cx="9" cy="-21" rx="4" ry="2.5" fill="#f9d87a" transform="rotate(-20,9,-21)"/>`;
+    svg+=`<ellipse cx="15" cy="-22" rx="4" ry="2.5" fill="#f9d87a" transform="rotate(20,15,-22)"/>`;
+    svg+=`<circle cx="12" cy="-22" r="2" fill="#f9c844"/>`;
+    svg+=`</g>`;
   }
-
-  drawDog(W * 0.30, H - 32, false);
-  drawDog(W * 0.68, H - 32, true);
+  drawDog(W*.30,H-32,false);
+  drawDog(W*.68,H-32,true);
 
   svg += `</svg>`;
   garden.innerHTML = svg;
 
-  // ── Animated butterflies (HTML divs with CSS, not SVG so they can animate) ──
-  const butterflyColors = ['#f9a8c9','#a8c8f0','#f9d87a','#c8b8f0','#a8d4b4'];
-  const gardenRect = garden.getBoundingClientRect();
-  const gardenH = 120;
-
-  // inject butterfly CSS once
+  // animated butterflies
+  const bfColors = ['#f9a8c9','#a8c8f0','#f9d87a','#c8b8f0','#a8d4b4'];
   if (!document.getElementById('bfStyle')) {
     const st = document.createElement('style');
     st.id = 'bfStyle';
     st.textContent = `
-      .butterfly {
-        position: absolute; pointer-events: none;
-        animation: bfFly linear infinite;
-      }
-      .bf-wing-l, .bf-wing-r {
-        position: absolute; top: 0;
-        animation: bfFlap ease-in-out infinite alternate;
-        transform-origin: right center;
-      }
-      .bf-wing-r { transform-origin: left center; animation-direction: alternate-reverse; }
-      @keyframes bfFlap {
-        0%   { transform: scaleX(1) rotate(-10deg); }
-        100% { transform: scaleX(0.2) rotate(10deg); }
-      }
+      .butterfly { position:absolute; pointer-events:none; animation:bfFly linear infinite; }
+      .bf-wing-l,.bf-wing-r { position:absolute; top:0; animation:bfFlap ease-in-out infinite alternate; transform-origin:right center; }
+      .bf-wing-r { transform-origin:left center; animation-direction:alternate-reverse; }
+      @keyframes bfFlap { 0%{transform:scaleX(1) rotate(-10deg)} 100%{transform:scaleX(0.2) rotate(10deg)} }
       @keyframes bfFly {
-        0%   { transform: translate(0px, 0px); }
-        20%  { transform: translate(var(--mx1), var(--my1)); }
-        45%  { transform: translate(var(--mx2), var(--my2)); }
-        70%  { transform: translate(var(--mx3), var(--my3)); }
-        100% { transform: translate(0px, 0px); }
+        0%  {transform:translate(0,0)}
+        20% {transform:translate(var(--mx1),var(--my1))}
+        45% {transform:translate(var(--mx2),var(--my2))}
+        70% {transform:translate(var(--mx3),var(--my3))}
+        100%{transform:translate(0,0)}
       }
     `;
     document.head.appendChild(st);
   }
-
-  const gardenEl = document.getElementById('garden');
-  gardenEl.style.position = 'relative';
-
-  for (let b = 0; b < 5; b++) {
-    const color = butterflyColors[b % butterflyColors.length];
-    const wSize = 10 + Math.random() * 6;
-    const hSize = wSize * 0.7;
-    const startX = 60 + Math.random() * (window.innerWidth - 120);
-    const startY = 10 + Math.random() * 50;
-
-    const bf = document.createElement('div');
-    bf.className = 'butterfly';
-    bf.style.left = startX + 'px';
-    bf.style.top  = startY + 'px';
-    bf.style.width  = (wSize * 2 + 4) + 'px';
-    bf.style.height = hSize + 'px';
-
-    const dur = 6 + Math.random() * 8;
-    bf.style.animationDuration = dur + 's';
-    bf.style.animationDelay = -(Math.random() * dur) + 's';
-    // random path offsets
-    const rx = () => (Math.random() - 0.5) * 120;
-    const ry = () => (Math.random() - 0.5) * 40;
-    bf.style.setProperty('--mx1', rx() + 'px');
-    bf.style.setProperty('--my1', ry() + 'px');
-    bf.style.setProperty('--mx2', rx() + 'px');
-    bf.style.setProperty('--my2', ry() + 'px');
-    bf.style.setProperty('--mx3', rx() + 'px');
-    bf.style.setProperty('--my3', ry() + 'px');
-
-    const flapDur = (0.3 + Math.random() * 0.25) + 's';
-
-    // left wing
-    const wl = document.createElement('div');
-    wl.className = 'bf-wing-l';
-    wl.style.cssText = `width:${wSize}px;height:${hSize}px;right:${wSize+2}px;border-radius:50% 0 50% 50%;background:${color};opacity:0.9;`;
-    wl.style.animationDuration = flapDur;
-
-    // right wing
-    const wr = document.createElement('div');
-    wr.className = 'bf-wing-r';
-    wr.style.cssText = `width:${wSize}px;height:${hSize}px;left:${wSize+2}px;border-radius:0 50% 50% 50%;background:${color};opacity:0.9;`;
-    wr.style.animationDuration = flapDur;
-
-    // body
-    const body = document.createElement('div');
-    body.style.cssText = `position:absolute;left:${wSize}px;top:${hSize*0.1}px;width:4px;height:${hSize*0.8}px;background:#5a3a1a;border-radius:2px;`;
-
-    bf.appendChild(wl);
-    bf.appendChild(wr);
-    bf.appendChild(body);
-    gardenEl.appendChild(bf);
+  garden.style.position = 'relative';
+  for (let b=0;b<5;b++){
+    const color=bfColors[b%bfColors.length];
+    const ws=10+Math.random()*6, hs=ws*0.7;
+    const bf=document.createElement('div');
+    bf.className='butterfly';
+    bf.style.left=(60+Math.random()*(window.innerWidth-120))+'px';
+    bf.style.top=(10+Math.random()*50)+'px';
+    bf.style.width=(ws*2+4)+'px';
+    bf.style.height=hs+'px';
+    const dur=6+Math.random()*8;
+    bf.style.animationDuration=dur+'s';
+    bf.style.animationDelay=-(Math.random()*dur)+'s';
+    const rx=()=>(Math.random()-.5)*120+'px', ry=()=>(Math.random()-.5)*40+'px';
+    bf.style.setProperty('--mx1',rx()); bf.style.setProperty('--my1',ry());
+    bf.style.setProperty('--mx2',rx()); bf.style.setProperty('--my2',ry());
+    bf.style.setProperty('--mx3',rx()); bf.style.setProperty('--my3',ry());
+    const fd=(0.3+Math.random()*0.25)+'s';
+    const wl=document.createElement('div'); wl.className='bf-wing-l';
+    wl.style.cssText=`width:${ws}px;height:${hs}px;right:${ws+2}px;border-radius:50% 0 50% 50%;background:${color};opacity:0.9;`;
+    wl.style.animationDuration=fd;
+    const wr=document.createElement('div'); wr.className='bf-wing-r';
+    wr.style.cssText=`width:${ws}px;height:${hs}px;left:${ws+2}px;border-radius:0 50% 50% 50%;background:${color};opacity:0.9;`;
+    wr.style.animationDuration=fd;
+    const body=document.createElement('div');
+    body.style.cssText=`position:absolute;left:${ws}px;top:${hs*.1}px;width:4px;height:${hs*.8}px;background:#5a3a1a;border-radius:2px;`;
+    bf.appendChild(wl); bf.appendChild(wr); bf.appendChild(body);
+    garden.appendChild(bf);
   }
 })();
 </script>
