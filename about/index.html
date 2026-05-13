@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About – Pang English Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #fdf8f3;
+  --pink: #f9a8c9;
+  --pink-light: #fde8f2;
+  --pink-soft: #fef0f7;
+  --blue: #a8c8f0;
+  --blue-light: #e8f2fd;
+  --blue-soft: #deeefb;
+  --sage: #a8d4b4;
+  --sage-light: #e8f5ec;
+  --sage-soft: #d8f0df;
+  --yellow: #f9d87a;
+  --yellow-light: #fef8e0;
+  --yellow-soft: #fff3c4;
+  --peach: #f8c5a0;
+  --peach-light: #fdeee4;
+  --lavender: #c8b8f0;
+  --lavender-light: #f0ebfd;
+  --dark: #1e2840;
+  --text: #3d4a6b;
+  --text-soft: #6b7a9b;
+  --shadow: 0 4px 24px rgba(45,58,94,0.08);
+  --radius-lg: 28px;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+/* ══ BUBBLES ══ */
+.bubbles-layer {
+  position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1;
+}
+.bubble {
+  position: absolute; bottom: -80px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  box-shadow: inset 0 0 10px rgba(255,255,255,0.35), 0 2px 12px rgba(180,200,255,0.08);
+  animation: bubbleRise linear infinite;
+}
+@keyframes bubbleRise {
+  0%   { opacity: 0;    transform: translateY(0)      translateX(0); }
+  8%   { opacity: var(--op); }
+  88%  { opacity: var(--op); }
+  100% { opacity: 0;    transform: translateY(-105vh) translateX(var(--drift,0px)); }
+}
+
+/* ══ NAV ══ */
+nav {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(253,248,243,0.95);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1.5px solid rgba(249,168,201,0.2);
+  padding: 0 28px;
+}
+.nav-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; gap: 12px; height: 62px;
+}
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+.logo-icon {
+  width: 52px; height: 52px; border-radius: 14px; overflow: hidden;
+  box-shadow: 0 3px 12px rgba(249,216,122,0.4); flex-shrink: 0;
+  background: linear-gradient(135deg, var(--yellow) 0%, var(--peach) 100%);
+  display: flex; align-items: center; justify-content: center; font-size: 26px;
+}
+.logo-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.logo-text h1 { font-family: 'Baloo 2', cursive; font-size: 17px; font-weight: 800; line-height: 1.1; color: var(--dark); }
+.logo-text h1 span { color: #f06fa4; }
+.logo-text p { font-size: 10px; font-weight: 600; color: var(--text-soft); letter-spacing: 0.04em; }
+.nav-links { display: flex; align-items: center; gap: 2px; list-style: none; margin-left: auto; }
+.nav-links a {
+  text-decoration: none; font-size: 12.5px; font-weight: 700; color: var(--text);
+  padding: 6px 10px; border-radius: 10px; transition: background 0.2s, color 0.2s; white-space: nowrap;
+}
+.nav-links a:hover { background: var(--pink-light); color: #d05090; }
+.nav-links a.active { background: var(--pink-light); color: #d05090; border-bottom: 2.5px solid #f06fa4; border-radius: 10px 10px 5px 5px; }
+.btn-contact {
+  background: linear-gradient(135deg, #f06fa4 0%, #f9a8c9 100%) !important;
+  color: white !important; padding: 7px 16px !important; border-radius: 50px !important;
+  font-weight: 800 !important; box-shadow: 0 3px 12px rgba(240,111,164,0.3);
+  transition: transform 0.2s, box-shadow 0.2s !important;
+}
+.btn-contact:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(240,111,164,0.4) !important; color: white !important; }
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 8px; margin-left: auto; background: none; border: none;
+}
+.hamburger span { width: 22px; height: 2.5px; background: var(--dark); border-radius: 2px; display: block; transition: 0.3s; }
+.mobile-nav {
+  display: none; flex-direction: column;
+  background: rgba(253,248,243,0.98); backdrop-filter: blur(14px);
+  padding: 12px 24px 20px; border-bottom: 1.5px solid rgba(249,168,201,0.2);
+  position: sticky; top: 62px; z-index: 199;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a {
+  text-decoration: none; font-size: 15px; font-weight: 700;
+  color: var(--text); padding: 10px 14px; border-radius: 12px; transition: background 0.2s;
+}
+.mobile-nav a:hover { background: var(--pink-light); color: #d05090; }
+.mobile-nav .btn-contact { margin-top: 8px; text-align: center; display: block; background: linear-gradient(135deg, #f06fa4 0%, #f9a8c9 100%) !important; }
+
+/* ══ PAGE BANNER ══ */
+.page-banner {
+  background: linear-gradient(160deg, #fdf8f3 0%, #fef3f8 55%, #f5f0fd 100%);
+  position: relative; overflow: hidden;
+  padding: 52px 40px 48px;
+  text-align: center;
+}
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(60px); opacity: 0.28; pointer-events: none;
+}
+.star-deco { position: absolute; pointer-events: none; animation: twinkle 3s ease-in-out infinite; }
+@keyframes twinkle { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.6)} }
+
+.page-banner-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; animation: fadeUp 0.6s 0.05s ease both; }
+
+.page-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--yellow-light); border: 1.5px solid var(--yellow);
+  border-radius: 50px; padding: 5px 16px; font-size: 12px; font-weight: 800;
+  color: #a07810; margin-bottom: 18px;
+  animation: floatBadge 3s ease-in-out infinite;
+}
+@keyframes floatBadge { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+
+.page-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800; line-height: 1.1;
+  color: var(--dark); margin-bottom: 10px;
+}
+.page-title span { color: #f06fa4; }
+.page-subtitle { font-size: 15px; font-weight: 600; color: var(--text-soft); line-height: 1.6; }
+
+/* ══ ABOUT CONTENT ══ */
+.about-section {
+  position: relative; z-index: 2;
+  max-width: 720px; margin: 0 auto;
+  padding: 52px 40px 72px;
+}
+
+.about-card {
+  background: white; border-radius: var(--radius-lg);
+  padding: 44px 48px;
+  box-shadow: var(--shadow);
+  border: 1.5px solid rgba(249,168,201,0.15);
+  position: relative; overflow: hidden;
+  animation: fadeUp 0.6s 0.15s ease both;
+}
+
+.about-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--pink), var(--lavender), var(--blue), var(--sage), var(--yellow));
+}
+
+.about-card p {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.85;
+  margin-bottom: 20px;
+}
+.about-card p:last-of-type { margin-bottom: 0; }
+
+/* the reach-out link inline */
+.about-card a.inline-link {
+  color: #f06fa4;
+  font-weight: 800;
+  text-decoration: none;
+  border-bottom: 1.5px solid rgba(240,111,164,0.35);
+  transition: color 0.2s, border-color 0.2s;
+}
+.about-card a.inline-link:hover {
+  color: #d05090;
+  border-bottom-color: #d05090;
+}
+
+/* copyright */
+.copyright-note {
+  margin-top: 28px;
+  background: var(--yellow-light);
+  border: 1.5px solid var(--yellow);
+  border-radius: 16px;
+  padding: 16px 24px;
+  font-size: 12.5px; font-weight: 600; color: #7a6010;
+  line-height: 1.65; text-align: center;
+  animation: fadeUp 0.6s 0.25s ease both;
+}
+
+/* ══ FOOTER ══ */
+footer {
+  background: var(--dark); color: rgba(255,255,255,0.5);
+  text-align: center; padding: 20px 40px; font-size: 12.5px; font-weight: 600;
+  position: relative; z-index: 2;
+}
+footer span { color: rgba(249,168,201,0.8); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 768px) {
+  nav { padding: 0 16px; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .page-banner { padding: 40px 24px 36px; }
+  .about-section { padding: 36px 20px 52px; }
+  .about-card { padding: 32px 28px; }
+}
+@media (max-width: 480px) {
+  .page-banner { padding: 32px 16px 28px; }
+  .about-section { padding: 28px 14px 44px; }
+  .about-card { padding: 26px 20px; }
+  .about-card p { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ BUBBLES ══ -->
+<div class="bubbles-layer" id="bubblesLayer"></div>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">
+        <img src="images/logo.png" alt="Pang English Studio logo" onerror="this.style.display='none'">
+        <span style="font-size:26px;position:absolute;">📖</span>
+      </div>
+      <div class="logo-text">
+        <h1><span>Pang</span> English Studio</h1>
+        <p>Learn&nbsp;•&nbsp;Read&nbsp;•&nbsp;Play&nbsp;•&nbsp;Grow</p>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#">Stories</a></li>
+      <li><a href="#">Phonics</a></li>
+      <li><a href="#">Vocabulary</a></li>
+      <li><a href="#">Grammar</a></li>
+      <li><a href="#">Games</a></li>
+      <li><a href="#">Worksheets</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="contact.html" class="btn-contact">✉ Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile nav -->
+<nav class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="#">Stories</a>
+  <a href="#">Phonics</a>
+  <a href="#">Vocabulary</a>
+  <a href="#">Grammar</a>
+  <a href="#">Games</a>
+  <a href="#">Worksheets</a>
+  <a href="about.html">About</a>
+  <a href="contact.html" class="btn-contact">✉ Contact</a>
+</nav>
+
+<!-- ══ PAGE BANNER ══ -->
+<section class="page-banner">
+  <div class="blob" style="width:340px;height:340px;background:#fde8f2;top:-80px;left:-60px;"></div>
+  <div class="blob" style="width:280px;height:280px;background:#e8effe;top:20px;right:-50px;"></div>
+  <div class="blob" style="width:200px;height:200px;background:#e8f5ec;bottom:-20px;left:40%;"></div>
+  <div class="star-deco" style="top:20%;left:9%;font-size:18px;">⭐</div>
+  <div class="star-deco" style="top:28%;right:11%;font-size:13px;color:#f9d87a;animation-delay:1s;">✦</div>
+  <div class="star-deco" style="top:14%;right:24%;font-size:11px;color:#c8b8f0;animation-delay:2s;">✦</div>
+  <div class="star-deco" style="top:58%;left:16%;font-size:10px;color:#a8c8f0;animation-delay:1.5s;">✦</div>
+
+  <div class="page-banner-inner">
+    <div class="page-badge">🌸 Meet the teacher</div>
+    <h1 class="page-title">About <span>Me</span></h1>
+    <p class="page-subtitle">The story behind Pang English Studio.</p>
+  </div>
+</section>
+
+<!-- ══ CONTENT ══ -->
+<main class="about-section">
+
+  <div class="about-card">
+
+    <p>Hi! I'm Pang.</p>
+
+    <p>Before starting my master's degree, I began teaching English to children and slowly discovered how much I genuinely enjoyed working with young learners. What originally started as something temporary gradually became something I became truly passionate about.</p>
+
+    <p>Over time, I realized that every child learns differently. Some students enjoy stories, some learn better through visuals, and many become more engaged when learning feels playful and interactive rather than stressful.</p>
+
+    <p>One thing I noticed very quickly is that children often learn much better when they are having fun.</p>
+
+    <p>That realization inspired me to start building this website. I wanted to create a space where English learning feels more interactive, colorful, and enjoyable for kids — not just worksheets and memorization, but activities that encourage children to actively use the language and feel more confident while learning.</p>
+
+    <p>Many of my students especially enjoy learning through games such as memory games, matching activities, and small interactive exercises. However, I also encourage them to say the words out loud while playing, because speaking and repeating vocabulary helps children remember and use English more naturally and confidently.</p>
+
+    <p>A lot of the activities and ideas on this website were inspired by my own students. Since every child has different interests, personalities, and learning styles, I try to create different types of activities so that each learner can hopefully find something they enjoy.</p>
+
+    <p>This website is still growing, and I'm continuing to improve and develop it step by step alongside my teaching journey.</p>
+
+    <p>While I am not a formally certified teacher, this website is built from real teaching experience, continuous learning, and genuine care for helping children enjoy English more. I'm still learning and improving every day, so some materials may continue to evolve over time as I gain more experience and understanding.</p>
+
+    <p>My goal is to keep this resource free for students and parents who want extra English practice at home.</p>
+
+    <p>If you have any suggestions, feedback, notice anything that could be improved, or would like to collaborate in the future, <a href="contact.html" class="inline-link">please feel free to reach out</a>. I'm always open to learning, improving, and finding better ways to make English learning more enjoyable for children. 🤍</p>
+
+    <p>Thank you for visiting, and I hope this little space can make learning English feel a bit more fun, comfortable, and exciting for your child.</p>
+
+  </div>
+
+  <div class="copyright-note">
+    © 2026 Pang English Learning — All content and activities are created originally for this website. Please do not copy, redistribute, or use materials commercially without permission.
+  </div>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  © 2026 <span>Pang English Studio</span> · Learn · Read · Play · Grow ⭐
+</footer>
+
+<script>
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobileNav').classList.toggle('open');
+});
+
+// ── Bubbles ──
+const bubbleTints = [
+  'rgba(249,168,201,0.25)',
+  'rgba(168,200,240,0.25)',
+  'rgba(249,216,122,0.22)',
+  'rgba(200,184,240,0.25)',
+  'rgba(168,212,180,0.22)',
+  'rgba(248,197,160,0.22)',
+  'rgba(220,230,255,0.18)',
+];
+
+function makeBubble() {
+  const layer = document.getElementById('bubblesLayer');
+  if (!layer) return;
+  const el = document.createElement('div');
+  el.className = 'bubble';
+  const size = 24 + Math.random() * 56;
+  el.style.width  = size + 'px';
+  el.style.height = size + 'px';
+  const tint = bubbleTints[Math.floor(Math.random() * bubbleTints.length)];
+  el.style.background = `radial-gradient(circle at 32% 28%, rgba(255,255,255,0.7) 0%, ${tint} 55%, rgba(255,255,255,0.03) 100%)`;
+  el.style.left = (2 + Math.random() * 96) + '%';
+  const op = 0.28 + Math.random() * 0.28;
+  el.style.setProperty('--op', op);
+  const drift = (Math.random() - 0.5) * 70;
+  el.style.setProperty('--drift', drift + 'px');
+  const dur = 28 + Math.random() * 32;
+  el.style.animationDuration = dur + 's';
+  el.style.animationDelay   = -(Math.random() * dur) + 's';
+  layer.appendChild(el);
+  setTimeout(() => el.remove(), dur * 2.5 * 1000);
+}
+
+for (let i = 0; i < 22; i++) makeBubble();
+setInterval(makeBubble, 2800);
+</script>
+</body>
+</html>
