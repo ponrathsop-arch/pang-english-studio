@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vocabulary – Pang English Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #fdf8f3;
+  --pink: #f9a8c9;     --pink-light: #fde8f2;   --pink-deep: #f06fa4;
+  --blue: #a8c8f0;     --blue-light: #e8f2fd;   --blue-deep: #4a90d8;
+  --sage: #a8d4b4;     --sage-light: #e8f5ec;   --sage-deep: #52b870;
+  --yellow: #f9d87a;   --yellow-light: #fef8e0; --yellow-deep: #e8a030;
+  --peach: #f8c5a0;    --peach-light: #fdeee4;  --peach-deep: #e07840;
+  --lavender: #c8b8f0; --lavender-light: #f0ebfd; --lavender-deep: #7858d0;
+  --mint: #a8e4d4;     --mint-light: #e0f8f2;   --mint-deep: #2a9878;
+  --rose: #f4b8c8;     --rose-light: #fce8ee;   --rose-deep: #c84870;
+  --sky: #b0d8f8;      --sky-light: #e4f2fd;    --sky-deep: #2870b8;
+  --lime: #c8e8a0;     --lime-light: #eef8e0;   --lime-deep: #5a9020;
+  --apricot: #f8d0a0;  --apricot-light: #fef0dc;--apricot-deep: #d07820;
+  --dark: #1e2840;     --text: #3d4a6b;         --text-soft: #6b7a9b;
+  --shadow: 0 4px 24px rgba(45,58,94,0.08);
+  --shadow-hover: 0 12px 36px rgba(45,58,94,0.16);
+  --radius-lg: 24px;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+/* ══ BUBBLES ══ */
+.bubbles-layer { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+.bubble {
+  position: absolute; bottom: -80px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  box-shadow: inset 0 0 10px rgba(255,255,255,0.35);
+  animation: bubbleRise linear infinite;
+}
+@keyframes bubbleRise {
+  0%  { opacity:0; transform:translateY(0) translateX(0); }
+  8%  { opacity:var(--op); }
+  88% { opacity:var(--op); }
+  100%{ opacity:0; transform:translateY(-105vh) translateX(var(--drift,0px)); }
+}
+
+/* ══ NAV ══ */
+nav {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(253,248,243,0.95);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1.5px solid rgba(249,168,201,0.2);
+  padding: 0 28px;
+}
+.nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 12px; height: 62px; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+.logo-icon {
+  width: 52px; height: 52px; border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(249,216,122,0.4); flex-shrink: 0;
+  background: linear-gradient(135deg, var(--yellow) 0%, var(--peach) 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; position: relative; overflow: hidden;
+}
+.logo-icon img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; z-index: 2; }
+.logo-text h1 { font-family: 'Baloo 2', cursive; font-size: 17px; font-weight: 800; line-height: 1.1; color: var(--dark); }
+.logo-text h1 span { color: #f06fa4; }
+.logo-text p { font-size: 10px; font-weight: 600; color: var(--text-soft); letter-spacing: 0.04em; }
+.nav-links { display: flex; align-items: center; gap: 2px; list-style: none; margin-left: auto; }
+.nav-links a {
+  text-decoration: none; font-size: 12.5px; font-weight: 700; color: var(--text);
+  padding: 6px 10px; border-radius: 10px; transition: background 0.2s, color 0.2s; white-space: nowrap;
+}
+.nav-links a:hover { background: var(--pink-light); color: #d05090; }
+.nav-links a.active { background: var(--pink-light); color: #d05090; border-bottom: 2.5px solid var(--pink-deep); border-radius: 10px 10px 5px 5px; }
+.btn-contact {
+  background: linear-gradient(135deg, #f06fa4 0%, #f9a8c9 100%) !important;
+  color: white !important; padding: 7px 16px !important; border-radius: 50px !important;
+  font-weight: 800 !important; box-shadow: 0 3px 12px rgba(240,111,164,0.3);
+}
+.btn-contact:hover { transform: translateY(-2px); color: white !important; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; margin-left: auto; background: none; border: none; }
+.hamburger span { width: 22px; height: 2.5px; background: var(--dark); border-radius: 2px; display: block; }
+.mobile-nav {
+  display: none; flex-direction: column;
+  background: rgba(253,248,243,0.98); backdrop-filter: blur(14px);
+  padding: 12px 24px 20px; border-bottom: 1.5px solid rgba(249,168,201,0.2);
+  position: sticky; top: 62px; z-index: 199;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a { text-decoration: none; font-size: 15px; font-weight: 700; color: var(--text); padding: 10px 14px; border-radius: 12px; transition: background 0.2s; }
+.mobile-nav a:hover { background: var(--pink-light); color: #d05090; }
+.mobile-nav .btn-contact { margin-top: 8px; text-align: center; display: block; background: linear-gradient(135deg, #f06fa4 0%, #f9a8c9 100%) !important; }
+
+/* ══ PAGE BANNER ══ */
+.page-banner {
+  background: linear-gradient(160deg, #fde8f2 0%, #fef8e0 40%, #e8f5ec 100%);
+  position: relative; overflow: hidden; padding: 44px 40px 40px; text-align: center;
+}
+.blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.28; pointer-events: none; }
+.star-deco { position: absolute; pointer-events: none; animation: twinkle 3s ease-in-out infinite; }
+@keyframes twinkle { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.6)} }
+.page-banner-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; animation: fadeUp 0.6s ease both; }
+.page-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--pink-light); border: 1.5px solid var(--pink);
+  border-radius: 50px; padding: 5px 16px; font-size: 12px; font-weight: 800;
+  color: var(--pink-deep); margin-bottom: 14px; animation: floatBadge 3s ease-in-out infinite;
+}
+@keyframes floatBadge { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+.page-title { font-family: 'Baloo 2', cursive; font-size: clamp(34px,5vw,54px); font-weight: 800; line-height: 1.1; color: var(--dark); margin-bottom: 8px; }
+.page-title span { color: var(--pink-deep); }
+.page-subtitle { font-size: 15px; font-weight: 600; color: var(--text-soft); }
+
+/* ══ VOCAB GRID ══ */
+.vocab-page {
+  max-width: 1000px; margin: 0 auto;
+  padding: 52px 32px 80px;
+  position: relative; z-index: 2;
+}
+
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+/* ── Category Card ── */
+.vocab-card {
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 32px 20px 26px;
+  box-shadow: var(--shadow);
+  border: 2px solid transparent;
+  transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s;
+  position: relative; overflow: hidden;
+  animation: fadeUp 0.5s ease both;
+  cursor: pointer;
+}
+.vocab-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 5px; border-radius: 4px 4px 0 0;
+}
+.vocab-card:hover { transform: translateY(-7px) scale(1.02); box-shadow: var(--shadow-hover); }
+.vocab-card:nth-child(1)  { animation-delay: 0.05s; }
+.vocab-card:nth-child(2)  { animation-delay: 0.10s; }
+.vocab-card:nth-child(3)  { animation-delay: 0.15s; }
+.vocab-card:nth-child(4)  { animation-delay: 0.20s; }
+.vocab-card:nth-child(5)  { animation-delay: 0.25s; }
+.vocab-card:nth-child(6)  { animation-delay: 0.30s; }
+.vocab-card:nth-child(7)  { animation-delay: 0.35s; }
+.vocab-card:nth-child(8)  { animation-delay: 0.40s; }
+.vocab-card:nth-child(9)  { animation-delay: 0.45s; }
+.vocab-card:nth-child(10) { animation-delay: 0.50s; }
+.vocab-card:nth-child(11) { animation-delay: 0.55s; }
+
+/* Colour variants */
+.c-pink     { background: var(--pink-light);    border-color: var(--pink); }
+.c-pink::before     { background: var(--pink-deep); }
+.c-pink:hover .card-arrow { background: var(--pink-deep); color: white; }
+
+.c-blue     { background: var(--blue-light);    border-color: var(--blue); }
+.c-blue::before     { background: var(--blue-deep); }
+.c-blue:hover .card-arrow { background: var(--blue-deep); color: white; }
+
+.c-sage     { background: var(--sage-light);    border-color: var(--sage); }
+.c-sage::before     { background: var(--sage-deep); }
+.c-sage:hover .card-arrow { background: var(--sage-deep); color: white; }
+
+.c-yellow   { background: var(--yellow-light);  border-color: var(--yellow); }
+.c-yellow::before   { background: var(--yellow-deep); }
+.c-yellow:hover .card-arrow { background: var(--yellow-deep); color: white; }
+
+.c-lavender { background: var(--lavender-light);border-color: var(--lavender); }
+.c-lavender::before { background: var(--lavender-deep); }
+.c-lavender:hover .card-arrow { background: var(--lavender-deep); color: white; }
+
+.c-mint     { background: var(--mint-light);    border-color: var(--mint); }
+.c-mint::before     { background: var(--mint-deep); }
+.c-mint:hover .card-arrow { background: var(--mint-deep); color: white; }
+
+.c-peach    { background: var(--peach-light);   border-color: var(--peach); }
+.c-peach::before    { background: var(--peach-deep); }
+.c-peach:hover .card-arrow { background: var(--peach-deep); color: white; }
+
+.c-rose     { background: var(--rose-light);    border-color: var(--rose); }
+.c-rose::before     { background: var(--rose-deep); }
+.c-rose:hover .card-arrow { background: var(--rose-deep); color: white; }
+
+.c-sky      { background: var(--sky-light);     border-color: var(--sky); }
+.c-sky::before      { background: var(--sky-deep); }
+.c-sky:hover .card-arrow { background: var(--sky-deep); color: white; }
+
+.c-lime     { background: var(--lime-light);    border-color: var(--lime); }
+.c-lime::before     { background: var(--lime-deep); }
+.c-lime:hover .card-arrow { background: var(--lime-deep); color: white; }
+
+.c-apricot  { background: var(--apricot-light); border-color: var(--apricot); }
+.c-apricot::before  { background: var(--apricot-deep); }
+.c-apricot:hover .card-arrow { background: var(--apricot-deep); color: white; }
+
+/* Card icon circle */
+.card-emoji-wrap {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: rgba(255,255,255,0.7);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 38px; margin-bottom: 16px;
+  box-shadow: 0 4px 14px rgba(45,58,94,0.08);
+  transition: transform 0.25s cubic-bezier(.34,1.56,.64,1);
+}
+.vocab-card:hover .card-emoji-wrap { transform: scale(1.12) rotate(-4deg); }
+
+.card-title {
+  font-family: 'Baloo 2', cursive; font-size: 19px; font-weight: 800;
+  color: var(--dark); margin-bottom: 6px; text-align: center;
+}
+.card-desc {
+  font-size: 12px; font-weight: 600; color: var(--text-soft);
+  line-height: 1.5; text-align: center; margin-bottom: 18px; flex: 1;
+}
+.card-arrow {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 50%; background: white;
+  box-shadow: 0 2px 10px rgba(45,58,94,0.12); font-size: 14px; color: var(--text);
+  transition: background 0.2s, transform 0.2s;
+}
+.vocab-card:hover .card-arrow { transform: translateX(3px); }
+
+/* ══ FOOTER ══ */
+.footer-banner { background: #fffaf6; padding: 28px 40px 36px; }
+.footer-banner-inner {
+  max-width: 700px; margin: 0 auto; background: white;
+  border-radius: 24px; padding: 24px 32px;
+  text-align: center; box-shadow: var(--shadow);
+  border: 1.5px solid rgba(249,168,201,0.18);
+}
+.footer-deco { display: flex; justify-content: center; gap: 8px; margin-bottom: 8px; font-size: 16px; }
+.footer-banner p { font-family: 'Baloo 2', cursive; font-size: 15px; font-weight: 700; color: var(--text); }
+.footer-banner p .t-pink { color: #f06fa4; }
+.footer-hearts { margin-top: 10px; font-size: 15px; display: flex; justify-content: center; gap: 4px; }
+footer { background: var(--dark); color: rgba(255,255,255,0.5); text-align: center; padding: 20px 40px; font-size: 12.5px; font-weight: 600; }
+footer span { color: rgba(249,168,201,0.8); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 900px) {
+  .vocab-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+}
+@media (max-width: 768px) {
+  nav { padding: 0 16px; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .page-banner { padding: 32px 20px 28px; }
+  .vocab-page { padding: 36px 16px 56px; }
+  .vocab-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .card-title { font-size: 17px; }
+  .card-emoji-wrap { width: 68px; height: 68px; font-size: 32px; }
+}
+@media (max-width: 480px) {
+  .vocab-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .vocab-card { padding: 24px 14px 20px; }
+  .card-emoji-wrap { width: 60px; height: 60px; font-size: 28px; margin-bottom: 12px; }
+  .card-title { font-size: 15px; }
+  .card-desc { font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bubbles-layer" id="bubblesLayer"></div>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-inner">
+    <a href="https://ponrathsop-arch.github.io/pang-english-studio/" class="logo">
+      <div class="logo-icon">
+        <span>📖</span>
+        <img src="../images/logo.png" alt="logo">
+      </div>
+      <div class="logo-text">
+        <h1><span>Pang</span> English Studio</h1>
+        <p>Learn&nbsp;•&nbsp;Read&nbsp;•&nbsp;Play&nbsp;•&nbsp;Grow</p>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/">Home</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/phonics/">Phonics</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/" class="active">Vocabulary</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/grammar/">Grammar</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/stories/">Stories</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/games/">Games</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/worksheets/">Worksheets</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/about/">About</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/contact/" class="btn-contact">✉ Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/">Home</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/phonics/">Phonics</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/">Vocabulary</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/grammar/">Grammar</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/stories/">Stories</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/games/">Games</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/worksheets/">Worksheets</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/about/">About</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/contact/" class="btn-contact">✉ Contact</a>
+</nav>
+
+<!-- ══ PAGE BANNER ══ -->
+<section class="page-banner">
+  <div class="blob" style="width:300px;height:300px;background:#fde8f2;top:-80px;left:-60px;"></div>
+  <div class="blob" style="width:260px;height:260px;background:#e8f5ec;top:20px;right:-50px;"></div>
+  <div class="blob" style="width:180px;height:180px;background:#fef8e0;bottom:-20px;left:40%;"></div>
+  <div class="star-deco" style="top:20%;left:8%;font-size:18px;">⭐</div>
+  <div class="star-deco" style="top:30%;right:10%;font-size:13px;color:#f9d87a;animation-delay:1s;">✦</div>
+  <div class="star-deco" style="top:14%;right:24%;font-size:11px;color:#a8c8f0;animation-delay:2s;">✦</div>
+  <div class="star-deco" style="top:55%;left:18%;font-size:10px;color:#c8b8f0;animation-delay:1.5s;">✦</div>
+  <div class="page-banner-inner">
+    <div class="page-badge">📚 Learn new words</div>
+    <h1 class="page-title"><span>Vocabulary</span></h1>
+    <p class="page-subtitle">Choose a topic and start learning words with pictures and activities!</p>
+  </div>
+</section>
+
+<!-- ══ VOCAB GRID ══ -->
+<main class="vocab-page">
+  <div class="vocab-grid">
+
+    <!-- Animals -->
+    <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/animals/" class="vocab-card c-pink">
+      <div class="card-emoji-wrap">🐾</div>
+      <div class="card-title">Animals</div>
+      <div class="card-desc">Meet furry, feathered and scaly friends from around the world.</div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <!-- Fruit -->
+    <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/fruit/" class="vocab-card c-sage">
+      <div class="card-emoji-wrap">🍎</div>
+      <div class="card-title">Fruit</div>
+      <div class="card-desc">Sweet, sour and juicy — learn the names of delicious fruits.</div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <!-- Transportation -->
+    <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/transportation/" class="vocab-card c-blue">
+      <div class="card-emoji-wrap">🚗</div>
+      <div class="card-title">Transportation</div>
+      <div class="card-desc">Cars, trains, planes and more — how do we get around?</div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <!-- Places -->
+    <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/places/" class="vocab-card c-lavender">
+      <div class="card-emoji-wrap">🏙️</div>
+      <div class="card-title">Places</div>
+      <div class="card-desc">School, park, hospital and more — learn the places around us.</div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <!-- Color -->
+    <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/colors/" class="vocab-card c-rose">
+      <div class="card-emoji-wrap">🌈</div>
+      <div class="card-title">Colors</div>
+      <div class="card-desc">Red, blue, yellow and more — discover all the colours of the rainbow.</div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <!-- Shape -->
+    <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/shapes/" class="vocab-card c-yellow">
+      <div class="card-emoji-wrap">🔷</div>
+      <div class="card-title">Shapes</div>
+      <div class="card-desc">Circles, squares, triangles and more — shapes are everywhere!</div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <!-- Occupation -->
+    <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/occupations/" class="vocab-card c-mint">
+      <div class="card-emoji-wrap">👩‍⚕️</div>
+      <div class="card-title">Occupations</div>
+      <div class="card-desc">Doctors, teachers, chefs — learn about the jobs people do.</div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <!-- School -->
+    <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/school/" class="vocab-card c-sky">
+      <div class="card-emoji-wrap">🎒</div>
+      <div class="card-title">School</div>
+      <div class="card-desc">Pencils, books, desks — all the things you find at school.</div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <!-- Health -->
+    <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/health/" class="vocab-card c-peach">
+      <div class="card-emoji-wrap">💊</div>
+      <div class="card-title">Health</div>
+      <div class="card-desc">Body parts, feelings and health words to keep you well.</div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <!-- Weather -->
+    <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/weather/" class="vocab-card c-lime">
+      <div class="card-emoji-wrap">⛅</div>
+      <div class="card-title">Weather</div>
+      <div class="card-desc">Sunny, rainy, windy — learn how to talk about the weather.</div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <!-- Things in the House -->
+    <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/house/" class="vocab-card c-apricot">
+      <div class="card-emoji-wrap">🏠</div>
+      <div class="card-title">Things in the House</div>
+      <div class="card-desc">Sofa, fridge, lamp and more — words for everything at home.</div>
+      <div class="card-arrow">→</div>
+    </a>
+
+  </div>
+</main>
+
+<!-- ══ FOOTER ══ -->
+<section class="footer-banner">
+  <div class="footer-banner-inner">
+    <div class="footer-deco">⭐ ☁️ 🌈 ☁️ ⭐</div>
+    <p>For kids to learn, because kids deserve to have <span class="t-pink">fun</span> while learning.</p>
+    <div class="footer-hearts">❤️ 🧡 💛 💚 💙 💜</div>
+  </div>
+</section>
+<footer>© 2026 <span>Pang English Studio</span> · Learn · Read · Play · Grow ⭐</footer>
+
+<script>
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobileNav').classList.toggle('open');
+});
+
+// ── Bubbles ──
+const bubbleTints = [
+  'rgba(249,168,201,0.25)','rgba(168,200,240,0.25)',
+  'rgba(249,216,122,0.22)','rgba(200,184,240,0.25)',
+  'rgba(168,212,180,0.22)','rgba(248,197,160,0.22)',
+  'rgba(168,228,212,0.22)','rgba(220,230,255,0.18)',
+];
+function makeBubble() {
+  const layer = document.getElementById('bubblesLayer');
+  if (!layer) return;
+  const el = document.createElement('div');
+  el.className = 'bubble';
+  const size = 24 + Math.random() * 56;
+  el.style.width = el.style.height = size + 'px';
+  const tint = bubbleTints[Math.floor(Math.random() * bubbleTints.length)];
+  el.style.background = `radial-gradient(circle at 32% 28%, rgba(255,255,255,0.7) 0%, ${tint} 55%, rgba(255,255,255,0.03) 100%)`;
+  el.style.left = (2 + Math.random() * 96) + '%';
+  const op = 0.25 + Math.random() * 0.25;
+  el.style.setProperty('--op', op);
+  el.style.setProperty('--drift', ((Math.random()-0.5)*70)+'px');
+  const dur = 28 + Math.random() * 32;
+  el.style.animationDuration = dur + 's';
+  el.style.animationDelay = -(Math.random() * dur) + 's';
+  layer.appendChild(el);
+  setTimeout(() => el.remove(), dur * 2.5 * 1000);
+}
+for (let i = 0; i < 20; i++) makeBubble();
+setInterval(makeBubble, 3000);
+</script>
+</body>
+</html>
