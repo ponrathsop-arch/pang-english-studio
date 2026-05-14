@@ -41,9 +41,13 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
 .big-title{font-family:'Baloo 2',cursive;font-size:clamp(1.35rem,4vw,2rem);color:var(--dark);text-align:center;line-height:1.2;}
 .sub{font-size:clamp(.7rem,1.7vw,.95rem);color:var(--muted);text-align:center;margin-top:4px;}
 .dot-row{display:flex;gap:7px;align-items:center;margin:8px 0 4px;}
-.dot{width:9px;height:9px;border-radius:50%;background:#e0d8f0;transition:all .3s;}
+.dot{width:9px;height:9px;border-radius:50%;background:#e0d8f0;transition:all .3s;cursor:default;}
+.dot.clickable{cursor:pointer;width:11px;height:11px;}
+.dot.clickable:hover{transform:scale(1.35);background:#c8b8f0;}
 .dot.cur{background:var(--pink-deep);transform:scale(1.5);}
 .dot.done{background:var(--sage-deep);}
+.dot.clickable.cur{cursor:pointer;}
+.dot.clickable.done{cursor:pointer;}
 .btn-primary{border:none;border-radius:50px;padding:11px 28px;background:linear-gradient(135deg,var(--pink-deep),var(--lavender));color:#fff;font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(.9rem,2vw,1.2rem);cursor:pointer;box-shadow:var(--shadow);transition:transform .13s;}
 .btn-primary:hover{transform:translateY(-3px);}
 .btn-sec{border:none;background:var(--blue-light);border-radius:50px;padding:8px 22px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.85rem;color:var(--blue-deep);cursor:pointer;margin-top:6px;}
@@ -534,9 +538,28 @@ function goNext(){if(curIdx<SCREEN_ORDER.length-1)showScreen(SCREEN_ORDER[curIdx
 function goHome(){showScreen('s-home');}
 function jumpTo(id){showScreen(id);}
 
-function imgTag(word,variant){
-  const suffix=variant==='scene'?'1':'';
-  return `<img src="${IMG_BASE}${word}${suffix}.png" alt="${word}" onerror="this.parentElement.style.background='#f0ebfd';this.style.display='none'">`;
+/* IMAGE CACHE — preload all images at startup so they appear instantly */
+const imgCache = {};
+function preloadImages() {
+  WORDS.forEach(w => {
+    // main image
+    const img1 = new Image();
+    img1.src = `${IMG_BASE}${w.word}.png`;
+    imgCache[w.word] = img1;
+    // scene image (Read Along)
+    const img2 = new Image();
+    img2.src = `${IMG_BASE}${w.word}1.png`;
+    imgCache[w.word + '1'] = img2;
+  });
+}
+preloadImages();
+
+function imgTag(word, variant) {
+  const suffix = variant === 'scene' ? '1' : '';
+  const key = word + suffix;
+  const cached = imgCache[key];
+  const src = cached ? cached.src : `${IMG_BASE}${key}.png`;
+  return `<img src="${src}" alt="${word}" onerror="this.parentElement.style.background='#f0ebfd';this.style.display='none'">`;
 }
 
 /* TTS */
@@ -582,11 +605,13 @@ function speakBlendSequence(consonant,family,word){
 
 /* HELPERS */
 function shuffle(a){return a.sort(()=>Math.random()-.5);}
-function dots(containerId,total,cur){
-  document.getElementById(containerId).innerHTML=Array.from({length:total},(_,i)=>`<div class="dot${i===cur?' cur':i<cur?' done':''}" id="${containerId}-${i}"></div>`).join('');
+function dots(containerId,total,cur,onClick){
+  const row=document.getElementById(containerId);
+  row.innerHTML=Array.from({length:total},(_,i)=>`<div class="dot${onClick?' clickable':''}${i===cur?' cur':i<cur?' done':''}" id="${containerId}-${i}" title="${onClick?WORDS[i].word:''}"></div>`).join('');
+  if(onClick){for(let i=0;i<total;i++){const d=document.getElementById(`${containerId}-${i}`);if(d)d.addEventListener('click',()=>onClick(i));}}
 }
-function updateDots(containerId,total,cur){
-  for(let i=0;i<total;i++){const d=document.getElementById(`${containerId}-${i}`);if(d)d.className='dot'+(i<cur?' done':i===cur?' cur':'');}
+function updateDots(containerId,total,cur,onClick){
+  for(let i=0;i<total;i++){const d=document.getElementById(`${containerId}-${i}`);if(d)d.className='dot'+(onClick?' clickable':'')+(i<cur?' done':i===cur?' cur':'');}
 }
 function spawnSparkle(x,y){
   ['✨','⭐','🌟','💫'].forEach((s,i)=>{const el=document.createElement('div');el.className='sparkle';el.textContent=s;el.style.cssText=`left:${x-14+(Math.random()-.5)*55}px;top:${y-14+(Math.random()-.5)*40}px;animation-delay:${i*.08}s`;document.body.appendChild(el);setTimeout(()=>el.remove(),1000);});
@@ -661,8 +686,9 @@ function handleZoomTap(){if(zoomIdx<PHONICS_TILES.length-1){openZoom(zoomIdx+1);
 
 /* BLEND */
 let blendIdx=0,blendState=0;
-function initBlend(){blendIdx=0;blendState=0;dots('b-dots',WORDS.length,0);renderBlend();}
-function renderBlend(){blendState=0;const w=WORDS[blendIdx];updateDots('b-dots',WORDS.length,blendIdx);document.getElementById('b-illo').innerHTML=imgTag(w.word);const bC=document.getElementById('b-con');bC.textContent=w.consonant;bC.style.color=w.color;bC.style.background=w.color+'22';bC.style.opacity='1';bC.style.transform='scale(1)';const bR=document.getElementById('b-res');bR.textContent=w.word;bR.style.color=w.color;bR.className='b-res';document.getElementById('b-lbl').textContent=`${w.consonant}  +  ap  = ?`;}
+function initBlend(){blendIdx=0;blendState=0;dots('b-dots',WORDS.length,0,jumpBlend);renderBlend();}
+function renderBlend(){blendState=0;const w=WORDS[blendIdx];updateDots('b-dots',WORDS.length,blendIdx,jumpBlend);document.getElementById('b-illo').innerHTML=imgTag(w.word);const bC=document.getElementById('b-con');bC.textContent=w.consonant;bC.style.color=w.color;bC.style.background=w.color+'22';bC.style.opacity='1';bC.style.transform='scale(1)';const bR=document.getElementById('b-res');bR.textContent=w.word;bR.style.color=w.color;bR.className='b-res';document.getElementById('b-lbl').textContent=`${w.consonant}  +  ap  = ?`;}
+function jumpBlend(i){blendIdx=i;blendState=0;updateDots('b-dots',WORDS.length,i,jumpBlend);renderBlend();}
 function handleBlendTap(){
   if(blendState===0){blendState=1;const w=WORDS[blendIdx];document.getElementById('b-con').style.transform='scale(1.2)';setTimeout(()=>{document.getElementById('b-res').classList.add('show');document.getElementById('b-con').style.opacity='.3';document.getElementById('b-lbl').textContent=`${w.consonant}  +  ap  =  ${w.word} ✅`;spawnSparkle(window.innerWidth/2,window.innerHeight*.5);speakBlendSequence(w.consonant,'ap',w.word);},320);}
   else{if(blendIdx<WORDS.length-1){blendIdx++;renderBlend();}else{bigConfetti();setTimeout(goNext,700);}}
@@ -671,7 +697,30 @@ function handleBlendTap(){
 /* FIND IT */
 let findIdx=0,findScore=0,findAnswered=false;
 function initFind(){findIdx=0;findScore=0;findAnswered=false;dots('fi-dots',WORDS.length,0);renderFind();}
-function renderFind(){findAnswered=false;updateDots('fi-dots',WORDS.length,findIdx);const w=WORDS[findIdx];const fwEl=document.getElementById('fi-word');fwEl.textContent=w.word;fwEl.style.color=w.color;document.getElementById('fi-fb').textContent='';document.getElementById('fi-score').textContent=`${findScore} / ${WORDS.length}`;const others=shuffle(WORDS.filter(x=>x.word!==w.word)).slice(0,3);const choices=shuffle([w,...others]);const grid=document.getElementById('fi-grid');grid.innerHTML='';choices.forEach(c=>{const card=document.createElement('div');card.className='fi-card';card.innerHTML=imgTag(c.word);card.addEventListener('click',()=>handleFind(card,c.word,w.word));grid.appendChild(card);});}
+function renderFind(){
+  findAnswered=false; updateDots('fi-dots',WORDS.length,findIdx);
+  const w=WORDS[findIdx];
+  const fwEl=document.getElementById('fi-word');
+  fwEl.textContent=w.word; fwEl.style.color=w.color;
+  document.getElementById('fi-fb').textContent='';
+  document.getElementById('fi-score').textContent=`${findScore} / ${WORDS.length}`;
+  const others=shuffle(WORDS.filter(x=>x.word!==w.word)).slice(0,3);
+  const choices=shuffle([w,...others]);
+  const grid=document.getElementById('fi-grid'); grid.innerHTML='';
+  // preload all 4 images first, then build cards
+  let loaded=0;
+  const cards=choices.map(c=>{
+    const card=document.createElement('div'); card.className='fi-card';
+    const im=document.createElement('img'); im.alt=c.word;
+    im.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:15px;display:block;';
+    im.onerror=function(){this.parentElement.style.background='#f0ebfd';this.style.display='none';};
+    im.src=imgCache[c.word]?imgCache[c.word].src:`${IMG_BASE}${c.word}.png`;
+    card.appendChild(im);
+    card.addEventListener('click',()=>handleFind(card,c.word,w.word));
+    return card;
+  });
+  cards.forEach(c=>grid.appendChild(c));
+}
 function handleFind(card,chosen,correct){if(findAnswered)return;findAnswered=true;if(chosen===correct){card.classList.add('correct-fi');findScore++;document.getElementById('fi-fb').innerHTML=`<span style="color:var(--sage-deep)">✅ Yes! ${correct}!</span>`;spawnSparkle(card.getBoundingClientRect().left+card.offsetWidth/2,card.getBoundingClientRect().top+card.offsetHeight/2);setTimeout(()=>{if(findIdx<WORDS.length-1){findIdx++;renderFind();}else{bigConfetti();setTimeout(goNext,700);}},950);}else{card.classList.add('wrong-fi');document.getElementById('fi-fb').innerHTML=`<span style="color:var(--red)">❌ Try again!</span>`;setTimeout(()=>{card.classList.remove('wrong-fi');findAnswered=false;},550);}}
 
 /* MATCH */
@@ -718,8 +767,9 @@ function endLR(){clearInterval(lrTimerInterval);const pct=Math.round(lrScore/WOR
 
 /* READ ALONG */
 let readIdx=0;
-function initRead(){readIdx=0;dots('ra-dots',WORDS.length,0);renderRead();}
-function renderRead(){updateDots('ra-dots',WORDS.length,readIdx);const w=WORDS[readIdx];document.getElementById('ra-illo').innerHTML=imgTag(w.word,'scene');document.getElementById('ra-word').textContent=w.word;document.getElementById('ra-word').style.color=w.color;const sent=SENTENCES[w.word];const hl=sent.replace(new RegExp(`\\b${w.word}\\b`,'gi'),`<span class="ra-hl">${w.word}</span>`);document.getElementById('ra-sentence').innerHTML=hl;}
+function initRead(){readIdx=0;dots('ra-dots',WORDS.length,0,jumpRead);renderRead();}
+function renderRead(){updateDots('ra-dots',WORDS.length,readIdx,jumpRead);const w=WORDS[readIdx];document.getElementById('ra-illo').innerHTML=imgTag(w.word,'scene');document.getElementById('ra-word').textContent=w.word;document.getElementById('ra-word').style.color=w.color;const sent=SENTENCES[w.word];const hl=sent.replace(new RegExp(`\\b${w.word}\\b`,'gi'),`<span class="ra-hl">${w.word}</span>`);document.getElementById('ra-sentence').innerHTML=hl;}
+function jumpRead(i){readIdx=i;updateDots('ra-dots',WORDS.length,i,jumpRead);renderRead();}
 function nextRead(){if(readIdx<WORDS.length-1){readIdx++;renderRead();}else{bigConfetti();setTimeout(goNext,700);}}
 function speakSentence(){speak(SENTENCES[WORDS[readIdx].word],0.74,1.02);}
 
