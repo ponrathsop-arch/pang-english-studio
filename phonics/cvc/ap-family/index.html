@@ -159,7 +159,7 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
 /* Garden strip shared across pages */
 .home-garden{
   position:fixed;
-  bottom:90px;
+  bottom:80px;
   left:0;
   right:0;
   height:110px;
@@ -278,7 +278,9 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
 .mem-front.fc{background:linear-gradient(135deg,var(--yellow),var(--peach));color:var(--dark);}
 /* Square memory back */
 .mem-back{background:#fff;transform:rotateY(180deg);overflow:hidden;}
-.mem-back img{width:100%;height:100%;object-fit:cover;border-radius:11px;display:block;}
+.mem-card.group-a .mem-back{background:linear-gradient(135deg,#fde8f2,#fff7fb);border:2px solid rgba(240,111,164,.35);}
+.mem-card.group-b .mem-back{background:linear-gradient(135deg,#e8f2fd,#f7fbff);border:2px solid rgba(74,144,216,.35);}
+.mem-back img{width:100%;height:100%;object-fit:cover;border-radius:9px;display:block;}
 .mem-back.word-back{font-weight:900;letter-spacing:.4px;color:var(--dark);}
 .mem-card.matched .mem-card-inner{box-shadow:0 0 0 3px var(--sage-deep);}
 .mem-card.wrong .mem-card-inner{animation:shake .35s ease;}
@@ -336,6 +338,8 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
 .fl-prev{background:var(--muted);box-shadow:0 4px 0 #6a7898;}
 .fl-next{background:linear-gradient(135deg,var(--blue-deep),var(--lavender));box-shadow:0 4px 0 #3060a8;}
 .fl-count{font-size:clamp(.75rem,1.6vw,.92rem);color:var(--muted);font-weight:800;}
+.listen-btn{border:none;border-radius:50px;padding:7px 18px;background:var(--yellow-light);color:var(--dark);font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(.75rem,1.6vw,.92rem);cursor:pointer;box-shadow:var(--shadow-sm);}
+.listen-btn:active{transform:scale(.94);}
 
 /* ═══════════════════════════
    SCREEN 9 — LIGHTNING
@@ -408,7 +412,6 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
   <div id="zoom-ltr"></div>
   <div id="zoom-ex"></div>
   <div id="zoom-comb"></div>
-  <div id="zoom-speaker" onclick="event.stopPropagation();speakZoomCurrent()">Hear</div>
   <div id="zoom-next">Tap to next letter · X to close</div>
 </div>
 
@@ -458,7 +461,6 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
       <div class="b-res" id="b-res"></div>
     </div>
     <div class="b-lbl" id="b-lbl"></div>
-    <button class="b-speak-btn" id="b-speak" onclick="event.stopPropagation();speakBlend()">Hear it</button>
   </div>
   <div class="tap-hint">Tap card to blend · tap again for next word</div>
 </div>
@@ -541,6 +543,7 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
   </div>
   <div class="fl-nav">
     <button class="fl-nav-btn fl-prev" onclick="flashPrev()">◀</button>
+    <button class="listen-btn" onclick="event.stopPropagation();speakFlashCurrent()">Listen</button>
     <div class="fl-count" id="fl-count">1 / 8</div>
     <button class="fl-nav-btn fl-next" onclick="flashNext()">▶</button>
   </div>
@@ -718,11 +721,11 @@ let ttsVoice = null;
 
 function loadVoices() {
   const voices = speechSynthesis.getVoices();
-  // Prefer en-US female voices (Samantha on iOS, Google US English on Android/Chrome)
-  ttsVoice = voices.find(v => v.lang === 'en-US' && /samantha|zira|google us/i.test(v.name))
-           || voices.find(v => v.lang === 'en-US' && v.name.toLowerCase().includes('female'))
-           || voices.find(v => v.lang === 'en-US')
-           || voices.find(v => v.lang.startsWith('en'))
+  // Best effort: browsers control voices, but these tend to sound warmer/less robotic.
+  ttsVoice = voices.find(v => /Samantha|Karen|Moira|Serena|Google UK English Female|Microsoft Aria|Microsoft Jenny|Natural/i.test(v.name) && /^en/i.test(v.lang))
+           || voices.find(v => /^en-US/i.test(v.lang) && /Google|Microsoft|Apple/i.test(v.name))
+           || voices.find(v => /^en-GB/i.test(v.lang))
+           || voices.find(v => /^en/i.test(v.lang))
            || null;
 }
 if(speechSynthesis.onvoiceschanged !== undefined) {
@@ -730,13 +733,14 @@ if(speechSynthesis.onvoiceschanged !== undefined) {
 }
 loadVoices();
 
-function speak(text, rate=0.82, pitch=1.1) {
+function speak(text, rate=0.78, pitch=1.02) {
   if(!('speechSynthesis' in window)) return;
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
-  u.lang  = 'en-US';
+  u.lang  = (ttsVoice && ttsVoice.lang) ? ttsVoice.lang : 'en-US';
   u.rate  = rate;
   u.pitch = pitch;
+  u.volume = 1;
   if(ttsVoice) u.voice = ttsVoice;
   speechSynthesis.speak(u);
 }
@@ -939,7 +943,7 @@ function initPhonics() {
     const b = document.createElement('button'); b.className='ph-tile';
     b.style.background = ph.bg; b.style.borderColor = ph.color+'44';
     b.innerHTML=`<div class="ph-ltr" style="color:${ph.color}">${ph.letter}</div><div class="ph-hint" style="color:${ph.color}aa">${ph.hint}</div>`;
-    b.addEventListener('click', () => { addRipple(b); speakLetter(ph.letter); openZoom(i); });
+    b.addEventListener('click', () => { addRipple(b); openZoom(i); });
     g.appendChild(b);
   });
 }
@@ -964,11 +968,10 @@ function openZoom(i) {
     document.getElementById('zoom-comb').textContent=`__ ap  —  the family!`;
   }
   document.getElementById('zoom-ov').classList.add('show');
-  speakLetter(ph.letter);
 }
 
 function speakZoomCurrent(){
-  if(zoomIdx>=0) speakLetter(PHONICS_TILES[zoomIdx].letter);
+  // Audio is only used in Cards and Read Along.
 }
 
 function closeZoom(){
@@ -1003,7 +1006,6 @@ function renderBlend(){
   const bR=document.getElementById('b-res');
   bR.textContent=w.word; bR.style.color=w.color; bR.className='b-res';
   document.getElementById('b-lbl').textContent=`${w.consonant}  +  ap  = ?`;
-  document.getElementById('b-speak').style.display='none';
 }
 
 function handleBlendTap(){
@@ -1014,9 +1016,7 @@ function handleBlendTap(){
       document.getElementById('b-res').classList.add('show');
       document.getElementById('b-con').style.opacity='.3';
       document.getElementById('b-lbl').textContent=`${w.consonant}  +  ap  =  ${w.word} ✅`;
-      document.getElementById('b-speak').style.display='flex';
       spawnSparkle(window.innerWidth/2, window.innerHeight*.5);
-      speakBlendSequence(w.consonant,'ap',w.word);
     },320);
   } else {
     if(blendIdx<WORDS.length-1){ blendIdx++; renderBlend(); }
@@ -1041,7 +1041,6 @@ function renderFind(){
   const w=WORDS[findIdx];
   const fwEl=document.getElementById('fi-word');
   fwEl.textContent=w.word; fwEl.style.color=w.color;
-  speak(w.word); // speak the word aloud on each new card
   document.getElementById('fi-fb').textContent='';
   document.getElementById('fi-score').textContent=`${findScore} / ${WORDS.length}`;
   const others=shuffle(WORDS.filter(x=>x.word!==w.word)).slice(0,3);
@@ -1060,7 +1059,6 @@ function handleFind(card,chosen,correct){
   if(chosen===correct){
     card.classList.add('correct-fi'); findScore++;
     document.getElementById('fi-fb').innerHTML=`<span style="color:var(--sage-deep)">✅ Yes! ${correct}!</span>`;
-    speak(correct);
     spawnSparkle(card.getBoundingClientRect().left+card.offsetWidth/2, card.getBoundingClientRect().top+card.offsetHeight/2);
     setTimeout(()=>{ if(findIdx<WORDS.length-1){findIdx++;renderFind();}else{bigConfetti();setTimeout(goNext,700);} },950);
   } else {
@@ -1109,7 +1107,6 @@ function handleMatchWord(card,word){
   if(matchSel.word===word){
     matchSel.el.classList.remove('selected'); matchSel.el.classList.add('matched');
     card.classList.add('matched'); matchSel=null; matchDone++;
-    speak(word);
     spawnSparkle(card.getBoundingClientRect().left+30, card.getBoundingClientRect().top+26);
     document.getElementById('match-score').textContent=`${matchDone} / ${WORDS.length} matched`;
     if(matchDone===WORDS.length) setTimeout(()=>{bigConfetti();setTimeout(goNext,900);},350);
@@ -1145,8 +1142,8 @@ function startMemory(mode){
   const sA=shuffle([...WORDS]), sB=shuffle([...WORDS]);
   const typeA=mode===2?'word':'pic', typeB=mode===1?'pic':'word';
   const fcA=mode===2?'fb':'fa', fcB=mode===1?'fa':(mode===2?'fb':'fc');
-  sA.forEach((w,i)=>{const card=buildMemCard(w,i+1,typeA,fcA,cSz,nFz,wFz);card.addEventListener('click',()=>handleMemA(card));gridA.appendChild(card);});
-  sB.forEach((w,i)=>{const card=buildMemCard(w,i+1,typeB,fcB,cSz,nFz,wFz);card.addEventListener('click',()=>handleMemB(card));gridB.appendChild(card);});
+  sA.forEach((w,i)=>{const card=buildMemCard(w,i+1,typeA,fcA,cSz,nFz,wFz,'group-a');card.addEventListener('click',()=>handleMemA(card));gridA.appendChild(card);});
+  sB.forEach((w,i)=>{const card=buildMemCard(w,i+1,typeB,fcB,cSz,nFz,wFz,'group-b');card.addEventListener('click',()=>handleMemB(card));gridB.appendChild(card);});
   // 2s preview showing all cards
   memLock=true;
   document.querySelectorAll('#mem-grid-a .mem-card,#mem-grid-b .mem-card').forEach(c=>c.classList.add('flipped'));
@@ -1156,8 +1153,8 @@ function startMemory(mode){
   },2000);
 }
 
-function buildMemCard(w,num,type,frontCls,cSz,nFz,wFz){
-  const card=document.createElement('div'); card.className='mem-card';
+function buildMemCard(w,num,type,frontCls,cSz,nFz,wFz,groupCls){
+  const card=document.createElement('div'); card.className='mem-card '+groupCls;
   card.style.width=cSz+'px'; card.style.height=cSz+'px'; card.dataset.word=w.word;
   const inner=document.createElement('div'); inner.className='mem-card-inner';
   const front=document.createElement('div'); front.className=`mem-front ${frontCls}`;
@@ -1184,7 +1181,6 @@ function checkMemPair(){
   if(a.dataset.word===b.dataset.word){
     a.classList.add('matched'); b.classList.add('matched'); memMatchedCount++;
     document.getElementById('mem-matched').textContent=memMatchedCount;
-    speak(a.dataset.word);
     spawnSparkle(b.getBoundingClientRect().left+b.offsetWidth/2, b.getBoundingClientRect().top+b.offsetHeight/2);
     memSelA=null; memSelB=null; memLock=false;
     if(memMatchedCount===WORDS.length){setTimeout(()=>{bigConfetti();setTimeout(goNext,900);},400);}
@@ -1219,12 +1215,10 @@ function tapTile(letter,idx){
   if(letter===w.word[pos]){
     spellInput.push(letter); box.textContent=letter.toUpperCase(); box.classList.remove('ab'); box.classList.add('fb','ob');
     document.getElementById(`stile-${idx}`).classList.add('used');
-    speakLetter(letter);
     document.getElementById('sp-lbl').textContent=w.word.split('').map((_,i)=>i<spellInput.length?w.word[i].toUpperCase():'_').join('  ');
     if(spellInput.length<w.word.length) document.getElementById(`spb-${spellInput.length}`)?.classList.add('ab');
     if(spellInput.length===w.word.length){
       document.getElementById('sp-fb').innerHTML=`<span style="color:var(--sage-deep)">✅ ${w.word.toUpperCase()}! Great!</span>`;
-      speak(w.word);
       spawnSparkle(window.innerWidth/2,window.innerHeight*.44);
       setTimeout(()=>{if(spellIdx<WORDS.length-1){spellIdx++;dots('sp-dots',WORDS.length,spellIdx);renderSpell();}else{bigConfetti();setTimeout(goNext,700);}},1400);
     }
@@ -1265,7 +1259,6 @@ function renderFlash(){
   if(flashMode==='word'){
     document.getElementById('fc-front').innerHTML=wordHTML;
     document.getElementById('fc-back').innerHTML=picHTML.replace('Tap to flip','▶ Next');
-    speak(w.word);
   } else {
     document.getElementById('fc-front').innerHTML=picHTML;
     document.getElementById('fc-back').innerHTML=wordHTML.replace('Tap to flip','▶ Next');
@@ -1275,7 +1268,11 @@ function renderFlash(){
 function flipCard(){
   flashFlipped=!flashFlipped;
   document.getElementById('fc-inner').classList.toggle('flipped',flashFlipped);
-  if(flashFlipped){ spawnSparkle(window.innerWidth/2,window.innerHeight*.4); speak(WORDS[flashIdx].word); }
+  if(flashFlipped){ spawnSparkle(window.innerWidth/2,window.innerHeight*.4); }
+}
+function speakFlashCurrent(){
+  const w=WORDS[flashIdx];
+  speak(w.word, 0.76, 1.02);
 }
 function flashNext(){ if(flashIdx<WORDS.length-1){flashIdx++;renderFlash();}else{bigConfetti();setTimeout(goNext,700);} }
 function flashPrev(){ if(flashIdx>0){flashIdx--;renderFlash();} }
@@ -1322,7 +1319,7 @@ function answerLR(chosen,correct){
     if(b.textContent===correct)b.classList.add('correct-lr');
     else if(b.textContent===chosen&&chosen!==correct)b.classList.add('wrong-lr');
   });
-  if(chosen===correct){lrScore++;document.getElementById('lr-score').textContent=lrScore;document.getElementById('lr-fb').innerHTML=`<span style="color:var(--sage-deep)">✅ Correct!</span>`;speak(correct);spawnSparkle(window.innerWidth/2,window.innerHeight*.6);}
+  if(chosen===correct){lrScore++;document.getElementById('lr-score').textContent=lrScore;document.getElementById('lr-fb').innerHTML=`<span style="color:var(--sage-deep)">✅ Correct!</span>`;spawnSparkle(window.innerWidth/2,window.innerHeight*.6);}
   else document.getElementById('lr-fb').innerHTML=`<span style="color:var(--red)">❌ It was: ${correct}</span>`;
   lrQ++; setTimeout(nextLR,1000);
 }
@@ -1369,7 +1366,7 @@ function nextRead(){
 
 function speakSentence(){
   const w=WORDS[readIdx];
-  speak(SENTENCES[w.word], 0.76, 1.05);
+  speak(SENTENCES[w.word], 0.74, 1.02);
 }
 
 /* ════ START ════ */
