@@ -159,7 +159,7 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
 /* Garden strip shared across pages */
 .home-garden{
   position:fixed;
-  bottom:90px;
+  bottom:58px;
   left:0;
   right:0;
   height:110px;
@@ -904,7 +904,7 @@ setInterval(()=>makeBubble('homeBubblesLayer'),2800);
     st.textContent=`.butterfly{position:absolute;pointer-events:none;animation:bfFly linear infinite;}.bf-wing-l,.bf-wing-r{position:absolute;top:0;animation:bfFlap ease-in-out infinite alternate;transform-origin:right center;}.bf-wing-r{transform-origin:left center;animation-direction:alternate-reverse;}@keyframes bfFlap{0%{transform:scaleX(1) rotate(-10deg)}100%{transform:scaleX(.2) rotate(10deg)}}@keyframes bfFly{0%{transform:translate(0,0)}25%{transform:translate(var(--mx1),var(--my1))}55%{transform:translate(var(--mx2),var(--my2))}80%{transform:translate(var(--mx3),var(--my3))}100%{transform:translate(0,0)}}`;
     document.head.appendChild(st);
   }
-  g.style.position='fixed'; g.style.left='0'; g.style.right='0'; g.style.bottom='80px'; g.style.height='110px'; g.style.zIndex='25'; g.style.pointerEvents='none';
+  g.style.position='fixed'; g.style.left='0'; g.style.right='0'; g.style.bottom='58px'; g.style.height='110px'; g.style.zIndex='25'; g.style.pointerEvents='none';
   for(let b=0;b<5;b++){
     const col=bfCols[b%bfCols.length], ws=9+Math.random()*5, hs=ws*.7;
     const bf=document.createElement('div'); bf.className='butterfly';
