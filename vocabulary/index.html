@@ -563,30 +563,58 @@ for (let i = 0; i < 20; i++) makeBubble();
 setInterval(makeBubble, 3000);
 function toggleSchoolDropdown(e){
 
-e.preventDefault();
+  // allow dropdown links to open normally
+  if(e.target.closest(".school-dropdown a")){
+      return;
+  }
 
-const drop=
-document.getElementById(
-"schoolDropdown"
-);
+  e.preventDefault();
 
-const arrow=
-document.getElementById(
-"schoolArrow"
-);
+  const drop =
+  document.getElementById(
+  "schoolDropdown"
+  );
 
-drop.classList.toggle(
-"open"
-);
+  const arrow =
+  document.getElementById(
+  "schoolArrow"
+  );
 
-arrow.innerHTML=
-drop.classList.contains(
-"open"
-)
-?
-"▲"
-:
-"▼";
+  const schoolCard =
+  document.querySelector(
+  ".school-card"
+  );
+
+  drop.classList.toggle(
+  "open"
+  );
+
+  arrow.innerHTML =
+  drop.classList.contains(
+  "open"
+  )
+  ?
+  "▲"
+  :
+  "▼";
+
+
+  if(
+      drop.classList.contains(
+      "open"
+      )
+  ){
+
+      setTimeout(()=>{
+
+          schoolCard.scrollIntoView({
+              behavior:"smooth",
+              block:"center"
+          });
+
+      },120);
+
+  }
 
 }
 </script>
