@@ -366,7 +366,7 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
     <button class="mem-tab-btn" id="mtb-3" onclick="startMemory(3)">🖼️🔤 Pic vs Word</button>
   </div>
   <div class="mem-score-row">
-    <span>Pairs: <strong id="mem-matched">0</strong>/<strong id="mem-total">3</strong></span>
+    <span>Pairs: <strong id="mem-matched">0</strong>/<strong id="mem-total">8</strong></span>
     <span>Tries: <strong id="mem-tries">0</strong></span>
     <button class="mem-restart" onclick="startMemory(currentMemMode)">🔄 Restart</button>
   </div>
@@ -477,13 +477,11 @@ const WORDS=[
   {word:'peg',consonant:'p',color:'#52b870'},
 ];
 
-<script>
 const SENTENCES={
   beg:'Do not beg for candy.',
   leg:'The dog has four legs.',
   peg:'Hang your hat on the peg.',
 };
-</script>
 
 const PHONICS_TILES=[
   {letter:'b',hint:'beg',bg:'#fde8f2',color:'#f06fa4'},
@@ -493,7 +491,7 @@ const PHONICS_TILES=[
   {letter:'g',hint:'ending',bg:'#f0ebfd',color:'#9b7ae8'},
   {letter:'eg',hint:'family',bg:'#fde8f2',color:'#f06fa4'},
 ];
-const DISTRACTORS=['a','c','d','f','h','i','j','k','m','n','o','q'];
+const DISTRACTORS=['a','c','g','h','i','m','n','o','p','s','u','x'];
 
 const SCREEN_ORDER=['s-home','s-phonics','s-blend','s-find','s-match','s-memory','s-spell','s-lightning','s-read','s-flash','s-done'];
 const TAB_MAP={'s-home':'tab-home','s-phonics':'tab-sounds','s-blend':'tab-blend','s-find':'tab-find','s-match':'tab-match','s-memory':'tab-memory','s-spell':'tab-spell','s-flash':'tab-flash','s-lightning':'tab-lightning','s-read':'tab-read','s-done':'tab-read'};
@@ -659,7 +657,7 @@ function openZoom(i){
   document.getElementById('zoom-ltr').textContent=ph.letter;
   document.getElementById('zoom-ltr').style.color=ph.color;
   document.getElementById('zoom-ex').textContent=`"${ph.letter}" — ${ph.hint}`;
-  if(ph.letter.length===1&&ph.letter!=='e'&&ph.letter!=='d'){document.getElementById('zoom-comb').textContent=`${ph.letter} + ed = ${ph.letter}ed`;}
+  if(ph.letter.length===1&&ph.letter!=='e'&&ph.letter!=='d'){document.getElementById('zoom-comb').textContent=`${ph.letter} + eg = ${ph.letter}eg`;}
   else if(ph.letter==='e'){document.getElementById('zoom-comb').textContent='e + d = ed';}
   else if(ph.letter==='d'){document.getElementById('zoom-comb').textContent='consonant + ed';}
   else{document.getElementById('zoom-comb').textContent='__ ed  —  the family!';}
