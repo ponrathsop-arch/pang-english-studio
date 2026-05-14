@@ -83,7 +83,7 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
 .sq-img img{width:100%;height:100%;object-fit:cover;border-radius:16px;display:block;}
 
 .back-btn{
-  position:absolute;
+  position:fixed;
   top:18px;
   left:16px;
   width:44px;
@@ -96,7 +96,7 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
   font-size:1.4rem;
   font-weight:900;
   cursor:pointer;
-  z-index:30;
+  z-index:1200;
   transition:transform .13s;
 }
 .back-btn:hover{transform:scale(1.05);}
@@ -118,9 +118,10 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
 /* Word family title + word chips */
 .home-sky{
   position:absolute;
-  top:34px;
+  top:42%;
   left:0;
   right:0;
+  transform:translateY(-50%);
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -155,24 +156,22 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
   margin-top:8px;animation:pulse 1.4s ease-in-out infinite alternate;
 }
 
-/* Garden strip at bottom */
+/* Garden strip shared across pages */
 .home-garden{
-  position:absolute;
-  bottom:80px;
+  position:fixed;
+  bottom:90px;
   left:0;
   right:0;
   height:110px;
-  z-index:3;
+  z-index:25;
   pointer-events:none;
 }
 
-
 @media (max-height:700px){
-  .home-sky{top:26px;}
+  .home-sky{top:42%;}
   .home-family{font-size:clamp(2.7rem,8vw,4.4rem);}
   .home-chip-wrap{margin-top:12px;}
   .home-chip{padding:5px 15px;font-size:clamp(1rem,3vw,1.35rem);}
-  .home-garden{bottom:125px;}
 }
 
 /* ═══════════════════════════
@@ -331,7 +330,7 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
 .fc-tap{font-size:clamp(.62rem,1.3vw,.82rem);color:var(--muted);letter-spacing:.5px;}
 .fc-word{font-family:'Baloo 2',cursive;font-size:clamp(2.6rem,8.5vw,5rem);font-weight:900;letter-spacing:2px;}
 .fc-hint{font-size:clamp(.72rem,1.5vw,.95rem);color:var(--muted);letter-spacing:2px;}
-.fl-nav{display:flex;gap:9px;margin-top:9px;align-items:center;}
+.fl-nav{display:flex;gap:9px;margin-top:20px;align-items:center;}
 .fl-nav-btn{border:none;border-radius:50px;padding:8px 20px;font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(.82rem,1.8vw,1.05rem);cursor:pointer;color:#fff;box-shadow:var(--shadow-sm);transition:transform .13s;}
 .fl-nav-btn:hover{transform:translateY(-2px);}
 .fl-prev{background:var(--muted);box-shadow:0 4px 0 #6a7898;}
@@ -395,11 +394,13 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
 </style>
 </head>
 <body>
+<button class="back-btn" onclick="showScreen('s-phonics')">←</button>
 
 <!-- GLOBAL BUBBLES -->
 <div class="bubbles-layer" id="bubblesLayer"></div>
 <div id="prog-wrap"><div id="prog-bar"></div></div>
 <div class="toast" id="toast"></div>
+<div class="home-garden" id="homeGarden"></div>
 
 <!-- ZOOM OVERLAY -->
 <div id="zoom-ov" onclick="handleZoomTap()">
@@ -413,7 +414,6 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
 
 <!-- ════ HOME ════ -->
 <div class="screen active" id="s-home" onclick="goNext()" style="cursor:pointer;">
-  <button class="back-btn" onclick="event.stopPropagation();showScreen('s-phonics')">←</button>
   <!-- Home-specific bubbles -->
   <div class="home-bubbles-layer" id="homeBubblesLayer"></div>
   <!-- word chips in sky -->
@@ -433,8 +433,6 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
     </div>
     <div class="home-tap">👆 Tap anywhere to start!</div>
   </div>
-  <!-- Garden strip -->
-  <div class="home-garden" id="homeGarden"></div>
 </div>
 
 <!-- ════ SOUNDS ════ -->
@@ -576,7 +574,6 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
     <div class="ra-illo" id="ra-illo"></div>
     <div class="ra-word" id="ra-word"></div>
     <div class="ra-sentence" id="ra-sentence"></div>
-    <button class="ra-speak" onclick="event.stopPropagation();speakSentence()">Read to me</button>
   </div>
   <div class="tap-hint">Tap the card for next word →</div>
 </div>
@@ -674,6 +671,17 @@ function showScreen(id) {
   document.getElementById('prog-bar').style.width = (curIdx/(SCREEN_ORDER.length-1)*100) + '%';
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active-tab'));
   const at = TAB_MAP[id]; if(at) document.getElementById(at)?.classList.add('active-tab');
+  const garden = document.getElementById('homeGarden');
+  if(garden){
+    garden.style.display = (id === 's-match') ? 'none' : 'block';
+    garden.style.position = 'fixed';
+    garden.style.left = '0';
+    garden.style.right = '0';
+    garden.style.bottom = '80px';
+    garden.style.height = '110px';
+    garden.style.zIndex = '25';
+    garden.style.pointerEvents = 'none';
+  }
   if(id==='s-phonics')   initPhonics();
   if(id==='s-blend')     initBlend();
   if(id==='s-find')      initFind();
@@ -892,7 +900,7 @@ setInterval(()=>makeBubble('homeBubblesLayer'),2800);
     st.textContent=`.butterfly{position:absolute;pointer-events:none;animation:bfFly linear infinite;}.bf-wing-l,.bf-wing-r{position:absolute;top:0;animation:bfFlap ease-in-out infinite alternate;transform-origin:right center;}.bf-wing-r{transform-origin:left center;animation-direction:alternate-reverse;}@keyframes bfFlap{0%{transform:scaleX(1) rotate(-10deg)}100%{transform:scaleX(.2) rotate(10deg)}}@keyframes bfFly{0%{transform:translate(0,0)}25%{transform:translate(var(--mx1),var(--my1))}55%{transform:translate(var(--mx2),var(--my2))}80%{transform:translate(var(--mx3),var(--my3))}100%{transform:translate(0,0)}}`;
     document.head.appendChild(st);
   }
-  g.style.position='relative';
+  g.style.position='fixed'; g.style.left='0'; g.style.right='0'; g.style.bottom='80px'; g.style.height='110px'; g.style.zIndex='25'; g.style.pointerEvents='none';
   for(let b=0;b<5;b++){
     const col=bfCols[b%bfCols.length], ws=9+Math.random()*5, hs=ws*.7;
     const bf=document.createElement('div'); bf.className='butterfly';
