@@ -625,7 +625,25 @@ function toggleMenu(id) {
   const banner = document.getElementById(id);
   const isOpen = banner.classList.contains('open');
   document.querySelectorAll('.menu-banner').forEach(b => b.classList.remove('open'));
-  if (!isOpen) banner.classList.add('open');
+  if (!isOpen) {
+    banner.classList.add('open');
+    // smooth swoosh scroll into view after a tiny delay so the banner has opened
+    setTimeout(() => {
+      const top = banner.getBoundingClientRect().top + window.scrollY - 80;
+      const start = window.scrollY;
+      const dist = top - start;
+      const duration = 700;
+      let startTime = null;
+      function easeOutExpo(t) { return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); }
+      function step(ts) {
+        if (!startTime) startTime = ts;
+        const progress = Math.min((ts - startTime) / duration, 1);
+        window.scrollTo(0, start + dist * easeOutExpo(progress));
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }, 60);
+  }
 }
 
 // ── Vowel accordion (independent — multiple can be open) ──
