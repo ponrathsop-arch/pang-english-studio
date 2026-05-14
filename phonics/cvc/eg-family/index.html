@@ -643,7 +643,7 @@ setInterval(()=>makeBubble('homeBubblesLayer'),2800);
 
 /* SOUNDS */
 let zoomIdx=-1;
-function initPhonics(){zoomIdx=-1;const g=document.getElementById('ph-grid');g.innerHTML='';PHONICS_TILES.forEach((ph,i)=>{const b=document.createElement('button');b.className='ph-tile';b.style.background=ph.bg;b.style.borderColor=ph.color+'44';b.innerHTML=`<div class="ph-ltr" style="color:${ph.color}">${ph.letter}</div><div class="ph-hint" style="color:${ph.color}aa">${ph.hint}</div>`;b.addEventListener('click',()=>{addRipple(b);});g.appendChild(b);});}
+function initPhonics(){zoomIdx=-1;const g=document.getElementById('ph-grid');g.innerHTML='';PHONICS_TILES.forEach((ph,i)=>{const b=document.createElement('button');b.className='ph-tile';b.style.background=ph.bg;b.style.borderColor=ph.color+'44';b.innerHTML=`<div class="ph-ltr" style="color:${ph.color}">${ph.letter}</div><div class="ph-hint" style="color:${ph.color}aa">${ph.hint}</div>`;b.addEventListener('click',()=>{addRipple(b);openZoom(i);});g.appendChild(b);});}
 function addRipple(btn){const r=document.createElement('div');r.className='sound-ripple';btn.appendChild(r);setTimeout(()=>r.remove(),500);}
 function openZoom(i){
   zoomIdx=i;const ph=PHONICS_TILES[i];
