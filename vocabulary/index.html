@@ -226,7 +226,36 @@ nav {
   transition: background 0.2s, transform 0.2s;
 }
 .vocab-card:hover .card-arrow { transform: translateX(3px); }
+.school-dropdown{
+max-height:0;
+overflow:hidden;
+display:flex;
+flex-direction:column;
+gap:8px;
+width:100%;
+margin-top:10px;
+transition:max-height .45s ease;
+}
 
+.school-dropdown.open{
+max-height:500px;
+}
+
+.school-dropdown a{
+background:rgba(255,255,255,.75);
+padding:10px;
+border-radius:12px;
+font-size:13px;
+font-weight:800;
+text-decoration:none;
+color:var(--dark);
+transition:.2s;
+}
+
+.school-dropdown a:hover{
+background:white;
+transform:translateX(5px);
+}
 /* ══ FOOTER ══ */
 .footer-banner { background: #fffaf6; padding: 28px 40px 36px; }
 .footer-banner-inner {
@@ -387,14 +416,42 @@ footer span { color: rgba(249,168,201,0.8); }
       <div class="card-arrow">→</div>
     </a>
 
-    <!-- School -->
-    <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/school/" class="vocab-card c-sky">
-      <div class="card-emoji-wrap">🎒</div>
-      <div class="card-title">School</div>
-      <div class="card-desc">Pencils, books, desks — all the things you find at school.</div>
-      <div class="card-arrow">→</div>
-    </a>
+<!-- School -->
+<div class="vocab-card c-sky school-card" onclick="toggleSchoolDropdown(event)">
+  
+  <div class="card-emoji-wrap">🎒</div>
 
+  <div class="card-title">
+    School
+  </div>
+
+  <div class="card-desc">
+    Pencils, books, desks — all the things you find at school.
+  </div>
+
+  <div class="card-arrow" id="schoolArrow">
+     ▼
+  </div>
+
+  <div class="school-dropdown" id="schoolDropdown">
+
+      <a href="#">📚 School Supplies</a>
+
+      <a href="#">👩‍🏫 People</a>
+
+      <a href="#">🏫 Places</a>
+
+      <a href="#">✏️ Actions</a>
+
+      <a href="#">📖 Subjects</a>
+
+      <a href="#">💻 Technology</a>
+
+      <a href="#">🎓 Study Skills</a>
+
+  </div>
+
+</div>
     <!-- Health -->
     <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/health/" class="vocab-card c-peach">
       <div class="card-emoji-wrap">💊</div>
@@ -465,6 +522,34 @@ function makeBubble() {
 }
 for (let i = 0; i < 20; i++) makeBubble();
 setInterval(makeBubble, 3000);
+function toggleSchoolDropdown(e){
+
+e.preventDefault();
+
+const drop=
+document.getElementById(
+"schoolDropdown"
+);
+
+const arrow=
+document.getElementById(
+"schoolArrow"
+);
+
+drop.classList.toggle(
+"open"
+);
+
+arrow.innerHTML=
+drop.classList.contains(
+"open"
+)
+?
+"▲"
+:
+"▼";
+
+}
 </script>
 </body>
 </html>
