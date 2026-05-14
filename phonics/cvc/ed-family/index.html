@@ -316,7 +316,7 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
 <div class="screen" id="s-phonics">
   <button class="screen-exit" onclick="goNext()">Next →</button>
   <div class="big-title">👂 Tap each sound!</div>
-  <div class="sub">Tap a letter · hear it · then tap to go to next!</div>
+  <div class="sub">Tap a letter to practice the sounds!</div>
   <div class="ph-grid" id="ph-grid"></div>
 </div>
 
@@ -568,33 +568,16 @@ if(speechSynthesis.onvoiceschanged!==undefined) speechSynthesis.onvoiceschanged=
 loadVoices();
 
 function speak(text,rate=0.78,pitch=1.02){
-  return;}  
-  if(!('speechSynthesis' in window))return;
-  speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang=(ttsVoice&&ttsVoice.lang)?ttsVoice.lang:'en-US';
-  u.rate=rate; u.pitch=pitch; u.volume=1;
-  if(ttsVoice) u.voice=ttsVoice;
-  speechSynthesis.speak(u);
+  return;
 }
 function letterSound(letter){
   return {b:'buh',f:'fff',l:'luh',r:'ruh',t:'tuh',w:'wuh',e:'eh',d:'duh',ed:'ed'}[letter]||letter;
 }
 function speakLetter(letter){speak(letterSound(letter),0.75,1.15);}
 function speakBlendSequence(consonant,family,word){
-  speechSynthesis.cancel();
-  const parts=[letterSound(consonant),family,word];
-  let i=0;
-  function next(){
-    if(i>=parts.length)return;
-    const u=new SpeechSynthesisUtterance(parts[i]);
-    u.lang='en-US'; u.rate=0.78; u.pitch=1.1;
-    if(ttsVoice) u.voice=ttsVoice;
-    i++; u.onend=()=>setTimeout(next,280);
-    speechSynthesis.speak(u);
-  }
-  next();
+  return;
 }
+
 
 /* HELPERS */
 function shuffle(a){return a.sort(()=>Math.random()-.5);}
@@ -660,7 +643,20 @@ setInterval(()=>makeBubble('homeBubblesLayer'),2800);
 
 /* SOUNDS */
 let zoomIdx=-1;
-function initPhonics(){zoomIdx=-1;const g=document.getElementById('ph-grid');g.innerHTML='';PHONICS_TILES.forEach((ph,i)=>{const b=document.createElement('button');b.className='ph-tile';b.style.background=ph.bg;b.style.borderColor=ph.color+'44';b.innerHTML=`<div class="ph-ltr" style="color:${ph.color}">${ph.letter}</div><div class="ph-hint" style="color:${ph.color}aa">${ph.hint}</div>`;b.addEventListener('click',()=>{addRipple(b);});
+function initPhonics(){
+  zoomIdx=-1;
+  const g=document.getElementById('ph-grid');
+  g.innerHTML='';
+  PHONICS_TILES.forEach((ph,i)=>{
+    const b=document.createElement('button');
+    b.className='ph-tile';
+    b.style.background=ph.bg;
+    b.style.borderColor=ph.color+'44';
+    b.innerHTML=`<div class="ph-ltr" style="color:${ph.color}">${ph.letter}</div><div class="ph-hint" style="color:${ph.color}aa">${ph.hint}</div>`;
+    b.addEventListener('click',()=>{addRipple(b);});
+    g.appendChild(b);
+  });
+}
 function addRipple(btn){const r=document.createElement('div');r.className='sound-ripple';btn.appendChild(r);setTimeout(()=>r.remove(),500);}
 function openZoom(i){
   zoomIdx=i;const ph=PHONICS_TILES[i];
@@ -683,7 +679,7 @@ function initBlend(){blendIdx=0;blendState=0;dots('b-dots',WORDS.length,0,jumpBl
 function renderBlend(){blendState=0;const w=WORDS[blendIdx];updateDots('b-dots',WORDS.length,blendIdx,jumpBlend);document.getElementById('b-illo').innerHTML=imgTag(w.word);const bC=document.getElementById('b-con');bC.textContent=w.consonant;bC.style.color=w.color;bC.style.background=w.color+'22';bC.style.opacity='1';bC.style.transform='scale(1)';const bR=document.getElementById('b-res');bR.textContent=w.word;bR.style.color=w.color;bR.className='b-res';document.getElementById('b-lbl').textContent=`${w.consonant}  +  ed  = ?`;}
 function jumpBlend(i){blendIdx=i;blendState=0;updateDots('b-dots',WORDS.length,i,jumpBlend);renderBlend();}
 function handleBlendTap(){
-  if(blendState===0){blendState=1;const w=WORDS[blendIdx];document.getElementById('b-con').style.transform='scale(1.2)';setTimeout(()=>{document.getElementById('b-res').classList.add('show');document.getElementById('b-con').style.opacity='.3';document.getElementById('b-lbl').textContent=`${w.consonant}  +  ed  =  ${w.word} ✅`;spawnSparkle(window.innerWidth/2,window.innerHeight*.5);// sound disabled
+  if(blendState===0){blendState=1;const w=WORDS[blendIdx];document.getElementById('b-con').style.transform='scale(1.2)';setTimeout(()=>{document.getElementById('b-res').classList.add('show');document.getElementById('b-con').style.opacity='.3';document.getElementById('b-lbl').textContent=`${w.consonant}  +  ed  =  ${w.word} ✅`;spawnSparkle(window.innerWidth/2,window.innerHeight*.5);speakBlendSequence(w.consonant,'ed',w.word);},320);}
   else{if(blendIdx<WORDS.length-1){blendIdx++;renderBlend();}else{bigConfetti();setTimeout(goNext,700);}}
 }
 
@@ -745,19 +741,14 @@ function setFlashMode(mode){flashMode=mode;document.getElementById('fl-btn-word'
 function renderFlash(){flashFlipped=false;const w=WORDS[flashIdx];updateDots('fl-dots',WORDS.length,flashIdx);document.getElementById('fc-inner').classList.remove('flipped');document.getElementById('fl-count').textContent=`${flashIdx+1} / ${WORDS.length}`;const picHTML=`<div class="fc-pic">${imgTag(w.word)}</div><div class="fc-tap">👆 Tap to flip</div>`;const wordHTML=`<div class="fc-word" style="color:${w.color}">${w.word}</div><div class="fc-hint" style="color:${w.color}">${w.consonant.toUpperCase()} + ED</div><div class="fc-tap">👆 Tap to flip</div>`;if(flashMode==='word'){document.getElementById('fc-front').innerHTML=wordHTML;document.getElementById('fc-back').innerHTML=picHTML.replace('Tap to flip','▶ Next');}else{document.getElementById('fc-front').innerHTML=picHTML;document.getElementById('fc-back').innerHTML=wordHTML.replace('Tap to flip','▶ Next');}}
 function flipCard(){flashFlipped=!flashFlipped;document.getElementById('fc-inner').classList.toggle('flipped',flashFlipped);if(flashFlipped)spawnSparkle(window.innerWidth/2,window.innerHeight*.4);}
 function speakFlashCurrent(){
-  if(!('speechSynthesis' in window)) return;
+  if(!('speechSynthesis' in window))return;
   speechSynthesis.cancel();
-
-  const u=new SpeechSynthesisUtterance(
-    WORDS[flashIdx].word
-  );
-
-  u.lang='en-US';
+  const u=new SpeechSynthesisUtterance(WORDS[flashIdx].word);
+  u.lang=(ttsVoice&&ttsVoice.lang)?ttsVoice.lang:'en-US';
   u.rate=0.76;
   u.pitch=1.02;
-
-  if(ttsVoice) u.voice=ttsVoice;
-
+  u.volume=1;
+  if(ttsVoice)u.voice=ttsVoice;
   speechSynthesis.speak(u);
 }
 function flashNext(){if(flashIdx<WORDS.length-1){flashIdx++;renderFlash();}else{bigConfetti();setTimeout(goNext,700);}}
