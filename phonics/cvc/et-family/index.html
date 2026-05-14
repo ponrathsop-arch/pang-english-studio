@@ -443,7 +443,6 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
     <div class="ra-illo" id="ra-illo"></div>
     <div class="ra-word" id="ra-word"></div>
     <div class="ra-sentence" id="ra-sentence"></div>
-    <button class="ra-speak" onclick="event.stopPropagation();speakSentence()">🔊 Read to me</button>
   </div>
   <div class="tap-hint">Tap the card for next word →</div>
 </div>
@@ -583,31 +582,14 @@ if(speechSynthesis.onvoiceschanged!==undefined) speechSynthesis.onvoiceschanged=
 loadVoices();
 
 function speak(text,rate=0.78,pitch=1.02){
-  if(!('speechSynthesis' in window))return;
-  speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang=(ttsVoice&&ttsVoice.lang)?ttsVoice.lang:'en-US';
-  u.rate=rate; u.pitch=pitch; u.volume=1;
-  if(ttsVoice) u.voice=ttsVoice;
-  speechSynthesis.speak(u);
+  return;
 }
 function letterSound(letter){
   return {b:'buh',g:'guh',j:'juh',l:'luh',m:'muh',n:'nuh',p:'puh',s:'sss',w:'wuh',v:'vuh',e:'eh',t:'tuh',et:'et'}[letter]||letter;
 }
 function speakLetter(letter){speak(letterSound(letter),0.75,1.15);}
 function speakBlendSequence(consonant,family,word){
-  speechSynthesis.cancel();
-  const parts=[letterSound(consonant),family,word];
-  let i=0;
-  function next(){
-    if(i>=parts.length)return;
-    const u=new SpeechSynthesisUtterance(parts[i]);
-    u.lang='en-US'; u.rate=0.78; u.pitch=1.1;
-    if(ttsVoice) u.voice=ttsVoice;
-    i++; u.onend=()=>setTimeout(next,280);
-    speechSynthesis.speak(u);
-  }
-  next();
+  return;
 }
 
 /* HELPERS */
@@ -681,12 +663,11 @@ function openZoom(i){
   document.getElementById('zoom-ltr').textContent=ph.letter;
   document.getElementById('zoom-ltr').style.color=ph.color;
   document.getElementById('zoom-ex').textContent=`"${ph.letter}" — ${ph.hint}`;
-  if(ph.letter.length===1&&ph.letter!=='e'&&ph.letter!=='d'){document.getElementById('zoom-comb').textContent=`${ph.letter} + ed = ${ph.letter}ed`;}
-  else if(ph.letter==='e'){document.getElementById('zoom-comb').textContent='e + d = ed';}
-  else if(ph.letter==='d'){document.getElementById('zoom-comb').textContent='consonant + ed';}
-  else{document.getElementById('zoom-comb').textContent='__ ed  —  the family!';}
+  if(ph.letter.length===1&&ph.letter!=='e'&&ph.letter!=='t'){document.getElementById('zoom-comb').textContent=`${ph.letter} + et = ${ph.letter}et`;}
+  else if(ph.letter==='e'){document.getElementById('zoom-comb').textContent='e + t = et';}
+  else if(ph.letter==='t'){document.getElementById('zoom-comb').textContent='consonant + et';}
+  else{document.getElementById('zoom-comb').textContent='__ et  —  the family!';}
   document.getElementById('zoom-ov').classList.add('show');
-  speakLetter(ph.letter);
 }
 function closeZoom(){document.getElementById('zoom-ov').classList.remove('show');}
 function handleZoomTap(){if(zoomIdx<PHONICS_TILES.length-1){openZoom(zoomIdx+1);}else{document.getElementById('zoom-ov').classList.remove('show');goNext();}}
@@ -694,10 +675,10 @@ function handleZoomTap(){if(zoomIdx<PHONICS_TILES.length-1){openZoom(zoomIdx+1);
 /* BLEND */
 let blendIdx=0,blendState=0;
 function initBlend(){blendIdx=0;blendState=0;dots('b-dots',WORDS.length,0,jumpBlend);renderBlend();}
-function renderBlend(){blendState=0;const w=WORDS[blendIdx];updateDots('b-dots',WORDS.length,blendIdx,jumpBlend);document.getElementById('b-illo').innerHTML=imgTag(w.word);const bC=document.getElementById('b-con');bC.textContent=w.consonant;bC.style.color=w.color;bC.style.background=w.color+'22';bC.style.opacity='1';bC.style.transform='scale(1)';const bR=document.getElementById('b-res');bR.textContent=w.word;bR.style.color=w.color;bR.className='b-res';document.getElementById('b-lbl').textContent=`${w.consonant}  +  ed  = ?`;}
+function renderBlend(){blendState=0;const w=WORDS[blendIdx];updateDots('b-dots',WORDS.length,blendIdx,jumpBlend);document.getElementById('b-illo').innerHTML=imgTag(w.word);const bC=document.getElementById('b-con');bC.textContent=w.consonant;bC.style.color=w.color;bC.style.background=w.color+'22';bC.style.opacity='1';bC.style.transform='scale(1)';const bR=document.getElementById('b-res');bR.textContent=w.word;bR.style.color=w.color;bR.className='b-res';document.getElementById('b-lbl').textContent=`${w.consonant}  +  et  = ?`;}
 function jumpBlend(i){blendIdx=i;blendState=0;updateDots('b-dots',WORDS.length,i,jumpBlend);renderBlend();}
 function handleBlendTap(){
-  if(blendState===0){blendState=1;const w=WORDS[blendIdx];document.getElementById('b-con').style.transform='scale(1.2)';setTimeout(()=>{document.getElementById('b-res').classList.add('show');document.getElementById('b-con').style.opacity='.3';document.getElementById('b-lbl').textContent=`${w.consonant}  +  ed  =  ${w.word} ✅`;spawnSparkle(window.innerWidth/2,window.innerHeight*.5);speakBlendSequence(w.consonant,'ed',w.word);},320);}
+  if(blendState===0){blendState=1;const w=WORDS[blendIdx];document.getElementById('b-con').style.transform='scale(1.2)';setTimeout(()=>{document.getElementById('b-res').classList.add('show');document.getElementById('b-con').style.opacity='.3';document.getElementById('b-lbl').textContent=`${w.consonant}  +  et  =  ${w.word} ✅`;spawnSparkle(window.innerWidth/2,window.innerHeight*.5);},320);}
   else{if(blendIdx<WORDS.length-1){blendIdx++;renderBlend();}else{bigConfetti();setTimeout(goNext,700);}}
 }
 
@@ -758,7 +739,17 @@ function initFlash(){flashIdx=0;flashFlipped=false;dots('fl-dots',WORDS.length,0
 function setFlashMode(mode){flashMode=mode;document.getElementById('fl-btn-word').classList.toggle('active-mode',mode==='word');document.getElementById('fl-btn-pic').classList.toggle('active-mode',mode==='pic');flashIdx=0;flashFlipped=false;dots('fl-dots',WORDS.length,0);renderFlash();}
 function renderFlash(){flashFlipped=false;const w=WORDS[flashIdx];updateDots('fl-dots',WORDS.length,flashIdx);document.getElementById('fc-inner').classList.remove('flipped');document.getElementById('fl-count').textContent=`${flashIdx+1} / ${WORDS.length}`;const picHTML=`<div class="fc-pic">${imgTag(w.word)}</div><div class="fc-tap">👆 Tap to flip</div>`;const wordHTML=`<div class="fc-word" style="color:${w.color}">${w.word}</div><div class="fc-hint" style="color:${w.color}">${w.consonant.toUpperCase()} + ED</div><div class="fc-tap">👆 Tap to flip</div>`;if(flashMode==='word'){document.getElementById('fc-front').innerHTML=wordHTML;document.getElementById('fc-back').innerHTML=picHTML.replace('Tap to flip','▶ Next');}else{document.getElementById('fc-front').innerHTML=picHTML;document.getElementById('fc-back').innerHTML=wordHTML.replace('Tap to flip','▶ Next');}}
 function flipCard(){flashFlipped=!flashFlipped;document.getElementById('fc-inner').classList.toggle('flipped',flashFlipped);if(flashFlipped)spawnSparkle(window.innerWidth/2,window.innerHeight*.4);}
-function speakFlashCurrent(){speak(WORDS[flashIdx].word,0.76,1.02);}
+function speakFlashCurrent(){
+  if(!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(WORDS[flashIdx].word);
+  u.lang=(ttsVoice&&ttsVoice.lang)?ttsVoice.lang:'en-US';
+  u.rate=0.76;
+  u.pitch=1.02;
+  u.volume=1;
+  if(ttsVoice) u.voice=ttsVoice;
+  speechSynthesis.speak(u);
+}
 function flashNext(){if(flashIdx<WORDS.length-1){flashIdx++;renderFlash();}else{bigConfetti();setTimeout(goNext,700);}}
 function flashPrev(){if(flashIdx>0){flashIdx--;renderFlash();}}
 
@@ -778,7 +769,7 @@ function initRead(){readIdx=0;dots('ra-dots',WORDS.length,0,jumpRead);renderRead
 function renderRead(){updateDots('ra-dots',WORDS.length,readIdx,jumpRead);const w=WORDS[readIdx];document.getElementById('ra-illo').innerHTML=imgTag(w.word,'scene');document.getElementById('ra-word').textContent=w.word;document.getElementById('ra-word').style.color=w.color;const sent=SENTENCES[w.word];const hl=sent.replace(new RegExp(`\\b${w.word}\\b`,'gi'),`<span class="ra-hl">${w.word}</span>`);document.getElementById('ra-sentence').innerHTML=hl;}
 function jumpRead(i){readIdx=i;updateDots('ra-dots',WORDS.length,i,jumpRead);renderRead();}
 function nextRead(){if(readIdx<WORDS.length-1){readIdx++;renderRead();}else{bigConfetti();setTimeout(goNext,700);}}
-function speakSentence(){speak(SENTENCES[WORDS[readIdx].word],0.74,1.02);}
+function speakSentence(){ return; }
 
 showScreen('s-home');
 </script>
