@@ -367,7 +367,7 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
     <button class="mem-tab-btn" id="mtb-3" onclick="startMemory(3)">🖼️🔤 Pic vs Word</button>
   </div>
   <div class="mem-score-row">
-    <span>Pairs: <strong id="mem-matched">0</strong>/<strong id="mem-total">8</strong></span>
+    <span>Pairs: <strong id="mem-matched">0</strong>/<strong id="mem-total">6</strong></span>
     <span>Tries: <strong id="mem-tries">0</strong></span>
     <button class="mem-restart" onclick="startMemory(currentMemMode)">🔄 Restart</button>
   </div>
@@ -653,7 +653,7 @@ function initPhonics(){
     b.style.background=ph.bg;
     b.style.borderColor=ph.color+'44';
     b.innerHTML=`<div class="ph-ltr" style="color:${ph.color}">${ph.letter}</div><div class="ph-hint" style="color:${ph.color}aa">${ph.hint}</div>`;
-    b.addEventListener('click',()=>{addRipple(b);});
+    b.addEventListener('click',()=>{addRipple(b);openZoom(i);});
     g.appendChild(b);
   });
 }
@@ -668,8 +668,9 @@ function openZoom(i){
   else if(ph.letter==='d'){document.getElementById('zoom-comb').textContent='consonant + ed';}
   else{document.getElementById('zoom-comb').textContent='__ ed  —  the family!';}
   document.getElementById('zoom-ov').classList.add('show');
-  speakLetter(ph.letter);
+  // popup only — no sound here
 }
+
 function closeZoom(){document.getElementById('zoom-ov').classList.remove('show');}
 function handleZoomTap(){if(zoomIdx<PHONICS_TILES.length-1){openZoom(zoomIdx+1);}else{document.getElementById('zoom-ov').classList.remove('show');goNext();}}
 
