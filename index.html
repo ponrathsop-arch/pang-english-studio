@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -10,189 +9,189 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-–cream: #fdf8f3;
-–pink: #f9a8c9;
-–pink-light: #fde8f2;
-–pink-soft: #fef0f7;
-–blue: #a8c8f0;
-–blue-light: #e8f2fd;
-–blue-soft: #deeefb;
-–sage: #a8d4b4;
-–sage-light: #e8f5ec;
-–sage-soft: #d8f0df;
-–yellow: #f9d87a;
-–yellow-light: #fef8e0;
-–yellow-soft: #fff3c4;
-–peach: #f8c5a0;
-–peach-light: #fdeee4;
-–lavender: #c8b8f0;
-–lavender-light: #f0ebfd;
-–dark: #1e2840;
-–text: #3d4a6b;
-–text-soft: #6b7a9b;
-–shadow: 0 4px 24px rgba(45,58,94,0.08);
-–shadow-hover: 0 8px 32px rgba(45,58,94,0.15);
-–radius-lg: 28px;
+  --cream: #fdf8f3;
+  --pink: #f9a8c9;
+  --pink-light: #fde8f2;
+  --pink-soft: #fef0f7;
+  --blue: #a8c8f0;
+  --blue-light: #e8f2fd;
+  --blue-soft: #deeefb;
+  --sage: #a8d4b4;
+  --sage-light: #e8f5ec;
+  --sage-soft: #d8f0df;
+  --yellow: #f9d87a;
+  --yellow-light: #fef8e0;
+  --yellow-soft: #fff3c4;
+  --peach: #f8c5a0;
+  --peach-light: #fdeee4;
+  --lavender: #c8b8f0;
+  --lavender-light: #f0ebfd;
+  --dark: #1e2840;
+  --text: #3d4a6b;
+  --text-soft: #6b7a9b;
+  --shadow: 0 4px 24px rgba(45,58,94,0.08);
+  --shadow-hover: 0 8px 32px rgba(45,58,94,0.15);
+  --radius-lg: 28px;
 }
 
 html { scroll-behavior: smooth; }
-body { font-family: ‘Nunito’, sans-serif; background: var(–cream); color: var(–text); overflow-x: hidden; }
+body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
 
 /* ══ BUBBLES ══ */
 .bubbles-layer {
-position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1;
+  position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1;
 }
 .bubble {
-position: absolute; bottom: -80px; border-radius: 50%;
-border: 1.5px solid rgba(255,255,255,0.5);
-box-shadow: inset 0 0 10px rgba(255,255,255,0.35), 0 2px 12px rgba(180,200,255,0.08);
-animation: bubbleRise linear infinite;
+  position: absolute; bottom: -80px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  box-shadow: inset 0 0 10px rgba(255,255,255,0.35), 0 2px 12px rgba(180,200,255,0.08);
+  animation: bubbleRise linear infinite;
 }
 @keyframes bubbleRise {
-0%   { opacity: 0;    transform: translateY(0)      translateX(0); }
-8%   { opacity: var(–op); }
-88%  { opacity: var(–op); }
-100% { opacity: 0;    transform: translateY(-105vh) translateX(var(–drift,0px)); }
+  0%   { opacity: 0;    transform: translateY(0)      translateX(0); }
+  8%   { opacity: var(--op); }
+  88%  { opacity: var(--op); }
+  100% { opacity: 0;    transform: translateY(-105vh) translateX(var(--drift,0px)); }
 }
 
 /* ══ NAV ══ */
 nav {
-position: sticky; top: 0; z-index: 200;
-background: rgba(253,248,243,0.95);
-backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-border-bottom: 1.5px solid rgba(249,168,201,0.2);
-padding: 0 28px;
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(253,248,243,0.95);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1.5px solid rgba(249,168,201,0.2);
+  padding: 0 28px;
 }
 .nav-inner {
-max-width: 1200px; margin: 0 auto;
-display: flex; align-items: center; gap: 12px; height: 62px;
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; gap: 12px; height: 62px;
 }
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
 
 /* Logo fix — image on top, emoji hidden behind */
 .logo-icon {
-width: 52px; height: 52px; border-radius: 14px;
-box-shadow: 0 3px 12px rgba(249,216,122,0.4); flex-shrink: 0;
-background: linear-gradient(135deg, var(–yellow) 0%, var(–peach) 100%);
-display: flex; align-items: center; justify-content: center;
-font-size: 26px; position: relative; overflow: hidden;
+  width: 52px; height: 52px; border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(249,216,122,0.4); flex-shrink: 0;
+  background: linear-gradient(135deg, var(--yellow) 0%, var(--peach) 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; position: relative; overflow: hidden;
 }
 .logo-icon img {
-position: absolute; inset: 0;
-width: 100%; height: 100%; object-fit: cover;
-display: block; z-index: 2;
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  display: block; z-index: 2;
 }
 .logo-icon .logo-emoji { position: relative; z-index: 1; }
 
-.logo-text h1 { font-family: ‘Baloo 2’, cursive; font-size: 17px; font-weight: 800; line-height: 1.1; color: var(–dark); }
+.logo-text h1 { font-family: 'Baloo 2', cursive; font-size: 17px; font-weight: 800; line-height: 1.1; color: var(--dark); }
 .logo-text h1 span { color: #f06fa4; }
-.logo-text p { font-size: 10px; font-weight: 600; color: var(–text-soft); letter-spacing: 0.04em; }
+.logo-text p { font-size: 10px; font-weight: 600; color: var(--text-soft); letter-spacing: 0.04em; }
 
 .nav-links { display: flex; align-items: center; gap: 2px; list-style: none; margin-left: auto; }
 .nav-links a {
-text-decoration: none; font-size: 12.5px; font-weight: 700; color: var(–text);
-padding: 6px 10px; border-radius: 10px; transition: background 0.2s, color 0.2s; white-space: nowrap;
+  text-decoration: none; font-size: 12.5px; font-weight: 700; color: var(--text);
+  padding: 6px 10px; border-radius: 10px; transition: background 0.2s, color 0.2s; white-space: nowrap;
 }
-.nav-links a:hover { background: var(–pink-light); color: #d05090; }
-.nav-links a.active { background: var(–pink-light); color: #d05090; border-bottom: 2.5px solid #f06fa4; border-radius: 10px 10px 5px 5px; }
+.nav-links a:hover { background: var(--pink-light); color: #d05090; }
+.nav-links a.active { background: var(--pink-light); color: #d05090; border-bottom: 2.5px solid #f06fa4; border-radius: 10px 10px 5px 5px; }
 .btn-contact {
-background: linear-gradient(135deg, #f06fa4 0%, #f9a8c9 100%) !important;
-color: white !important; padding: 7px 16px !important; border-radius: 50px !important;
-font-weight: 800 !important; box-shadow: 0 3px 12px rgba(240,111,164,0.3);
-transition: transform 0.2s, box-shadow 0.2s !important;
+  background: linear-gradient(135deg, #f06fa4 0%, #f9a8c9 100%) !important;
+  color: white !important; padding: 7px 16px !important; border-radius: 50px !important;
+  font-weight: 800 !important; box-shadow: 0 3px 12px rgba(240,111,164,0.3);
+  transition: transform 0.2s, box-shadow 0.2s !important;
 }
 .btn-contact:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(240,111,164,0.4) !important; color: white !important; }
 
 .hamburger {
-display: none; flex-direction: column; gap: 5px;
-cursor: pointer; padding: 8px; margin-left: auto; background: none; border: none;
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 8px; margin-left: auto; background: none; border: none;
 }
-.hamburger span { width: 22px; height: 2.5px; background: var(–dark); border-radius: 2px; display: block; transition: 0.3s; }
+.hamburger span { width: 22px; height: 2.5px; background: var(--dark); border-radius: 2px; display: block; transition: 0.3s; }
 
 .mobile-nav {
-display: none; flex-direction: column;
-background: rgba(253,248,243,0.98); backdrop-filter: blur(14px);
-padding: 12px 24px 20px; border-bottom: 1.5px solid rgba(249,168,201,0.2);
-position: sticky; top: 62px; z-index: 199;
+  display: none; flex-direction: column;
+  background: rgba(253,248,243,0.98); backdrop-filter: blur(14px);
+  padding: 12px 24px 20px; border-bottom: 1.5px solid rgba(249,168,201,0.2);
+  position: sticky; top: 62px; z-index: 199;
 }
 .mobile-nav.open { display: flex; }
 .mobile-nav a {
-text-decoration: none; font-size: 15px; font-weight: 700;
-color: var(–text); padding: 10px 14px; border-radius: 12px; transition: background 0.2s;
+  text-decoration: none; font-size: 15px; font-weight: 700;
+  color: var(--text); padding: 10px 14px; border-radius: 12px; transition: background 0.2s;
 }
-.mobile-nav a:hover { background: var(–pink-light); color: #d05090; }
+.mobile-nav a:hover { background: var(--pink-light); color: #d05090; }
 .mobile-nav .btn-contact { margin-top: 8px; text-align: center; display: block; background: linear-gradient(135deg, #f06fa4 0%, #f9a8c9 100%) !important; }
 
 /* ══ HERO ══ */
 .hero-section {
-background: linear-gradient(160deg, #fdf8f3 0%, #fef3f8 55%, #f5f0fd 100%);
-position: relative; overflow: hidden;
+  background: linear-gradient(160deg, #fdf8f3 0%, #fef3f8 55%, #f5f0fd 100%);
+  position: relative; overflow: hidden;
 }
 .blob {
-position: absolute; border-radius: 50%;
-filter: blur(60px); opacity: 0.28; pointer-events: none;
+  position: absolute; border-radius: 50%;
+  filter: blur(60px); opacity: 0.28; pointer-events: none;
 }
 
 /* Hero is now smaller — less padding, tighter grid */
 .hero {
-position: relative; max-width: 1200px; margin: 0 auto;
-padding: 24px 40px 20px;
-display: grid; grid-template-columns: 1fr 1fr;
-align-items: center; gap: 24px; z-index: 2;
+  position: relative; max-width: 1200px; margin: 0 auto;
+  padding: 24px 40px 20px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; gap: 24px; z-index: 2;
 }
 .hero-left { position: relative; z-index: 1; }
 
 .hero-badge {
-display: inline-flex; align-items: center; gap: 7px;
-background: var(–yellow-light); border: 1.5px solid var(–yellow);
-border-radius: 50px; padding: 5px 14px; font-size: 11.5px; font-weight: 800;
-color: #a07810; margin-bottom: 12px; animation: floatBadge 3s ease-in-out infinite;
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--yellow-light); border: 1.5px solid var(--yellow);
+  border-radius: 50px; padding: 5px 14px; font-size: 11.5px; font-weight: 800;
+  color: #a07810; margin-bottom: 12px; animation: floatBadge 3s ease-in-out infinite;
 }
 @keyframes floatBadge { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
 
 .hero-title {
-font-family: ‘Baloo 2’, cursive; font-size: clamp(24px, 2.8vw, 40px);
-font-weight: 800; line-height: 1.15; color: var(–dark); margin-bottom: 10px;
+  font-family: 'Baloo 2', cursive; font-size: clamp(24px, 2.8vw, 40px);
+  font-weight: 800; line-height: 1.15; color: var(--dark); margin-bottom: 10px;
 }
 .hero-title .t-pink { color: #f06fa4; }
 .hero-title .t-purple { color: #9b7ae8; }
 
 .hero-sub {
-font-size: 14px; font-weight: 600; color: var(–text-soft);
-line-height: 1.65; max-width: 360px; margin-bottom: 18px;
+  font-size: 14px; font-weight: 600; color: var(--text-soft);
+  line-height: 1.65; max-width: 360px; margin-bottom: 18px;
 }
 
 .quote-bubble {
-display: inline-flex; align-items: center; gap: 10px;
-background: white; border: 2px dashed #f9d87a; border-radius: 50px;
-padding: 9px 20px; font-size: 13px; font-weight: 800; color: var(–dark);
-box-shadow: 0 3px 12px rgba(249,216,122,0.2); margin-bottom: 20px;
+  display: inline-flex; align-items: center; gap: 10px;
+  background: white; border: 2px dashed #f9d87a; border-radius: 50px;
+  padding: 9px 20px; font-size: 13px; font-weight: 800; color: var(--dark);
+  box-shadow: 0 3px 12px rgba(249,216,122,0.2); margin-bottom: 20px;
 }
 .quote-bubble .t-pink { color: #f06fa4; }
 
 /* ── Swoosh scroll button ── */
 .swoosh-btn {
-display: inline-flex; align-items: center; gap: 10px;
-background: linear-gradient(135deg, #f06fa4 0%, #c8b8f0 100%);
-color: white; border: none; cursor: pointer;
-padding: 11px 24px; border-radius: 50px;
-font-family: ‘Baloo 2’, cursive; font-size: 14px; font-weight: 800;
-box-shadow: 0 4px 18px rgba(240,111,164,0.35);
-transition: transform 0.2s, box-shadow 0.2s;
-text-decoration: none;
-animation: floatBadge 2.5s ease-in-out infinite;
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, #f06fa4 0%, #c8b8f0 100%);
+  color: white; border: none; cursor: pointer;
+  padding: 11px 24px; border-radius: 50px;
+  font-family: 'Baloo 2', cursive; font-size: 14px; font-weight: 800;
+  box-shadow: 0 4px 18px rgba(240,111,164,0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  animation: floatBadge 2.5s ease-in-out infinite;
 }
 .swoosh-btn:hover {
-transform: translateY(-3px) scale(1.04);
-box-shadow: 0 8px 28px rgba(240,111,164,0.45);
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 8px 28px rgba(240,111,164,0.45);
 }
 .swoosh-btn .arrow-down {
-font-size: 18px;
-animation: bounceDown 1.2s ease-in-out infinite;
+  font-size: 18px;
+  animation: bounceDown 1.2s ease-in-out infinite;
 }
 @keyframes bounceDown {
-0%,100% { transform: translateY(0); }
-50%      { transform: translateY(4px); }
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(4px); }
 }
 
 /* ── Hero right — bigger illustration ── */
@@ -201,32 +200,32 @@ animation: bounceDown 1.2s ease-in-out infinite;
 
 /* No oval — just the image sitting naturally, bigger */
 .hero-img-wrap {
-width: 100%;
-position: relative;
-display: flex; align-items: flex-end; justify-content: center;
+  width: 100%;
+  position: relative;
+  display: flex; align-items: flex-end; justify-content: center;
 }
 .hero-img-wrap img {
-width: 100%;
-max-width: 500px;
-height: auto;
-object-fit: contain;
-display: block;
-filter: drop-shadow(0 12px 32px rgba(45,58,94,0.12));
-animation: floatHero 5s ease-in-out infinite;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 12px 32px rgba(45,58,94,0.12));
+  animation: floatHero 5s ease-in-out infinite;
 }
 @keyframes floatHero {
-0%,100% { transform: translateY(0); }
-50%      { transform: translateY(-10px); }
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
 }
 
 /* speech bubbles */
 .speech {
-position: absolute; border-radius: 50px; padding: 7px 15px;
-font-family: ‘Baloo 2’, cursive; font-size: 13px; font-weight: 700;
-color: var(–dark); box-shadow: var(–shadow); animation: floatUp 4s ease-in-out infinite; z-index: 3;
+  position: absolute; border-radius: 50px; padding: 7px 15px;
+  font-family: 'Baloo 2', cursive; font-size: 13px; font-weight: 700;
+  color: var(--dark); box-shadow: var(--shadow); animation: floatUp 4s ease-in-out infinite; z-index: 3;
 }
-.speech-read  { background: var(–yellow-soft); top: 22%; left: 0%;  animation-delay: 0s; }
-.speech-learn { background: var(–pink-soft);   top: 10%; right: 2%; animation-delay: 1.2s; }
+.speech-read  { background: var(--yellow-soft); top: 22%; left: 0%;  animation-delay: 0s; }
+.speech-learn { background: var(--pink-soft);   top: 10%; right: 2%; animation-delay: 1.2s; }
 .speech-play  { background: #d9f7f0;             top: 48%; right: 0%; animation-delay: 2.4s; }
 @keyframes floatUp { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-8px) rotate(1deg)} }
 
@@ -235,142 +234,142 @@ color: var(–dark); box-shadow: var(–shadow); animation: floatUp 4s ease-in-o
 
 /* ══ EXPLORE SECTION ══ */
 .explore {
-background: #fffaf6; padding: 60px 0 0;
-position: relative; overflow: hidden;
+  background: #fffaf6; padding: 60px 0 0;
+  position: relative; overflow: hidden;
 }
 .explore::before {
-content: ‘’; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-background: linear-gradient(90deg, var(–pink), var(–blue), var(–sage), var(–yellow), var(–peach), var(–lavender));
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--pink), var(--blue), var(--sage), var(--yellow), var(--peach), var(--lavender));
 }
 
 .section-header { text-align: center; margin-bottom: 36px; padding: 0 24px; }
 .section-header h2 {
-font-family: ‘Baloo 2’, cursive; font-size: clamp(26px, 3vw, 36px);
-font-weight: 800; color: var(–dark); margin-bottom: 8px;
-display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: 'Baloo 2', cursive; font-size: clamp(26px, 3vw, 36px);
+  font-weight: 800; color: var(--dark); margin-bottom: 8px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
 }
-.section-header p { font-size: 15px; font-weight: 600; color: var(–text-soft); }
+.section-header p { font-size: 15px; font-weight: 600; color: var(--text-soft); }
 
 /* ── Scrollable card track ── */
 .cards-track-wrap { position: relative; }
 .cards-track-outer {
-overflow-x: auto; overflow-y: visible;
--webkit-overflow-scrolling: touch;
-scrollbar-width: none;
-padding: 12px 60px 28px;
-scroll-snap-type: x mandatory;
-scroll-behavior: smooth;
+  overflow-x: auto; overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 12px 60px 28px;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
 }
 .cards-track-outer::-webkit-scrollbar { display: none; }
 .cards-track { display: flex; gap: 20px; width: max-content; }
 
 /* Scroll arrow buttons */
 .scroll-btn {
-position: absolute; top: 50%; transform: translateY(-50%);
-width: 40px; height: 40px; border-radius: 50%;
-background: white; border: none; cursor: pointer;
-box-shadow: 0 4px 16px rgba(45,58,94,0.14);
-display: flex; align-items: center; justify-content: center;
-font-size: 16px; color: var(–text); z-index: 10;
-transition: background 0.2s, transform 0.2s;
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 40px; height: 40px; border-radius: 50%;
+  background: white; border: none; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(45,58,94,0.14);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: var(--text); z-index: 10;
+  transition: background 0.2s, transform 0.2s;
 }
-.scroll-btn:hover { background: var(–pink-light); color: #d05090; transform: translateY(-50%) scale(1.1); }
+.scroll-btn:hover { background: var(--pink-light); color: #d05090; transform: translateY(-50%) scale(1.1); }
 .scroll-btn.left  { left: 8px; }
 .scroll-btn.right { right: 8px; }
 
 /* Cards */
 .card {
-background: white; border-radius: var(–radius-lg);
-padding: 28px 22px 24px; text-align: center;
-box-shadow: var(–shadow); cursor: pointer;
-transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s;
-position: relative; overflow: hidden;
-border: 2px solid transparent;
-scroll-snap-align: start;
-width: 220px; flex-shrink: 0;
-display: flex; flex-direction: column; align-items: center;
-text-decoration: none;
+  background: white; border-radius: var(--radius-lg);
+  padding: 28px 22px 24px; text-align: center;
+  box-shadow: var(--shadow); cursor: pointer;
+  transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s;
+  position: relative; overflow: hidden;
+  border: 2px solid transparent;
+  scroll-snap-align: start;
+  width: 220px; flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: center;
+  text-decoration: none;
 }
 .card::before {
-content: ‘’; position: absolute; top: 0; left: 0; right: 0;
-height: 5px; border-radius: 4px 4px 0 0;
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 5px; border-radius: 4px 4px 0 0;
 }
-.card:hover { transform: translateY(-6px) scale(1.02); box-shadow: var(–shadow-hover); }
+.card:hover { transform: translateY(-6px) scale(1.02); box-shadow: var(--shadow-hover); }
 
-.card-1 { background: var(–blue-light);    border-color: var(–blue); }
-.card-1::before { background: var(–blue); }
-.card-2 { background: var(–pink-light);    border-color: var(–pink); }
-.card-2::before { background: var(–pink); }
-.card-3 { background: var(–lavender-light);border-color: var(–lavender); }
-.card-3::before { background: var(–lavender); }
-.card-4 { background: var(–yellow-light);  border-color: var(–yellow); }
-.card-4::before { background: var(–yellow); }
-.card-5 { background: var(–sage-light);    border-color: var(–sage); }
-.card-5::before { background: var(–sage); }
-.card-6 { background: var(–peach-light);   border-color: var(–peach); }
-.card-6::before { background: var(–peach); }
+.card-1 { background: var(--blue-light);    border-color: var(--blue); }
+.card-1::before { background: var(--blue); }
+.card-2 { background: var(--pink-light);    border-color: var(--pink); }
+.card-2::before { background: var(--pink); }
+.card-3 { background: var(--lavender-light);border-color: var(--lavender); }
+.card-3::before { background: var(--lavender); }
+.card-4 { background: var(--yellow-light);  border-color: var(--yellow); }
+.card-4::before { background: var(--yellow); }
+.card-5 { background: var(--sage-light);    border-color: var(--sage); }
+.card-5::before { background: var(--sage); }
+.card-6 { background: var(--peach-light);   border-color: var(--peach); }
+.card-6::before { background: var(--peach); }
 
 .card-icon {
-width: 96px; height: 96px; margin: 0 auto 18px;
-border-radius: 22px; overflow: hidden; position: relative; flex-shrink: 0;
+  width: 96px; height: 96px; margin: 0 auto 18px;
+  border-radius: 22px; overflow: hidden; position: relative; flex-shrink: 0;
 }
 .card-icon img { width: 100%; height: 100%; object-fit: contain; display: block; padding: 10px; }
-.card-1 .card-icon { background: var(–blue-soft); }
-.card-2 .card-icon { background: var(–pink-soft); }
-.card-3 .card-icon { background: var(–lavender-light); }
-.card-4 .card-icon { background: var(–yellow-soft); }
-.card-5 .card-icon { background: var(–sage-soft); }
-.card-6 .card-icon { background: var(–peach-light); }
+.card-1 .card-icon { background: var(--blue-soft); }
+.card-2 .card-icon { background: var(--pink-soft); }
+.card-3 .card-icon { background: var(--lavender-light); }
+.card-4 .card-icon { background: var(--yellow-soft); }
+.card-5 .card-icon { background: var(--sage-soft); }
+.card-6 .card-icon { background: var(--peach-light); }
 
-.card h3 { font-family: ‘Baloo 2’, cursive; font-size: 20px; font-weight: 800; color: var(–dark); margin-bottom: 7px; }
-.card p  { font-size: 12.5px; font-weight: 600; color: var(–text-soft); line-height: 1.5; margin-bottom: 16px; flex: 1; }
+.card h3 { font-family: 'Baloo 2', cursive; font-size: 20px; font-weight: 800; color: var(--dark); margin-bottom: 7px; }
+.card p  { font-size: 12.5px; font-weight: 600; color: var(--text-soft); line-height: 1.5; margin-bottom: 16px; flex: 1; }
 
 .card-arrow {
-display: inline-flex; align-items: center; justify-content: center;
-width: 34px; height: 34px; border-radius: 50%; background: white;
-box-shadow: 0 2px 10px rgba(45,58,94,0.12); font-size: 14px; color: var(–text);
-transition: background 0.2s, transform 0.2s; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 50%; background: white;
+  box-shadow: 0 2px 10px rgba(45,58,94,0.12); font-size: 14px; color: var(--text);
+  transition: background 0.2s, transform 0.2s; flex-shrink: 0;
 }
 .card:hover .card-arrow { transform: translateX(3px); }
-.card-1:hover .card-arrow { background: var(–blue);    color: white; }
-.card-2:hover .card-arrow { background: var(–pink);    color: white; }
-.card-3:hover .card-arrow { background: var(–lavender);color: white; }
-.card-4:hover .card-arrow { background: var(–yellow);  color: var(–dark); }
-.card-5:hover .card-arrow { background: var(–sage);    color: white; }
-.card-6:hover .card-arrow { background: var(–peach);   color: white; }
+.card-1:hover .card-arrow { background: var(--blue);    color: white; }
+.card-2:hover .card-arrow { background: var(--pink);    color: white; }
+.card-3:hover .card-arrow { background: var(--lavender);color: white; }
+.card-4:hover .card-arrow { background: var(--yellow);  color: var(--dark); }
+.card-5:hover .card-arrow { background: var(--sage);    color: white; }
+.card-6:hover .card-arrow { background: var(--peach);   color: white; }
 
 /* ── Garden decoration ── */
 .garden {
-position: relative; height: 130px; margin-top: 0; overflow: visible; pointer-events: none;
+  position: relative; height: 130px; margin-top: 0; overflow: visible; pointer-events: none;
 }
 
 /* ── FOOTER BANNER ── */
 .footer-banner { background: #fffaf6; padding: 32px 40px 40px; }
 .footer-banner-inner {
-max-width: 700px; margin: 0 auto; background: white;
-border-radius: 24px; padding: 28px 32px;
-text-align: center; box-shadow: var(–shadow);
-border: 1.5px solid rgba(249,168,201,0.18);
-position: relative; overflow: hidden;
+  max-width: 700px; margin: 0 auto; background: white;
+  border-radius: 24px; padding: 28px 32px;
+  text-align: center; box-shadow: var(--shadow);
+  border: 1.5px solid rgba(249,168,201,0.18);
+  position: relative; overflow: hidden;
 }
 .footer-banner-inner::before {
-content: ‘’; position: absolute; inset: 0;
-background: radial-gradient(ellipse at top left, rgba(249,216,122,0.08) 0%, transparent 60%),
-radial-gradient(ellipse at bottom right, rgba(249,168,201,0.08) 0%, transparent 60%);
-pointer-events: none;
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at top left, rgba(249,216,122,0.08) 0%, transparent 60%),
+              radial-gradient(ellipse at bottom right, rgba(249,168,201,0.08) 0%, transparent 60%);
+  pointer-events: none;
 }
 .footer-deco { display: flex; justify-content: center; gap: 8px; margin-bottom: 10px; font-size: 18px; }
 .footer-banner p {
-font-family: ‘Baloo 2’, cursive; font-size: clamp(14px, 2vw, 17px);
-font-weight: 700; color: var(–text); line-height: 1.5; position: relative;
+  font-family: 'Baloo 2', cursive; font-size: clamp(14px, 2vw, 17px);
+  font-weight: 700; color: var(--text); line-height: 1.5; position: relative;
 }
 .footer-banner p .t-pink { color: #f06fa4; }
 .footer-hearts { margin-top: 12px; font-size: 16px; display: flex; justify-content: center; gap: 4px; }
 
 footer {
-background: var(–dark); color: rgba(255,255,255,0.5);
-text-align: center; padding: 20px 40px; font-size: 12.5px; font-weight: 600;
-position: relative; z-index: 2;
+  background: var(--dark); color: rgba(255,255,255,0.5);
+  text-align: center; padding: 20px 40px; font-size: 12.5px; font-weight: 600;
+  position: relative; z-index: 2;
 }
 footer span { color: rgba(249,168,201,0.8); }
 
@@ -386,62 +385,59 @@ footer span { color: rgba(249,168,201,0.8); }
 
 /* ══ RESPONSIVE ══ */
 @media (max-width: 1024px) {
-.cards-track-outer { padding: 12px 52px 28px; }
+  .cards-track-outer { padding: 12px 52px 28px; }
 }
 @media (max-width: 768px) {
-nav { padding: 0 16px; }
-.nav-links { display: none; }
-.hamburger { display: flex; }
-.hero { grid-template-columns: 1fr; padding: 20px 20px 16px; gap: 16px; }
-.hero-right { order: -1; }
-.hero-img-wrap img { max-width: 340px; }
-.explore { padding: 48px 0 0; }
-.cards-track-outer { padding: 10px 44px 24px; }
-.card { width: 185px; }
-.footer-banner { padding: 24px 20px 32px; }
-.footer-banner-inner { padding: 22px 20px; }
-.scroll-btn { width: 34px; height: 34px; font-size: 14px; }
+  nav { padding: 0 16px; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .hero { grid-template-columns: 1fr; padding: 20px 20px 16px; gap: 16px; }
+  .hero-right { order: -1; }
+  .hero-img-wrap img { max-width: 340px; }
+  .explore { padding: 48px 0 0; }
+  .cards-track-outer { padding: 10px 44px 24px; }
+  .card { width: 185px; }
+  .footer-banner { padding: 24px 20px 32px; }
+  .footer-banner-inner { padding: 22px 20px; }
+  .scroll-btn { width: 34px; height: 34px; font-size: 14px; }
 }
 
 /* ── Phone: switch to 2-col grid instead of horizontal scroll ── */
 @media (max-width: 520px) {
-.hero { padding: 16px 16px 12px; }
-.hero-img-wrap img { max-width: 290px; }
+  .hero { padding: 16px 16px 12px; }
+  .hero-img-wrap img { max-width: 290px; }
 
-/* override scroll track → 2-col grid */
-.cards-track-wrap { position: relative; }
-.scroll-btn { display: none; }
-.cards-track-outer {
-overflow-x: visible;
-padding: 8px 16px 20px;
-scroll-snap-type: none;
-}
-.cards-track {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 14px;
-width: 100%;
-}
-.card {
-width: 100%;
-padding: 20px 14px 18px;
-scroll-snap-align: none;
-}
-.card-icon { width: 72px; height: 72px; margin-bottom: 12px; }
-.card h3 { font-size: 17px; }
-.card p { font-size: 11.5px; }
+  /* override scroll track → 2-col grid */
+  .cards-track-wrap { position: relative; }
+  .scroll-btn { display: none; }
+  .cards-track-outer {
+    overflow-x: visible;
+    padding: 8px 16px 20px;
+    scroll-snap-type: none;
+  }
+  .cards-track {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    width: 100%;
+  }
+  .card {
+    width: 100%;
+    padding: 20px 14px 18px;
+    scroll-snap-align: none;
+  }
+  .card-icon { width: 72px; height: 72px; margin-bottom: 12px; }
+  .card h3 { font-size: 17px; }
+  .card p { font-size: 11.5px; }
 }
 </style>
-
 </head>
 <body>
 
 <!-- ══ BUBBLES ══ -->
-
 <div class="bubbles-layer" id="bubblesLayer"></div>
 
 <!-- ══ NAV ══ -->
-
 <nav>
   <div class="nav-inner">
     <a href="https://ponrathsop-arch.github.io/pang-english-studio/" class="logo">
@@ -455,29 +451,25 @@ scroll-snap-align: none;
       </div>
     </a>
 
-```
-<ul class="nav-links">
-  <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/" class="active">Home</a></li>
-  <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/phonics/">Phonics</a></li>
-  <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/">Vocabulary</a></li>
-  <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/grammar/">Grammar</a></li>
-  <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/stories/">Stories</a></li>
-  <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/games/">Games</a></li>
-  <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/worksheets/">Worksheets</a></li>
-  <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/about/">About</a></li>
-  <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/contact/" class="btn-contact">✉ Contact</a></li>
-</ul>
+    <ul class="nav-links">
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/" class="active">Home</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/phonics/">Phonics</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/">Vocabulary</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/grammar/">Grammar</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/stories/">Stories</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/games/">Games</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/worksheets/">Worksheets</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/about/">About</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/contact/" class="btn-contact">✉ Contact</a></li>
+    </ul>
 
-<button class="hamburger" id="hamburger" aria-label="Menu">
-  <span></span><span></span><span></span>
-</button>
-```
-
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
 <!-- Mobile nav -->
-
 <nav class="mobile-nav" id="mobileNav">
   <a href="https://ponrathsop-arch.github.io/pang-english-studio/">Home</a>
   <a href="https://ponrathsop-arch.github.io/pang-english-studio/phonics/">Phonics</a>
@@ -491,7 +483,6 @@ scroll-snap-align: none;
 </nav>
 
 <!-- ══ HERO ══ -->
-
 <section class="hero-section">
   <div class="blob" style="width:360px;height:360px;background:#fde8f2;top:-80px;left:-60px;"></div>
   <div class="blob" style="width:300px;height:300px;background:#e8effe;top:40px;right:-50px;"></div>
@@ -502,49 +493,45 @@ scroll-snap-align: none;
     <div class="hero-left">
       <div class="hero-badge">⭐ For young learners 🌈</div>
 
-```
-  <h1 class="hero-title">
-    Learn today,<br>
-    <span class="t-pink">laugh often,</span><br>
-    <span class="t-purple">grow</span> forever!
-  </h1>
+      <h1 class="hero-title">
+        Learn today,<br>
+        <span class="t-pink">laugh often,</span><br>
+        <span class="t-purple">grow</span> forever!
+      </h1>
 
-  <p class="hero-sub">Fun stories, games, and activities made for young learners.</p>
+      <p class="hero-sub">Fun stories, games, and activities made for young learners.</p>
 
-  <div class="quote-bubble">
-    ⭐ Small steps. <span class="t-pink">Big dreams.</span> 🌈
-  </div>
+      <div class="quote-bubble">
+        ⭐ Small steps. <span class="t-pink">Big dreams.</span> 🌈
+      </div>
 
-  <!-- Swoosh scroll button -->
-  <a href="#explore" class="swoosh-btn" id="swooshBtn">
-    Explore &amp; Learn <span class="arrow-down">↓</span>
-  </a>
-</div>
-
-<!-- RIGHT — new illustration: teacher + kids + dog -->
-<div class="hero-right">
-  <div class="hero-illustration">
-    <div class="speech speech-read">💬 Read</div>
-    <div class="speech speech-learn">📚 Learn</div>
-    <div class="speech speech-play">🎮 Play</div>
-
-    <div class="star-deco" style="top:6%;left:36%;font-size:16px;">⭐</div>
-    <div class="star-deco" style="top:28%;left:1%;font-size:11px;color:#f9d87a;animation-delay:0.8s;">✦</div>
-    <div class="star-deco" style="top:52%;right:12%;font-size:10px;color:#a8c8f0;animation-delay:1.6s;">✦</div>
-    <div class="star-deco" style="top:8%;right:26%;font-size:12px;color:#c8b8f0;animation-delay:2.4s;">✦</div>
-
-    <div class="hero-img-wrap">
-      <img src="images/hero.png" alt="Teacher reading story time with children and dog">
+      <!-- Swoosh scroll button -->
+      <a href="#explore" class="swoosh-btn" id="swooshBtn">
+        Explore &amp; Learn <span class="arrow-down">↓</span>
+      </a>
     </div>
-  </div>
-</div>
-```
 
+    <!-- RIGHT — new illustration: teacher + kids + dog -->
+    <div class="hero-right">
+      <div class="hero-illustration">
+        <div class="speech speech-read">💬 Read</div>
+        <div class="speech speech-learn">📚 Learn</div>
+        <div class="speech speech-play">🎮 Play</div>
+
+        <div class="star-deco" style="top:6%;left:36%;font-size:16px;">⭐</div>
+        <div class="star-deco" style="top:28%;left:1%;font-size:11px;color:#f9d87a;animation-delay:0.8s;">✦</div>
+        <div class="star-deco" style="top:52%;right:12%;font-size:10px;color:#a8c8f0;animation-delay:1.6s;">✦</div>
+        <div class="star-deco" style="top:8%;right:26%;font-size:12px;color:#c8b8f0;animation-delay:2.4s;">✦</div>
+
+        <div class="hero-img-wrap">
+          <img src="images/hero.png" alt="Teacher reading story time with children and dog">
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- ══ EXPLORE & LEARN ══ -->
-
 <section class="explore" id="explore">
   <div class="section-header">
     <h2>✨ Explore and Learn! ✨</h2>
@@ -554,67 +541,62 @@ scroll-snap-align: none;
   <div class="cards-track-wrap">
     <button class="scroll-btn left" id="scrollLeft" aria-label="Scroll left">‹</button>
 
-```
-<div class="cards-track-outer" id="cardsTrack">
-  <div class="cards-track">
+    <div class="cards-track-outer" id="cardsTrack">
+      <div class="cards-track">
 
-    <a href="https://ponrathsop-arch.github.io/pang-english-studio/phonics/" class="card card-1">
-      <div class="card-icon"><img src="images/icon-phonics.png" alt="Phonics"></div>
-      <h3>Phonics</h3>
-      <p>Fun phonics practice for early readers. CVC, CCVC & more.</p>
-      <div class="card-arrow">→</div>
-    </a>
+        <a href="https://ponrathsop-arch.github.io/pang-english-studio/phonics/" class="card card-1">
+          <div class="card-icon"><img src="images/icon-phonics.png" alt="Phonics"></div>
+          <h3>Phonics</h3>
+          <p>Fun phonics practice for early readers. CVC, CCVC & more.</p>
+          <div class="card-arrow">→</div>
+        </a>
 
-    <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/" class="card card-2">
-      <div class="card-icon"><img src="images/icon-vocab.png" alt="Vocabulary"></div>
-      <h3>Vocabulary</h3>
-      <p>Theme-based words with pictures and activities.</p>
-      <div class="card-arrow">→</div>
-    </a>
+        <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/" class="card card-2">
+          <div class="card-icon"><img src="images/icon-vocab.png" alt="Vocabulary"></div>
+          <h3>Vocabulary</h3>
+          <p>Theme-based words with pictures and activities.</p>
+          <div class="card-arrow">→</div>
+        </a>
 
-    <a href="https://ponrathsop-arch.github.io/pang-english-studio/grammar/" class="card card-3">
-      <div class="card-icon"><img src="images/icon-grammar.png" alt="Grammar"></div>
-      <h3>Grammar</h3>
-      <p>Easy grammar lessons for young learners to grow.</p>
-      <div class="card-arrow">→</div>
-    </a>
+        <a href="https://ponrathsop-arch.github.io/pang-english-studio/grammar/" class="card card-3">
+          <div class="card-icon"><img src="images/icon-grammar.png" alt="Grammar"></div>
+          <h3>Grammar</h3>
+          <p>Easy grammar lessons for young learners to grow.</p>
+          <div class="card-arrow">→</div>
+        </a>
 
-    <a href="https://ponrathsop-arch.github.io/pang-english-studio/stories/" class="card card-4">
-      <div class="card-icon"><img src="images/icon-stories.png" alt="Stories"></div>
-      <h3>Stories</h3>
-      <p>Short stories to build reading and imagination.</p>
-      <div class="card-arrow">→</div>
-    </a>
+        <a href="https://ponrathsop-arch.github.io/pang-english-studio/stories/" class="card card-4">
+          <div class="card-icon"><img src="images/icon-stories.png" alt="Stories"></div>
+          <h3>Stories</h3>
+          <p>Short stories to build reading and imagination.</p>
+          <div class="card-arrow">→</div>
+        </a>
 
-    <a href="https://ponrathsop-arch.github.io/pang-english-studio/games/" class="card card-5">
-      <div class="card-icon"><img src="images/icon-games.png" alt="Games"></div>
-      <h3>Games</h3>
-      <p>Interactive games to learn and have fun together.</p>
-      <div class="card-arrow">→</div>
-    </a>
+        <a href="https://ponrathsop-arch.github.io/pang-english-studio/games/" class="card card-5">
+          <div class="card-icon"><img src="images/icon-games.png" alt="Games"></div>
+          <h3>Games</h3>
+          <p>Interactive games to learn and have fun together.</p>
+          <div class="card-arrow">→</div>
+        </a>
 
-    <a href="https://ponrathsop-arch.github.io/pang-english-studio/worksheets/" class="card card-6">
-      <div class="card-icon"><img src="images/icon-worksheets.png" alt="Worksheets"></div>
-      <h3>Worksheets</h3>
-      <p>Printable worksheets for every level and skill.</p>
-      <div class="card-arrow">→</div>
-    </a>
+        <a href="https://ponrathsop-arch.github.io/pang-english-studio/worksheets/" class="card card-6">
+          <div class="card-icon"><img src="images/icon-worksheets.png" alt="Worksheets"></div>
+          <h3>Worksheets</h3>
+          <p>Printable worksheets for every level and skill.</p>
+          <div class="card-arrow">→</div>
+        </a>
 
-  </div>
-</div>
+      </div>
+    </div>
 
-<button class="scroll-btn right" id="scrollRight" aria-label="Scroll right">›</button>
-```
-
+    <button class="scroll-btn right" id="scrollRight" aria-label="Scroll right">›</button>
   </div>
 
   <!-- Garden decoration -->
-
   <div class="garden" id="garden"></div>
 </section>
 
 <!-- ══ FOOTER BANNER ══ -->
-
 <section class="footer-banner">
   <div class="footer-banner-inner">
     <div class="footer-deco">⭐ ☁️ 🌈 ☁️ ⭐</div>
@@ -624,7 +606,6 @@ scroll-snap-align: none;
 </section>
 
 <!-- ══ FOOTER ══ -->
-
 <footer>
   © 2026 <span>Pang English Studio</span> · Learn · Read · Play · Grow ⭐
 </footer>
@@ -844,6 +825,5 @@ setInterval(makeBubble, 2800);
   }
 })();
 </script>
-
 </body>
 </html>
