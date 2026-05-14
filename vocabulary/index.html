@@ -228,33 +228,58 @@ nav {
 .vocab-card:hover .card-arrow { transform: translateX(3px); }
 .school-dropdown{
 max-height:0;
+opacity:0;
 overflow:hidden;
+
+transform:translateY(-10px);
+
 display:flex;
 flex-direction:column;
 gap:8px;
+
 width:100%;
-margin-top:10px;
-transition:max-height .45s ease;
+margin-top:0;
+
+transition:
+max-height .45s ease,
+opacity .35s ease,
+transform .35s ease,
+margin-top .35s ease;
 }
 
 .school-dropdown.open{
 max-height:500px;
+opacity:1;
+
+transform:translateY(0);
+
+margin-top:14px;
 }
 
 .school-dropdown a{
-background:rgba(255,255,255,.75);
-padding:10px;
+background:rgba(255,255,255,.8);
+
+padding:10px 14px;
+
 border-radius:12px;
+
 font-size:13px;
+
 font-weight:800;
+
 text-decoration:none;
+
 color:var(--dark);
+
+box-shadow:
+0 3px 10px rgba(0,0,0,.06);
+
 transition:.2s;
 }
 
 .school-dropdown a:hover{
+transform:translateX(6px);
 background:white;
-transform:translateX(5px);
 }
 /* ══ FOOTER ══ */
 .footer-banner { background: #fffaf6; padding: 28px 40px 36px; }
