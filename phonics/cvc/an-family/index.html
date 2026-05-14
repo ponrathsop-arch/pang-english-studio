@@ -660,7 +660,7 @@ function openZoom(i){
   if(ph.letter.length===1&&ph.letter!=='a'&&ph.letter!=='t'){document.getElementById('zoom-comb').textContent=`${ph.letter} + an = ${ph.letter}an`;}
   else if(ph.letter==='a'){document.getElementById('zoom-comb').textContent='a + n = an';}
   else if(ph.letter==='t'){document.getElementById('zoom-comb').textContent='consonant + an';}
-  else{document.getElementById('zoom-comb').textContent='__ at  —  the family!';}
+  else{document.getElementById('zoom-comb').textContent='__ an  —  the family!';}
   document.getElementById('zoom-ov').classList.add('show');
 }
 function closeZoom(){document.getElementById('zoom-ov').classList.remove('show');}
@@ -669,7 +669,7 @@ function handleZoomTap(){if(zoomIdx<PHONICS_TILES.length-1){openZoom(zoomIdx+1);
 /* BLEND */
 let blendIdx=0,blendState=0;
 function initBlend(){blendIdx=0;blendState=0;dots('b-dots',WORDS.length,0,jumpBlend);renderBlend();}
-function renderBlend(){blendState=0;const w=WORDS[blendIdx];updateDots('b-dots',WORDS.length,blendIdx,jumpBlend);document.getElementById('b-illo').innerHTML=imgTag(w.word);const bC=document.getElementById('b-con');bC.textContent=w.consonant;bC.style.color=w.color;bC.style.background=w.color+'22';bC.style.opacity='1';bC.style.transform='scale(1)';const bR=document.getElementById('b-res');bR.textContent=w.word;bR.style.color=w.color;bR.className='b-res';document.getElementById('b-lbl').textContent=`${w.consonant}  +  at  = ?`;}
+function renderBlend(){blendState=0;const w=WORDS[blendIdx];updateDots('b-dots',WORDS.length,blendIdx,jumpBlend);document.getElementById('b-illo').innerHTML=imgTag(w.word);const bC=document.getElementById('b-con');bC.textContent=w.consonant;bC.style.color=w.color;bC.style.background=w.color+'22';bC.style.opacity='1';bC.style.transform='scale(1)';const bR=document.getElementById('b-res');bR.textContent=w.word;bR.style.color=w.color;bR.className='b-res';document.getElementById('b-lbl').textContent=`${w.consonant}  +  an  = ?`;}
 function jumpBlend(i){blendIdx=i;blendState=0;updateDots('b-dots',WORDS.length,i,jumpBlend);renderBlend();}
 function handleBlendTap(){
   if(blendState===0){blendState=1;const w=WORDS[blendIdx];document.getElementById('b-con').style.transform='scale(1.2)';setTimeout(()=>{document.getElementById('b-res').classList.add('show');document.getElementById('b-con').style.opacity='.3';document.getElementById('b-lbl').textContent=`${w.consonant}  +  an  =  ${w.word} ✅`;spawnSparkle(window.innerWidth/2,window.innerHeight*.5);},320);}
