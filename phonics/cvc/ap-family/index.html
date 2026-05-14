@@ -316,8 +316,8 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
 
 <div class="screen" id="s-phonics">
   <button class="screen-exit" onclick="goNext()">Next →</button>
-  <div class="big-title">👂 Tap each sound!</div>
-  <div class="sub">Tap a letter · hear it · then tap to go to next!</div>
+  <div class="big-title">👂 Tap each letter!</div>
+  <div class="sub">Tap a letter · then tap to go to next!</div>
   <div class="ph-grid" id="ph-grid"></div>
 </div>
 
@@ -442,7 +442,6 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
     <div class="ra-illo" id="ra-illo"></div>
     <div class="ra-word" id="ra-word"></div>
     <div class="ra-sentence" id="ra-sentence"></div>
-    <button class="ra-speak" onclick="event.stopPropagation();speakSentence()">🔊 Read to me</button>
   </div>
   <div class="tap-hint">Tap the card for next word →</div>
 </div>
@@ -679,7 +678,6 @@ function openZoom(i){
   else if(ph.letter==='p'){document.getElementById('zoom-comb').textContent='consonant + ap';}
   else{document.getElementById('zoom-comb').textContent='__ ap  —  the family!';}
   document.getElementById('zoom-ov').classList.add('show');
-  speakLetter(ph.letter);
 }
 function closeZoom(){document.getElementById('zoom-ov').classList.remove('show');}
 function handleZoomTap(){if(zoomIdx<PHONICS_TILES.length-1){openZoom(zoomIdx+1);}else{document.getElementById('zoom-ov').classList.remove('show');goNext();}}
@@ -690,7 +688,7 @@ function initBlend(){blendIdx=0;blendState=0;dots('b-dots',WORDS.length,0,jumpBl
 function renderBlend(){blendState=0;const w=WORDS[blendIdx];updateDots('b-dots',WORDS.length,blendIdx,jumpBlend);document.getElementById('b-illo').innerHTML=imgTag(w.word);const bC=document.getElementById('b-con');bC.textContent=w.consonant;bC.style.color=w.color;bC.style.background=w.color+'22';bC.style.opacity='1';bC.style.transform='scale(1)';const bR=document.getElementById('b-res');bR.textContent=w.word;bR.style.color=w.color;bR.className='b-res';document.getElementById('b-lbl').textContent=`${w.consonant}  +  ap  = ?`;}
 function jumpBlend(i){blendIdx=i;blendState=0;updateDots('b-dots',WORDS.length,i,jumpBlend);renderBlend();}
 function handleBlendTap(){
-  if(blendState===0){blendState=1;const w=WORDS[blendIdx];document.getElementById('b-con').style.transform='scale(1.2)';setTimeout(()=>{document.getElementById('b-res').classList.add('show');document.getElementById('b-con').style.opacity='.3';document.getElementById('b-lbl').textContent=`${w.consonant}  +  ap  =  ${w.word} ✅`;spawnSparkle(window.innerWidth/2,window.innerHeight*.5);speakBlendSequence(w.consonant,'ap',w.word);},320);}
+  if(blendState===0){blendState=1;const w=WORDS[blendIdx];document.getElementById('b-con').style.transform='scale(1.2)';setTimeout(()=>{document.getElementById('b-res').classList.add('show');document.getElementById('b-con').style.opacity='.3';document.getElementById('b-lbl').textContent=`${w.consonant}  +  ap  =  ${w.word} ✅`;spawnSparkle(window.innerWidth/2,window.innerHeight*.5);},320);}
   else{if(blendIdx<WORDS.length-1){blendIdx++;renderBlend();}else{bigConfetti();setTimeout(goNext,700);}}
 }
 
@@ -771,7 +769,7 @@ function initRead(){readIdx=0;dots('ra-dots',WORDS.length,0,jumpRead);renderRead
 function renderRead(){updateDots('ra-dots',WORDS.length,readIdx,jumpRead);const w=WORDS[readIdx];document.getElementById('ra-illo').innerHTML=imgTag(w.word,'scene');document.getElementById('ra-word').textContent=w.word;document.getElementById('ra-word').style.color=w.color;const sent=SENTENCES[w.word];const hl=sent.replace(new RegExp(`\\b${w.word}\\b`,'gi'),`<span class="ra-hl">${w.word}</span>`);document.getElementById('ra-sentence').innerHTML=hl;}
 function jumpRead(i){readIdx=i;updateDots('ra-dots',WORDS.length,i,jumpRead);renderRead();}
 function nextRead(){if(readIdx<WORDS.length-1){readIdx++;renderRead();}else{bigConfetti();setTimeout(goNext,700);}}
-function speakSentence(){speak(SENTENCES[WORDS[readIdx].word],0.74,1.02);}
+function speakSentence(){return;}
 
 showScreen('s-home');
 </script>
