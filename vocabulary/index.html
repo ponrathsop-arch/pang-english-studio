@@ -21,6 +21,7 @@
   --sky: #b0d8f8;      --sky-light: #e4f2fd;    --sky-deep: #2870b8;
   --lime: #c8e8a0;     --lime-light: #eef8e0;   --lime-deep: #5a9020;
   --apricot: #f8d0a0;  --apricot-light: #fef0dc;--apricot-deep: #d07820;
+  --coral: #ffc4a8;    --coral-light: #fff0e8;  --coral-deep: #d45a20;
   --dark: #1e2840;     --text: #3d4a6b;         --text-soft: #6b7a9b;
   --shadow: 0 4px 24px rgba(45,58,94,0.08);
   --shadow-hover: 0 12px 36px rgba(45,58,94,0.16);
@@ -154,6 +155,7 @@ nav {
 .vocab-card:nth-child(9)  { animation-delay: 0.45s; }
 .vocab-card:nth-child(10) { animation-delay: 0.50s; }
 .vocab-card:nth-child(11) { animation-delay: 0.55s; }
+.vocab-card:nth-child(12) { animation-delay: 0.60s; }
 
 /* Colour variants */
 .c-pink     { background: var(--pink-light);    border-color: var(--pink); }
@@ -200,6 +202,10 @@ nav {
 .c-apricot::before  { background: var(--apricot-deep); }
 .c-apricot:hover .card-arrow { background: var(--apricot-deep); color: white; }
 
+.c-coral    { background: var(--coral-light);   border-color: var(--coral); }
+.c-coral::before    { background: var(--coral-deep); }
+.c-coral:hover .card-arrow { background: var(--coral-deep); color: white; }
+
 /* Card icon circle */
 .card-emoji-wrap {
   width: 80px; height: 80px; border-radius: 50%;
@@ -226,61 +232,26 @@ nav {
   transition: background 0.2s, transform 0.2s;
 }
 .vocab-card:hover .card-arrow { transform: translateX(3px); }
-.school-dropdown{
-max-height:0;
-opacity:0;
-overflow:hidden;
 
-transform:translateY(-10px);
-
-display:flex;
-flex-direction:column;
-gap:8px;
-
-width:100%;
-margin-top:0;
-
-transition:
-max-height .45s ease,
-opacity .35s ease,
-transform .35s ease,
-margin-top .35s ease;
+/* School dropdown */
+.school-dropdown {
+  max-height: 0; opacity: 0; overflow: hidden;
+  transform: translateY(-10px);
+  display: flex; flex-direction: column; gap: 8px;
+  width: 100%; margin-top: 0;
+  transition: max-height .45s ease, opacity .35s ease, transform .35s ease, margin-top .35s ease;
 }
-
-.school-dropdown.open{
-max-height:500px;
-opacity:1;
-
-transform:translateY(0);
-
-margin-top:14px;
+.school-dropdown.open {
+  max-height: 500px; opacity: 1;
+  transform: translateY(0); margin-top: 14px;
 }
-
-.school-dropdown a{
-background:rgba(255,255,255,.8);
-
-padding:10px 14px;
-
-border-radius:12px;
-
-font-size:13px;
-
-font-weight:800;
-
-text-decoration:none;
-
-color:var(--dark);
-
-box-shadow:
-0 3px 10px rgba(0,0,0,.06);
-
-transition:.2s;
+.school-dropdown a {
+  background: rgba(255,255,255,.8); padding: 10px 14px; border-radius: 12px;
+  font-size: 13px; font-weight: 800; text-decoration: none; color: var(--dark);
+  box-shadow: 0 3px 10px rgba(0,0,0,.06); transition: .2s;
 }
+.school-dropdown a:hover { transform: translateX(6px); background: white; }
 
-.school-dropdown a:hover{
-transform:translateX(6px);
-background:white;
-}
 /* ══ FOOTER ══ */
 .footer-banner { background: #fffaf6; padding: 28px 40px 36px; }
 .footer-banner-inner {
@@ -417,7 +388,7 @@ footer span { color: rgba(249,168,201,0.8); }
       <div class="card-arrow">→</div>
     </a>
 
-    <!-- Color -->
+    <!-- Colors -->
     <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/colors/" class="vocab-card c-rose">
       <div class="card-emoji-wrap">🌈</div>
       <div class="card-title">Colors</div>
@@ -425,7 +396,7 @@ footer span { color: rgba(249,168,201,0.8); }
       <div class="card-arrow">→</div>
     </a>
 
-    <!-- Shape -->
+    <!-- Shapes -->
     <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/shapes/" class="vocab-card c-yellow">
       <div class="card-emoji-wrap">🔷</div>
       <div class="card-title">Shapes</div>
@@ -433,7 +404,7 @@ footer span { color: rgba(249,168,201,0.8); }
       <div class="card-arrow">→</div>
     </a>
 
-    <!-- Occupation -->
+    <!-- Occupations -->
     <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/occupations/" class="vocab-card c-mint">
       <div class="card-emoji-wrap">👩‍⚕️</div>
       <div class="card-title">Occupations</div>
@@ -441,56 +412,31 @@ footer span { color: rgba(249,168,201,0.8); }
       <div class="card-arrow">→</div>
     </a>
 
-<!-- School -->
-<div class="vocab-card c-sky school-card" onclick="toggleSchoolDropdown(event)">
-  
-  <div class="card-emoji-wrap">🎒</div>
+    <!-- School (dropdown) -->
+    <div class="vocab-card c-sky school-card" onclick="toggleSchoolDropdown(event)">
+      <div class="card-emoji-wrap">🎒</div>
+      <div class="card-title">School</div>
+      <div class="card-desc">Pencils, books, desks — all the things you find at school.</div>
+      <div class="card-arrow" id="schoolArrow">▼</div>
+      <div class="school-dropdown" id="schoolDropdown">
+        <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/school/school-supplies/">📚 School Supplies</a>
+        <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/school/people/">👩‍🏫 People</a>
+        <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/school/places/">🏫 Places</a>
+        <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/school/actions/">✏️ Actions</a>
+        <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/school/subjects/">📖 Subjects</a>
+        <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/school/technology/">💻 Technology</a>
+        <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/school/study-skills/">🎓 Study Skills</a>
+      </div>
+    </div>
 
-  <div class="card-title">
-    School
-  </div>
+    <!-- Food & Drink -->
+    <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/food-and-drink/" class="vocab-card c-coral">
+      <div class="card-emoji-wrap">🍽️</div>
+      <div class="card-title">Food &amp; Drink</div>
+      <div class="card-desc">Pizza, noodles, juice and more — learn yummy food and drink words.</div>
+      <div class="card-arrow">→</div>
+    </a>
 
-  <div class="card-desc">
-    Pencils, books, desks — all the things you find at school.
-  </div>
-
-  <div class="card-arrow" id="schoolArrow">
-     ▼
-  </div>
-
- <div class="school-dropdown" id="schoolDropdown">
-
-<a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/school/school-supplies/">
-📚 School Supplies
-</a>
-
-<a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/school/people/">
-👩‍🏫 People
-</a>
-
-<a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/school/places/">
-🏫 Places
-</a>
-
-<a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/school/actions/">
-✏️ Actions
-</a>
-
-<a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/school/subjects/">
-📖 Subjects
-</a>
-
-<a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/school/technology/">
-💻 Technology
-</a>
-
-<a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/school/study-skills/">
-🎓 Study Skills
-</a>
-
-</div>
-
-</div>
     <!-- Health -->
     <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/health/" class="vocab-card c-peach">
       <div class="card-emoji-wrap">💊</div>
@@ -561,61 +507,18 @@ function makeBubble() {
 }
 for (let i = 0; i < 20; i++) makeBubble();
 setInterval(makeBubble, 3000);
-function toggleSchoolDropdown(e){
 
-  // allow dropdown links to open normally
-  if(e.target.closest(".school-dropdown a")){
-      return;
-  }
-
+function toggleSchoolDropdown(e) {
+  if (e.target.closest('.school-dropdown a')) return;
   e.preventDefault();
-
-  const drop =
-  document.getElementById(
-  "schoolDropdown"
-  );
-
-  const arrow =
-  document.getElementById(
-  "schoolArrow"
-  );
-
-  const schoolCard =
-  document.querySelector(
-  ".school-card"
-  );
-
-  drop.classList.toggle(
-  "open"
-  );
-
-  arrow.innerHTML =
-  drop.classList.contains(
-  "open"
-  )
-  ?
-  "▲"
-  :
-  "▼";
-
-
-  if(
-      drop.classList.contains(
-      "open"
-      )
-  ){
-
-      setTimeout(()=>{
-
-          schoolCard.scrollIntoView({
-              behavior:"smooth",
-              block:"center"
-          });
-
-      },120);
-
+  const drop = document.getElementById('schoolDropdown');
+  const arrow = document.getElementById('schoolArrow');
+  const schoolCard = document.querySelector('.school-card');
+  drop.classList.toggle('open');
+  arrow.innerHTML = drop.classList.contains('open') ? '▲' : '▼';
+  if (drop.classList.contains('open')) {
+    setTimeout(() => { schoolCard.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 120);
   }
-
 }
 </script>
 </body>
