@@ -259,6 +259,43 @@ html,body{height:100%;font-family:'Nunito',Arial,sans-serif;font-weight:800;back
 .cel-title{font-family:'Baloo 2';font-size:clamp(2rem,6vw,4rem);color:var(--dark);}
 .cel-sub{font-size:clamp(.9rem,2.2vw,1.25rem);color:var(--muted);text-align:center;}
 
+/* TEACHER FLASHCARD PICKER */
+#s-flashcard-pick{background:radial-gradient(circle at 22% 20%,rgba(249,216,122,.22),transparent 28%),radial-gradient(circle at 80% 75%,rgba(168,212,180,.2),transparent 28%),linear-gradient(145deg,#fef8e0,#fffaf6,#fdeee4);}
+.fc-picker-panel{border-radius:28px;padding:18px 16px 16px;max-width:540px;width:min(96vw,540px);display:flex;flex-direction:column;gap:12px;position:relative;z-index:2;margin-top:10px;}
+.fc-picker-toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+.fc-sel-btn{border:none;border-radius:999px;padding:7px 16px;font-family:'Nunito';font-weight:900;font-size:.82rem;cursor:pointer;background:rgba(255,255,255,.78);color:var(--dark);box-shadow:0 3px 8px rgba(45,58,94,.1);transition:.15s;}
+.fc-sel-btn:active{transform:scale(.93);}
+.fc-word-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;max-height:38vh;overflow-y:auto;padding:4px 2px;}
+@media(max-width:480px){.fc-word-grid{grid-template-columns:repeat(3,1fr);}}
+.fc-word-chip{border:2.5px solid var(--yellow);background:var(--yellow-light);border-radius:12px;padding:7px 6px;font-size:clamp(.58rem,1.5vw,.78rem);font-weight:900;color:var(--dark);cursor:pointer;text-align:center;line-height:1.2;transition:.15s;user-select:none;}
+.fc-word-chip:active{transform:scale(.93);}
+.fc-word-chip.fc-unselected{border-color:#ddd;background:#f5f5f5;color:#bbb;}
+.fc-pick-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:4px;border-top:1.5px solid rgba(232,160,48,.18);}
+.fc-pick-count{font-size:.82rem;color:var(--muted);font-weight:900;}
+
+/* TEACHER FLASHCARD SESSION */
+#s-flashcard{background:radial-gradient(circle at 20% 18%,rgba(249,168,201,.18),transparent 28%),radial-gradient(circle at 82% 22%,rgba(168,212,180,.2),transparent 28%),linear-gradient(145deg,#fde8f2,#fffaf6,#fef8e0);justify-content:flex-start;padding-top:10px;}
+.fc-session-header{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:480px;margin-bottom:10px;position:relative;z-index:2;}
+.fc-back-session{border:none;border-radius:999px;padding:7px 14px;background:rgba(255,255,255,.85);color:var(--dark);font-family:'Nunito';font-weight:900;font-size:.82rem;cursor:pointer;box-shadow:0 3px 10px rgba(45,58,94,.1);}
+.fc-progress-txt{font-family:'Baloo 2';font-size:1.1rem;color:var(--dark);}
+.fc-restart-btn{border:none;border-radius:50%;width:36px;height:36px;background:rgba(255,255,255,.85);color:var(--dark);font-size:1rem;cursor:pointer;box-shadow:0 3px 10px rgba(45,58,94,.1);}
+.fc-card-wrap{width:min(94vw,420px);cursor:pointer;position:relative;z-index:2;}
+.fc-card{border-radius:30px;min-height:clamp(280px,46vh,380px);width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px 20px;gap:14px;transition:transform .18s cubic-bezier(.34,1.56,.64,1);}
+.fc-card:active{transform:scale(.97);}
+.fc-card-side{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;width:100%;}
+.fc-big-img{width:clamp(180px,38vw,260px);height:clamp(180px,38vw,260px);box-shadow:0 12px 0 rgba(45,58,94,.1);background:linear-gradient(145deg,#fff,#fef8e0);border:3px solid rgba(255,255,255,.78);}
+.fc-tap-hint{font-size:clamp(.72rem,1.8vw,.95rem);color:var(--muted);animation:pulse 1.5s ease-in-out infinite alternate;}
+.fc-reveal-word{font-family:'Baloo 2';font-size:clamp(2.6rem,9vw,5rem);color:var(--dark);text-align:center;line-height:1;text-shadow:0 4px 0 rgba(255,255,255,.85);}
+.fc-reveal-emoji{font-size:clamp(2.4rem,8vw,4rem);}
+.fc-nav-row{display:flex;align-items:center;justify-content:space-between;width:min(94vw,420px);margin-top:14px;gap:8px;position:relative;z-index:2;}
+.fc-nav-btn{border:none;border-radius:999px;padding:9px 20px;font-family:'Nunito';font-weight:900;font-size:.88rem;cursor:pointer;background:rgba(255,255,255,.88);color:var(--dark);box-shadow:0 4px 12px rgba(45,58,94,.1);transition:.15s;}
+.fc-nav-btn:active{transform:scale(.93);}
+.fc-nav-next{background:linear-gradient(135deg,var(--yellow-deep),var(--peach));color:white;}
+.fc-dot-row{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;flex:1;max-width:200px;}
+.fc-dot{width:7px;height:7px;border-radius:50%;background:#e0d8f0;transition:all .22s;flex-shrink:0;}
+.fc-dot.fc-cur{background:var(--yellow-deep);transform:scale(1.6);}
+.fc-dot.fc-done{background:var(--sage-deep);}
+
 /* CONFETTI */
 .conf-p{position:fixed;width:9px;height:9px;border-radius:3px;opacity:0;pointer-events:none;z-index:9999;animation:confFall 1.4s ease forwards;}
 @keyframes confFall{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}
@@ -576,13 +613,61 @@ html,body{height:100%;font-family:'Nunito',Arial,sans-serif;font-weight:800;back
   <button class="main-tab" id="mtab-review" onclick="showMainTab('review')">
     <div class="main-tab-icon">🖼️</div><div class="main-tab-label">Review</div><div class="tab-pip"></div>
   </button>
+  <button class="main-tab" id="mtab-flashcard" onclick="showMainTab('flashcard')">
+    <div class="main-tab-icon">🎴</div><div class="main-tab-label">Flash Cards</div><div class="tab-pip"></div>
+  </button>
+</div>
+
+<!-- TEACHER FLASHCARD PICKER -->
+<div class="screen" id="s-flashcard-pick">
+  <div class="big-title">🎴 Teacher Flash Cards</div>
+  <div class="sub">Choose which words to show. Then tap Start.</div>
+  <div class="fc-picker-panel glass-panel">
+    <div class="fc-picker-toolbar">
+      <button class="fc-sel-btn" onclick="fcSelectAll()">✅ All</button>
+      <button class="fc-sel-btn" onclick="fcSelectSet(1)">Set 1</button>
+      <button class="fc-sel-btn" onclick="fcSelectSet(2)">Set 2</button>
+      <button class="fc-sel-btn" onclick="fcSelectNone()">✕ None</button>
+    </div>
+    <div class="fc-word-grid" id="fc-word-grid"></div>
+    <div class="fc-pick-footer">
+      <span class="fc-pick-count" id="fc-pick-count">20 words selected</span>
+      <button class="btn btn-main" id="fc-start-btn" onclick="startFlashCards()">▶ Start</button>
+    </div>
+  </div>
+</div>
+
+<!-- TEACHER FLASHCARD SESSION -->
+<div class="screen" id="s-flashcard">
+  <div class="fc-session-header">
+    <button class="fc-back-session" onclick="showMainTab('flashcard')">← Pick Words</button>
+    <div class="fc-progress-txt" id="fc-prog-txt">1 / 20</div>
+    <button class="fc-restart-btn" onclick="startFlashCards()">🔄</button>
+  </div>
+  <div class="fc-card-wrap" id="fc-card-wrap" onclick="fcReveal()">
+    <div class="fc-card glass-panel" id="fc-card">
+      <div class="fc-card-side fc-pic-side" id="fc-pic-side">
+        <div class="sq-img fc-big-img" id="fc-big-img"></div>
+        <div class="fc-tap-hint">Tap to reveal →</div>
+      </div>
+      <div class="fc-card-side fc-word-side" id="fc-word-side" style="display:none;">
+        <div class="fc-reveal-word" id="fc-reveal-word"></div>
+        <div class="fc-reveal-emoji" id="fc-reveal-emoji"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-nav-row">
+    <button class="fc-nav-btn" id="fc-prev-btn" onclick="fcNav(-1)">← Prev</button>
+    <div class="fc-dot-row" id="fc-dots"></div>
+    <button class="fc-nav-btn fc-nav-next" id="fc-next-btn" onclick="fcNav(1)">Next →</button>
+  </div>
 </div>
 
 <script>
 // ── DATA ──────────────────────────────────────────────────────────────
 const WORDS = [
   {word:"pizza",        key:"pizza",        s1:"We ate pizza for dinner.",                  s2:"The pizza has lots of cheese.",           emoji:"🍕"},
-  {word:"hamburger",    key:"hamburger",     s1:"My brother ordered a hamburger.",           s2:"He ate a big hamburger at the restaurant.",emoji:"🍔"},
+  {word:"hamburger",    key:"hamburger",     s1:"My brother ordered a hamburger.",           s2:"She ate a big hamburger at the restaurant.",emoji:"🍔"},
   {word:"fried chicken",key:"fried-chicken", s1:"The children love fried chicken.",          s2:"We bought fried chicken for lunch.",       emoji:"🍗"},
   {word:"French fries", key:"french-fries",  s1:"She shared her French fries with me.",      s2:"The French fries are hot and crispy.",     emoji:"🍟"},
   {word:"fried rice",   key:"fried-rice",    s1:"Mom cooked fried rice today.",              s2:"I like shrimp fried rice.",               emoji:"🍛"},
@@ -649,6 +734,9 @@ function showMainTab(tab){
     } else if(tab==='review'){
       g('s-review')?.classList.add('active');
       initReview();
+    } else if(tab==='flashcard'){
+      g('s-flashcard-pick')?.classList.add('active');
+      initFlashCardPicker();
     }
   }
   updateBottomPad();
@@ -682,7 +770,7 @@ function clearSubHighlight(){
   document.querySelectorAll('.sub-tab').forEach(t=>t.classList.remove('active-sub'));
 }
 function updateProgress(){
-  const order=['learn1','learn2','lightning','review'];
+  const order=['learn1','learn2','lightning','review','flashcard'];
   const idx=order.indexOf(activeMain);
   if(g('prog-bar')) g('prog-bar').style.width=((idx+1)/order.length*100)+'%';
 }
@@ -1044,6 +1132,111 @@ function overlayNav(dir){
 }
 function closeOverlay(){ g('review-overlay')?.classList.remove('show'); }
 g('review-overlay').addEventListener('click',function(e){ if(e.target===this) closeOverlay(); });
+
+// ── TEACHER FLASHCARD ─────────────────────────────────────────────────
+let fcSelected = new Set(WORDS.map(w=>w.key)); // all selected by default
+let fcDeck = [];   // shuffled subset
+let fcIdx  = 0;
+let fcRevealed = false;
+
+function initFlashCardPicker(){
+  const grid = g('fc-word-grid'); if(!grid) return; grid.innerHTML='';
+  WORDS.forEach(item=>{
+    const chip = document.createElement('div');
+    chip.className = 'fc-word-chip' + (fcSelected.has(item.key) ? '' : ' fc-unselected');
+    chip.textContent = item.word;
+    chip.dataset.key = item.key;
+    chip.onclick = () => fcToggleChip(chip, item.key);
+    grid.appendChild(chip);
+  });
+  fcUpdateCount();
+}
+
+function fcToggleChip(chip, key){
+  if(fcSelected.has(key)){
+    fcSelected.delete(key);
+    chip.classList.add('fc-unselected');
+  } else {
+    fcSelected.add(key);
+    chip.classList.remove('fc-unselected');
+  }
+  fcUpdateCount();
+}
+
+function fcUpdateCount(){
+  const n = fcSelected.size;
+  const el = g('fc-pick-count'); if(el) el.textContent = `${n} word${n===1?'':'s'} selected`;
+  const btn = g('fc-start-btn'); if(btn) btn.disabled = n===0;
+}
+
+function fcSelectAll(){ fcSelected = new Set(WORDS.map(w=>w.key)); refreshChips(); }
+function fcSelectNone(){ fcSelected = new Set(); refreshChips(); }
+function fcSelectSet(set){
+  const arr = setFor(set);
+  arr.forEach(w=> fcSelected.add(w.key));
+  refreshChips();
+}
+function refreshChips(){
+  document.querySelectorAll('.fc-word-chip').forEach(chip=>{
+    chip.classList.toggle('fc-unselected', !fcSelected.has(chip.dataset.key));
+  });
+  fcUpdateCount();
+}
+
+function startFlashCards(){
+  if(fcSelected.size===0) return;
+  fcDeck = shuffle(WORDS.filter(w=>fcSelected.has(w.key)));
+  fcIdx = 0; fcRevealed = false;
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  g('s-flashcard')?.classList.add('active');
+  renderFCCard();
+}
+
+function renderFCCard(){
+  fcRevealed = false;
+  const item = fcDeck[fcIdx];
+  // picture side visible, word side hidden
+  const picSide = g('fc-pic-side'); if(picSide) picSide.style.display='flex';
+  const wordSide = g('fc-word-side'); if(wordSide) wordSide.style.display='none';
+  // image
+  placeImage(g('fc-big-img'), item);
+  // word + emoji (pre-load for reveal)
+  const wEl = g('fc-reveal-word'); if(wEl) wEl.textContent = item.word;
+  const eEl = g('fc-reveal-emoji'); if(eEl) eEl.textContent = item.emoji;
+  // header progress
+  const pt = g('fc-prog-txt'); if(pt) pt.textContent = `${fcIdx+1} / ${fcDeck.length}`;
+  // nav buttons
+  const prev = g('fc-prev-btn'); if(prev) prev.style.opacity = fcIdx===0 ? '.35' : '1';
+  const next = g('fc-next-btn'); if(next) next.textContent = fcIdx===fcDeck.length-1 ? '🏁 Done' : 'Next →';
+  // dots
+  const dotRow = g('fc-dots'); if(dotRow){
+    dotRow.innerHTML='';
+    const maxDots = Math.min(fcDeck.length, 20);
+    for(let i=0;i<maxDots;i++){
+      const d=document.createElement('div');
+      d.className='fc-dot'+(i<fcIdx?' fc-done':i===fcIdx?' fc-cur':'');
+      dotRow.appendChild(d);
+    }
+  }
+}
+
+function fcReveal(){
+  if(fcRevealed) return;
+  fcRevealed = true;
+  const picSide = g('fc-pic-side'); if(picSide) picSide.style.display='none';
+  const wordSide = g('fc-word-side'); if(wordSide) wordSide.style.display='flex';
+  spawnSparkle(window.innerWidth/2, window.innerHeight/2);
+}
+
+function fcNav(dir){
+  if(dir===-1 && fcIdx===0) return;
+  if(dir===1 && fcIdx===fcDeck.length-1){
+    // Done — go back to picker
+    showMainTab('flashcard'); return;
+  }
+  fcIdx += dir;
+  renderFCCard();
+}
 
 // ── INIT ──────────────────────────────────────────────────────────────
 updateBottomPad();
