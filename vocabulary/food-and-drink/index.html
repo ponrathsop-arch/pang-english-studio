@@ -777,11 +777,21 @@ function updateProgress(){
 
 // ── UTILS ─────────────────────────────────────────────────────────────
 function shuffle(a){ return [...a].sort(()=>Math.random()-.5); }
-function imgSrc(item){ return `${IMG_BASE}${item.key}.png`; }
+function imgSrc(item)  { return `${IMG_BASE}${item.key}.png`; }
+function imgSrc1(item) { return `${IMG_BASE}${item.key}1.png`; }
+
 function imageBox(item){
   return `<img src="${imgSrc(item)}" alt="${item.word}" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\\'fallback-emoji\\'>${item.emoji}</div>';">`;
 }
+function imageBox1(item){
+  // loads word1.png, falls back to word.png, then to emoji
+  return `<img src="${imgSrc1(item)}" alt="${item.word}"
+    onerror="if(this.dataset.fb){this.style.display='none';this.parentElement.innerHTML='<div class=\\'fallback-emoji\\'>${item.emoji}</div>';}else{this.dataset.fb='1';this.src='${imgSrc(item)}';}">`;
+}
+
 function placeImage(el,item){ if(el) el.innerHTML=imageBox(item); }
+function placeImage1(el,item){ if(el) el.innerHTML=imageBox1(item); }
+
 function highlightWord(sentence, word){
   const esc = word.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
   return sentence.replace(new RegExp(esc,'gi'), m=>`<span class="hl">${m}</span>`);
@@ -827,13 +837,17 @@ function initVocab(set){
 }
 function renderVocab(set){
   const s=set-1; const words=setFor(set); const item=words[vocabIdx[s]];
-  placeImage(g(`vocab${set}-img`),item);
   const wEl=g(`vocab${set}-word`); if(wEl) wEl.textContent=item.word;
   const sentEl=g(`vocab${set}-sentence`);
-  if(sentEl){
-    if(vocabSide[s]===0){
-      sentEl.style.display='none';
-    } else {
+
+  if(vocabSide[s]===0){
+    // Word side: show word.png
+    placeImage(g(`vocab${set}-img`), item);
+    if(sentEl) sentEl.style.display='none';
+  } else {
+    // Sentence side: show word1.png (falls back to word.png)
+    placeImage1(g(`vocab${set}-img`), item);
+    if(sentEl){
       sentEl.style.display='flex';
       sentEl.innerHTML=
         `<div class="vocab-s-row"><span class="vocab-s-num">1.</span><span>${highlightWord(item.s1,item.word)}</span></div>`+
@@ -844,7 +858,7 @@ function renderVocab(set){
 }
 function nextVocabTap(set){
   const s=set-1; const words=setFor(set);
-  if(vocabSide[s]===0){vocabSide[s]=1;renderVocab(set);return;}
+  if(vocabSide[s]===0){ vocabSide[s]=1; renderVocab(set); return; }
   vocabIdx[s]++; vocabSide[s]=0;
   if(vocabIdx[s]>=words.length){ vocabIdx[s]=words.length-1; return; }
   renderVocab(set);
@@ -952,8 +966,23 @@ function startMemory(set,mode){
   const a=g(`mem${set}-grid-a`); if(!a) return; a.innerHTML='';
   const b=g(`mem${set}-grid-b`); if(!b) return; b.innerHTML='';
   const words=setFor(set);
-  shuffle(words).forEach((item,i)=>a.appendChild(memCard(set,item,mode===2?'word':'pic','A',i)));
-  shuffle(words).forEach((item,i)=>b.appendChild(memCard(set,item,mode===1?'pic':'word','B',i)));
+  const wordsA=shuffle(words);
+  const wordsB=shuffle(words);
+  // preview: flip all cards briefly so kids can see them, then flip back
+  wordsA.forEach((item,i)=>a.appendChild(memCard(set,item,mode===2?'word':'pic','A',i)));
+  wordsB.forEach((item,i)=>b.appendChild(memCard(set,item,mode===1?'pic':'word','B',i)));
+  // 2-second preview
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      const allCards=document.querySelectorAll(`#mem${set}-grid-a .mem-card, #mem${set}-grid-b .mem-card`);
+      allCards.forEach(c=>c.classList.add('flipped'));
+      setTimeout(()=>{
+        allCards.forEach(c=>c.classList.remove('flipped'));
+        memLock[s]=false;
+      },2000);
+    });
+  });
+  memLock[s]=true;
 }
 function memCard(set,item,type,group,i){
   const card=document.createElement('div');
@@ -973,7 +1002,6 @@ function flipMem(set,card){
   memTries[s]++;
   const tEl=g(`mem${set}-tries`); if(tEl) tEl.textContent=memTries[s];
   if(memFirst[s].dataset.key===card.dataset.key){
-    // Correct match — show for 1.5s then mark matched
     const firstCard=memFirst[s];
     memFirst[s]=null;
     setTimeout(()=>{
@@ -984,7 +1012,6 @@ function flipMem(set,card){
       if(memMatched[s]===setFor(set).length) setTimeout(()=>spawnSparkle(window.innerWidth/2,window.innerHeight/2),200);
     },1500);
   }else{
-    // Wrong — show for 1.5s then flip back
     memLock[s]=true;
     const f=memFirst[s];
     memFirst[s]=null;
@@ -1134,8 +1161,8 @@ function closeOverlay(){ g('review-overlay')?.classList.remove('show'); }
 g('review-overlay').addEventListener('click',function(e){ if(e.target===this) closeOverlay(); });
 
 // ── TEACHER FLASHCARD ─────────────────────────────────────────────────
-let fcSelected = new Set(WORDS.map(w=>w.key)); // all selected by default
-let fcDeck = [];   // shuffled subset
+let fcSelected = new Set(WORDS.map(w=>w.key));
+let fcDeck = [];
 let fcIdx  = 0;
 let fcRevealed = false;
 
@@ -1195,20 +1222,14 @@ function startFlashCards(){
 function renderFCCard(){
   fcRevealed = false;
   const item = fcDeck[fcIdx];
-  // picture side visible, word side hidden
   const picSide = g('fc-pic-side'); if(picSide) picSide.style.display='flex';
   const wordSide = g('fc-word-side'); if(wordSide) wordSide.style.display='none';
-  // image
   placeImage(g('fc-big-img'), item);
-  // word + emoji (pre-load for reveal)
   const wEl = g('fc-reveal-word'); if(wEl) wEl.textContent = item.word;
   const eEl = g('fc-reveal-emoji'); if(eEl) eEl.textContent = item.emoji;
-  // header progress
   const pt = g('fc-prog-txt'); if(pt) pt.textContent = `${fcIdx+1} / ${fcDeck.length}`;
-  // nav buttons
   const prev = g('fc-prev-btn'); if(prev) prev.style.opacity = fcIdx===0 ? '.35' : '1';
   const next = g('fc-next-btn'); if(next) next.textContent = fcIdx===fcDeck.length-1 ? '🏁 Done' : 'Next →';
-  // dots
   const dotRow = g('fc-dots'); if(dotRow){
     dotRow.innerHTML='';
     const maxDots = Math.min(fcDeck.length, 20);
@@ -1231,7 +1252,6 @@ function fcReveal(){
 function fcNav(dir){
   if(dir===-1 && fcIdx===0) return;
   if(dir===1 && fcIdx===fcDeck.length-1){
-    // Done — go back to picker
     showMainTab('flashcard'); return;
   }
   fcIdx += dir;
