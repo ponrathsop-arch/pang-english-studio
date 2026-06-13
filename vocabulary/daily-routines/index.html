@@ -517,7 +517,7 @@ html,body{height:100%;font-family:'Nunito',Arial,sans-serif;font-weight:800;back
 
 <script>
 // ── DATA ──────────────────────────────────────────────────────────────
-// Each word has ONE image: key + ".png"  (e.g. wake-up.png)
+// Each word's picture is named by its NUMBER: 1.png, 2.png, 3.png ... 20.png
 const WORDS = [
   {word:"wake up",         key:"wake-up",        emoji:"⏰", s:["I wake up at seven o'clock.","I wake up early every day."]},
   {word:"brush my teeth",  key:"brush-my-teeth", emoji:"🪥", s:["I brush my teeth in the morning.","I brush my teeth at night."]},
@@ -545,6 +545,7 @@ const WORDS = [
 ];
 const SETS = [ WORDS.slice(0,5), WORDS.slice(5,10), WORDS.slice(10,15), WORDS.slice(15,20) ];
 const IMG_BASE = './';
+WORDS.forEach((w,i)=>w.num=i+1);   // picture file = its number (1.png … 20.png)
 
 // ── NAV STATE ─────────────────────────────────────────────────────────
 let activeMain = 'home';
@@ -625,7 +626,7 @@ function updateProgress(){
 
 // ── UTILS ─────────────────────────────────────────────────────────────
 function shuffle(a){ return [...a].sort(()=>Math.random()-.5); }
-function imgSrc(item){ return `${IMG_BASE}${item.key}.png`; }
+function imgSrc(item){ return `${IMG_BASE}${item.num}.png`; }
 function imageBox(item){
   return `<img src="${imgSrc(item)}" alt="${item.word}" onerror="this.onerror=null;var p=this.parentElement;if(p)p.innerHTML='<div class=\\'fallback-emoji\\'>${item.emoji}</div>';">`;
 }
