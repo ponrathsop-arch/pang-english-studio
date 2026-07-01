@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Long Vowels | Pang English Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #fdf8f3;
+  --pink: #f9a8c9; --pink-light: #fde8f2; --pink-soft: #fef0f7;
+  --blue: #a8c8f0; --blue-light: #e8f2fd; --blue-soft: #deeefb;
+  --sage: #a8d4b4; --sage-light: #e8f5ec; --sage-soft: #d8f0df;
+  --yellow: #f9d87a; --yellow-light: #fef8e0; --yellow-soft: #fff3c4;
+  --peach: #f8c5a0; --peach-light: #fdeee4;
+  --lavender: #c8b8f0; --lavender-light: #f0ebfd;
+  --mint: #9fe0cf; --mint-light: #e3f9f2; --mint-soft: #d0f5ea;
+  --dark: #1e2840; --text: #3d4a6b; --text-soft: #6b7a9b;
+  --shadow: 0 4px 24px rgba(45,58,94,0.08);
+  --shadow-hover: 0 8px 32px rgba(45,58,94,0.15);
+  --radius-lg: 28px;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+/* ══ BUBBLES ══ */
+.bubbles-layer { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+.bubble {
+  position: absolute; bottom: -80px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  box-shadow: inset 0 0 10px rgba(255,255,255,0.35), 0 2px 12px rgba(180,200,255,0.08);
+  animation: bubbleRise linear infinite;
+}
+@keyframes bubbleRise {
+  0%   { opacity: 0;    transform: translateY(0)      translateX(0); }
+  8%   { opacity: var(--op); }
+  88%  { opacity: var(--op); }
+  100% { opacity: 0;    transform: translateY(-105vh) translateX(var(--drift,0px)); }
+}
+
+/* ══ NAV ══ */
+nav {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(253,248,243,0.95);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1.5px solid rgba(249,168,201,0.2);
+  padding: 0 28px;
+}
+.nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 12px; height: 62px; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+.logo-icon {
+  width: 52px; height: 52px; border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(249,216,122,0.4); flex-shrink: 0;
+  background: linear-gradient(135deg, var(--yellow) 0%, var(--peach) 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; position: relative; overflow: hidden;
+}
+.logo-icon img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; z-index: 2; }
+.logo-icon .logo-emoji { position: relative; z-index: 1; }
+.logo-text h1 { font-family: 'Baloo 2', cursive; font-size: 17px; font-weight: 800; line-height: 1.1; color: var(--dark); }
+.logo-text h1 span { color: #f06fa4; }
+.logo-text p { font-size: 10px; font-weight: 600; color: var(--text-soft); letter-spacing: 0.04em; }
+.nav-links { display: flex; align-items: center; gap: 2px; list-style: none; margin-left: auto; }
+.nav-links a {
+  text-decoration: none; font-size: 12.5px; font-weight: 700; color: var(--text);
+  padding: 6px 10px; border-radius: 10px; transition: background 0.2s, color 0.2s; white-space: nowrap;
+}
+.nav-links a:hover { background: var(--pink-light); color: #d05090; }
+.nav-links a.active { background: var(--mint-light); color: #2a9c80; border-bottom: 2.5px solid var(--mint); border-radius: 10px 10px 5px 5px; }
+.btn-contact {
+  background: linear-gradient(135deg, #f06fa4 0%, #f9a8c9 100%) !important;
+  color: white !important; padding: 7px 16px !important; border-radius: 50px !important;
+  font-weight: 800 !important; box-shadow: 0 3px 12px rgba(240,111,164,0.3);
+  transition: transform 0.2s, box-shadow 0.2s !important;
+}
+.btn-contact:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(240,111,164,0.4) !important; color: white !important; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; margin-left: auto; background: none; border: none; }
+.hamburger span { width: 22px; height: 2.5px; background: var(--dark); border-radius: 2px; display: block; transition: 0.3s; }
+.mobile-nav {
+  display: none; flex-direction: column;
+  background: rgba(253,248,243,0.98); backdrop-filter: blur(14px);
+  padding: 12px 24px 20px; border-bottom: 1.5px solid rgba(249,168,201,0.2);
+  position: sticky; top: 62px; z-index: 199;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a { text-decoration: none; font-size: 15px; font-weight: 700; color: var(--text); padding: 10px 14px; border-radius: 12px; transition: background 0.2s; }
+.mobile-nav a:hover { background: var(--pink-light); color: #d05090; }
+.mobile-nav a.active { background: var(--mint-light); color: #2a9c80; }
+.mobile-nav .btn-contact { margin-top: 8px; text-align: center; display: block; background: linear-gradient(135deg, #f06fa4 0%, #f9a8c9 100%) !important; }
+
+/* ══ PAGE HERO ══ */
+.page-hero {
+  background: linear-gradient(160deg, #e3f9f2 0%, #fef3f8 55%, #f5f0fd 100%);
+  position: relative; overflow: hidden; padding: 40px 24px 34px; text-align: center;
+}
+.blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.3; pointer-events: none; }
+.page-hero-inner { position: relative; z-index: 2; max-width: 640px; margin: 0 auto; }
+.page-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--mint-light); border: 1.5px solid var(--mint);
+  border-radius: 50px; padding: 5px 16px; font-size: 11.5px; font-weight: 800;
+  color: #2a9c80; margin-bottom: 12px; animation: floatBadge 3s ease-in-out infinite;
+}
+@keyframes floatBadge { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+.page-title {
+  font-family: 'Baloo 2', cursive; font-size: clamp(26px, 4vw, 42px);
+  font-weight: 800; color: var(--dark); margin-bottom: 10px; line-height: 1.15;
+}
+.page-title .t-mint { color: #2a9c80; }
+.page-sub { font-size: 14.5px; font-weight: 600; color: var(--text-soft); line-height: 1.6; max-width: 480px; margin: 0 auto; }
+
+/* ══ PATTERNS GRID ══ */
+.patterns-section { background: #fffaf6; padding: 44px 24px 10px; position: relative; }
+.patterns-section::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--mint), var(--blue), var(--pink), var(--yellow), var(--lavender));
+}
+.patterns-grid {
+  max-width: 900px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+}
+.pattern-card {
+  background: white; border-radius: var(--radius-lg);
+  padding: 26px 20px 22px; text-align: center;
+  box-shadow: var(--shadow); cursor: pointer;
+  transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s;
+  position: relative; overflow: hidden; border: 2px solid transparent;
+  display: flex; flex-direction: column; align-items: center;
+  text-decoration: none;
+}
+.pattern-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; border-radius: 4px 4px 0 0; }
+.pattern-card.is-live:hover { transform: translateY(-6px) scale(1.02); box-shadow: var(--shadow-hover); }
+.pattern-card.is-soon { cursor: default; opacity: 0.72; }
+
+.pat-1 { background: var(--mint-light); border-color: var(--mint); }
+.pat-1::before { background: var(--mint); }
+.pat-2 { background: var(--blue-light); border-color: var(--blue); }
+.pat-2::before { background: var(--blue); }
+.pat-3 { background: var(--pink-light); border-color: var(--pink); }
+.pat-3::before { background: var(--pink); }
+
+.pattern-icon {
+  width: 84px; height: 84px; margin: 0 auto 14px;
+  border-radius: 20px; display: flex; align-items: center; justify-content: center;
+  font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 26px; letter-spacing: 1px;
+}
+.pat-1 .pattern-icon { background: var(--mint-soft); color: #2a9c80; }
+.pat-2 .pattern-icon { background: var(--blue-soft); color: #3a6fa8; }
+.pat-3 .pattern-icon { background: var(--pink-soft); color: #d0508a; }
+
+.pattern-card h3 { font-family: 'Baloo 2', cursive; font-size: 19px; font-weight: 800; color: var(--dark); margin-bottom: 6px; }
+.pattern-card .pat-words { font-size: 12px; font-weight: 700; color: var(--text-soft); letter-spacing: 0.3px; margin-bottom: 10px; }
+.pattern-card p { font-size: 12px; font-weight: 600; color: var(--text-soft); line-height: 1.5; margin-bottom: 14px; flex: 1; }
+
+.pat-arrow {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 50%; background: white;
+  box-shadow: 0 2px 10px rgba(45,58,94,0.12); font-size: 13px; color: var(--text);
+  transition: background 0.2s, transform 0.2s; flex-shrink: 0;
+}
+.pattern-card.is-live:hover .pat-arrow { transform: translateX(3px); }
+.pat-1.is-live:hover .pat-arrow { background: var(--mint); color: white; }
+
+.soon-badge {
+  position: absolute; top: 12px; right: 12px;
+  background: var(--dark); color: white; font-size: 9.5px; font-weight: 800;
+  letter-spacing: 0.4px; padding: 4px 9px; border-radius: 50px;
+}
+
+@media (max-width: 720px) {
+  .patterns-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .patterns-grid { grid-template-columns: 1fr; max-width: 320px; }
+  nav { padding: 0 16px; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+}
+
+/* ── Garden decoration ── */
+.garden { position: relative; height: 120px; margin-top: 36px; overflow: visible; pointer-events: none; }
+
+/* ══ FOOTER ══ */
+footer {
+  background: var(--dark); color: rgba(255,255,255,0.5);
+  text-align: center; padding: 20px 40px; font-size: 12.5px; font-weight: 600;
+  position: relative; z-index: 2;
+}
+footer span { color: rgba(159,224,207,0.85); }
+
+.back-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-bottom: 14px; text-decoration: none;
+  font-size: 12.5px; font-weight: 800; color: var(--text-soft);
+  background: white; padding: 7px 16px 7px 12px; border-radius: 50px;
+  box-shadow: var(--shadow); transition: transform 0.2s;
+}
+.back-link:hover { transform: translateY(-2px); color: #2a9c80; }
+</style>
+</head>
+<body>
+
+<div class="bubbles-layer" id="bubblesLayer"></div>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-inner">
+    <a href="https://ponrathsop-arch.github.io/pang-english-studio/" class="logo">
+      <div class="logo-icon">
+        <span class="logo-emoji">📖</span>
+        <img src="../images/logo.png" alt="Pang English Studio logo">
+      </div>
+      <div class="logo-text">
+        <h1><span>Pang</span> English Studio</h1>
+        <p>Learn&nbsp;•&nbsp;Read&nbsp;•&nbsp;Play&nbsp;•&nbsp;Grow</p>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/">Home</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/phonics/">Phonics</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/long-vowels/" class="active">Long Vowels</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/">Vocabulary</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/grammar/">Grammar</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/stories/">Stories</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/games/">Games</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/worksheets/">Worksheets</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/about/">About</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/contact/" class="btn-contact">✉ Contact</a></li>
+    </ul>
+
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/">Home</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/phonics/">Phonics</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/long-vowels/" class="active">Long Vowels</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/">Vocabulary</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/grammar/">Grammar</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/stories/">Stories</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/games/">Games</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/worksheets/">Worksheets</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/about/">About</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/contact/" class="btn-contact">✉ Contact</a>
+</nav>
+
+<!-- ══ PAGE HERO ══ -->
+<section class="page-hero">
+  <div class="blob" style="width:280px;height:280px;background:#d0f5ea;top:-60px;left:-40px;"></div>
+  <div class="blob" style="width:240px;height:240px;background:#fde8f2;top:20px;right:-40px;"></div>
+
+  <div class="page-hero-inner">
+    <a href="https://ponrathsop-arch.github.io/pang-english-studio/" class="back-link">← Home</a>
+    <div class="page-badge">✨ Level up your reading ✨</div>
+    <h1 class="page-title">Long <span class="t-mint">Vowel</span> Sounds</h1>
+    <p class="page-sub">Magic letters that change how a word sounds! Pick a pattern below to start reading, matching, and playing.</p>
+  </div>
+</section>
+
+<!-- ══ PATTERNS GRID ══ -->
+<section class="patterns-section">
+  <div class="patterns-grid">
+
+    <a href="a_e.html" class="pattern-card pat-1 is-live">
+      <div class="pattern-icon">a_e</div>
+      <h3>Magic E</h3>
+      <div class="pat-words">cake · gate · face · lake</div>
+      <p>The silent 'e' makes the vowel say its name!</p>
+      <div class="pat-arrow">→</div>
+    </a>
+
+    <div class="pattern-card pat-2 is-soon">
+      <div class="soon-badge">SOON</div>
+      <div class="pattern-icon">ai</div>
+      <h3>AI</h3>
+      <div class="pat-words">rain · wait · train</div>
+      <p>Coming soon!</p>
+    </div>
+
+    <div class="pattern-card pat-3 is-soon">
+      <div class="soon-badge">SOON</div>
+      <div class="pattern-icon">ay</div>
+      <h3>AY</h3>
+      <div class="pat-words">day · play · stay</div>
+      <p>Coming soon!</p>
+    </div>
+
+  </div>
+
+  <div class="garden" id="garden"></div>
+</section>
+
+<footer>
+  © 2026 <span>Pang English Studio</span> · Learn · Read · Play · Grow ⭐
+</footer>
+
+<script>
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobileNav').classList.toggle('open');
+});
+
+const bubbleTints = [
+  'rgba(159,224,207,0.28)','rgba(249,168,201,0.25)','rgba(168,200,240,0.25)',
+  'rgba(249,216,122,0.22)','rgba(200,184,240,0.25)',
+];
+function makeBubble() {
+  const layer = document.getElementById('bubblesLayer');
+  if (!layer) return;
+  const el = document.createElement('div');
+  el.className = 'bubble';
+  const size = 24 + Math.random() * 56;
+  el.style.width = el.style.height = size + 'px';
+  const tint = bubbleTints[Math.floor(Math.random() * bubbleTints.length)];
+  el.style.background = `radial-gradient(circle at 32% 28%, rgba(255,255,255,0.7) 0%, ${tint} 55%, rgba(255,255,255,0.03) 100%)`;
+  el.style.left = (2 + Math.random() * 96) + '%';
+  const op = 0.28 + Math.random() * 0.28;
+  el.style.setProperty('--op', op);
+  el.style.setProperty('--drift', ((Math.random()-0.5)*70) + 'px');
+  const dur = 28 + Math.random() * 32;
+  el.style.animationDuration = dur + 's';
+  el.style.animationDelay = -(Math.random() * dur) + 's';
+  layer.appendChild(el);
+  setTimeout(() => el.remove(), dur * 2.5 * 1000);
+}
+for (let i = 0; i < 18; i++) makeBubble();
+setInterval(makeBubble, 3000);
+
+/* ── Garden strip (grass + flowers + a couple rabbits) ── */
+(function buildGarden() {
+  const garden = document.getElementById('garden');
+  const W = Math.max(window.innerWidth, 800);
+  const H = 100;
+  let svg = `<svg width="100%" height="${H}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">`;
+  svg += `<rect x="0" y="${H-34}" width="${W}" height="34" fill="#7ec87a"/>`;
+  svg += `<rect x="0" y="${H-34}" width="${W}" height="7" fill="#6ab868"/>`;
+  const bladeCount = Math.floor(W / 16);
+  for (let i = 0; i < bladeCount; i++) {
+    const x = (i / bladeCount) * W + Math.random() * 12 - 6;
+    const bh = 10 + Math.random() * 18;
+    const lean = (Math.random() - 0.5) * 9;
+    svg += `<path d="M${x} ${H-34} Q${x+lean} ${H-34-bh*0.55} ${x+lean*1.4} ${H-34-bh}" stroke="${Math.random()>.5?'#4aa84a':'#5cb85c'}" stroke-width="${1.1+Math.random()*0.7}" fill="none" stroke-linecap="round"/>`;
+  }
+  for (let i = 0; i < 16; i++) {
+    const fx = 24 + (i/16)*(W-48) + Math.random()*18-9;
+    const fy = H-34-6;
+    const fc = ['#f9a8c9','#f9d87a','#a8c8f0','#9fe0cf','#c8b8f0','#ffffff'][Math.floor(Math.random()*6)];
+    const fs = 3.5 + Math.random()*2.5;
+    svg += `<line x1="${fx}" y1="${fy}" x2="${fx}" y2="${H-34}" stroke="#5cb85c" stroke-width="1.4"/>`;
+    for (let p=0;p<5;p++){const a=(p/5)*Math.PI*2;svg+=`<circle cx="${fx+Math.cos(a)*fs}" cy="${fy+Math.sin(a)*fs}" r="${fs*.7}" fill="${fc}" opacity="0.9"/>`;}
+    svg += `<circle cx="${fx}" cy="${fy}" r="${fs*.46}" fill="#f9d87a"/>`;
+  }
+  function drawRabbit(rx,ry,fl){
+    svg+=`<g transform="translate(${rx},${ry}) scale(${fl?-1:1},1)">`;
+    svg+=`<ellipse cx="0" cy="0" rx="12" ry="9" fill="white"/>`;
+    svg+=`<ellipse cx="10" cy="-8" rx="8" ry="7" fill="white"/>`;
+    svg+=`<ellipse cx="7" cy="-18" rx="3" ry="7.5" fill="white"/>`;
+    svg+=`<ellipse cx="7" cy="-18" rx="1.7" ry="5" fill="#f9c8d0"/>`;
+    svg+=`<ellipse cx="13" cy="-17" rx="3" ry="7.5" fill="white"/>`;
+    svg+=`<ellipse cx="13" cy="-17" rx="1.7" ry="5" fill="#f9c8d0"/>`;
+    svg+=`<circle cx="12" cy="-9" r="1.7" fill="#1a1a1a"/>`;
+    svg+=`<circle cx="12.5" cy="-9.5" r="0.6" fill="white"/>`;
+    svg+=`<ellipse cx="10" cy="-6" rx="2" ry="1.3" fill="#f9a8c9"/>`;
+    svg+=`<circle cx="-11" cy="-1" r="4" fill="white"/>`;
+    svg+=`<ellipse cx="-3" cy="8" rx="4" ry="2.6" fill="#f0e8e8"/>`;
+    svg+=`<ellipse cx="4" cy="8" rx="4" ry="2.6" fill="#f0e8e8"/>`;
+    svg+=`</g>`;
+  }
+  drawRabbit(W*.22,H-28,false);
+  drawRabbit(W*.78,H-28,true);
+  svg += `</svg>`;
+  garden.innerHTML = svg;
+})();
+</script>
+</body>
+</html>
