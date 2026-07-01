@@ -26,6 +26,9 @@
   --peach-light: #fdeee4;
   --lavender: #c8b8f0;
   --lavender-light: #f0ebfd;
+  --mint: #9fe0cf;
+  --mint-light: #e3f9f2;
+  --mint-soft: #d0f5ea;
   --dark: #1e2840;
   --text: #3d4a6b;
   --text-soft: #6b7a9b;
@@ -308,6 +311,8 @@ nav {
 .card-5::before { background: var(--sage); }
 .card-6 { background: var(--peach-light);   border-color: var(--peach); }
 .card-6::before { background: var(--peach); }
+.card-7 { background: var(--mint-light);    border-color: var(--mint); }
+.card-7::before { background: var(--mint); }
 
 .card-icon {
   width: 96px; height: 96px; margin: 0 auto 18px;
@@ -320,6 +325,7 @@ nav {
 .card-4 .card-icon { background: var(--yellow-soft); }
 .card-5 .card-icon { background: var(--sage-soft); }
 .card-6 .card-icon { background: var(--peach-light); }
+.card-7 .card-icon { background: var(--mint-soft); }
 
 .card h3 { font-family: 'Baloo 2', cursive; font-size: 20px; font-weight: 800; color: var(--dark); margin-bottom: 7px; }
 .card p  { font-size: 12.5px; font-weight: 600; color: var(--text-soft); line-height: 1.5; margin-bottom: 16px; flex: 1; }
@@ -337,6 +343,7 @@ nav {
 .card-4:hover .card-arrow { background: var(--yellow);  color: var(--dark); }
 .card-5:hover .card-arrow { background: var(--sage);    color: white; }
 .card-6:hover .card-arrow { background: var(--peach);   color: white; }
+.card-7:hover .card-arrow { background: var(--mint);    color: var(--dark); }
 
 /* ── Garden decoration ── */
 .garden {
@@ -454,6 +461,7 @@ footer span { color: rgba(249,168,201,0.8); }
     <ul class="nav-links">
       <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/" class="active">Home</a></li>
       <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/phonics/">Phonics</a></li>
+      <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/long-vowels/">Long Vowels</a></li>
       <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/">Vocabulary</a></li>
       <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/grammar/">Grammar</a></li>
       <li><a href="https://ponrathsop-arch.github.io/pang-english-studio/stories/">Stories</a></li>
@@ -473,6 +481,7 @@ footer span { color: rgba(249,168,201,0.8); }
 <nav class="mobile-nav" id="mobileNav">
   <a href="https://ponrathsop-arch.github.io/pang-english-studio/">Home</a>
   <a href="https://ponrathsop-arch.github.io/pang-english-studio/phonics/">Phonics</a>
+  <a href="https://ponrathsop-arch.github.io/pang-english-studio/long-vowels/">Long Vowels</a>
   <a href="https://ponrathsop-arch.github.io/pang-english-studio/vocabulary/">Vocabulary</a>
   <a href="https://ponrathsop-arch.github.io/pang-english-studio/grammar/">Grammar</a>
   <a href="https://ponrathsop-arch.github.io/pang-english-studio/stories/">Stories</a>
@@ -545,9 +554,16 @@ footer span { color: rgba(249,168,201,0.8); }
       <div class="cards-track">
 
         <a href="https://ponrathsop-arch.github.io/pang-english-studio/phonics/" class="card card-1">
-          <div class="card-icon"><img src="images/icon-phonics.png" alt="Phonics"></div>
-          <h3>Phonics</h3>
-          <p>Fun phonics practice for early readers. CVC, CCVC & more.</p>
+          <div class="card-icon"><img src="images/icon-phonics.png" alt="Phonics – Short Vowels"></div>
+          <h3>Phonics – Short Vowels</h3>
+          <p>Fun short vowel practice for early readers. CVC, CCVC & more.</p>
+          <div class="card-arrow">→</div>
+        </a>
+
+        <a href="https://ponrathsop-arch.github.io/pang-english-studio/long-vowels/" class="card card-7">
+          <div class="card-icon"><img src="images/icon-long-vowels.png" alt="Phonics – Long Vowels"></div>
+          <h3>Phonics – Long Vowels</h3>
+          <p>Long vowel patterns: silent e, vowel teams & more.</p>
           <div class="card-arrow">→</div>
         </a>
 
