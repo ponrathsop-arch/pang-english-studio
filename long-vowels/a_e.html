@@ -283,7 +283,7 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
 </style>
 </head>
 <body>
-<button class="back-btn" onclick="window.location.href='https://ponrathsop-arch.github.io/pang-english-studio/phonics/'">←</button>
+<button class="back-btn" onclick="window.location.href='https://ponrathsop-arch.github.io/pang-english-studio/long-vowels/'">←</button>
 <div class="bubbles-layer" id="bubblesLayer"></div>
 <div id="prog-wrap"><div id="prog-bar"></div></div>
 <div class="toast" id="toast"></div>
@@ -486,15 +486,15 @@ const WORDS=[
 ];
 
 const SENTENCES={
-  cake:'I bake a cake.',
+  cake:'I eat a cake.',
   gate:'Open the gate.',
   face:'Wash your face.',
-  rake:'Use a rake for leaves.',
-  vase:'Put flowers in the vase.',
-  wave:'Wave to your friends.',
-  name:'What is your name?',
-  game:'Let\'s play a game.',
-  lake:'We swim in the lake.'
+  rake:'Dad has a rake.',
+  vase:'The vase has flowers.',
+  wave:'I wave to my mom.',
+  name:'My name is Ben.',
+  game:'We play a game.',
+  lake:'We see a big lake.'
 };
 
 /* combo = what shows in the Sounds zoom popup for that tile */
@@ -772,7 +772,7 @@ function endLR(){clearInterval(lrTimerInterval);const pct=Math.round(lrScore/WOR
 /* READ ALONG */
 let readIdx=0;
 function initRead(){readIdx=0;dots('ra-dots',WORDS.length,0,jumpRead);renderRead();}
-function renderRead(){updateDots('ra-dots',WORDS.length,readIdx,jumpRead);const w=WORDS[readIdx];document.getElementById('ra-illo').innerHTML=imgTag(w.word,'scene');document.getElementById('ra-word').textContent=w.word;document.getElementById('ra-word').style.color=w.color;const sent=SENTENCES[w.word];const hl=sent.replace(new RegExp(`\\b${w.word}\\b`,'gi'),`<span class="ra-hl">${w.word}</span>`);document.getElementById('ra-sentence').innerHTML=hl;}
+function renderRead(){updateDots('ra-dots',WORDS.length,readIdx,jumpRead);const w=WORDS[readIdx];document.getElementById('ra-illo').innerHTML=imgTag(w.word);document.getElementById('ra-word').textContent=w.word;document.getElementById('ra-word').style.color=w.color;const sent=SENTENCES[w.word];const hl=sent.replace(new RegExp(`\\b${w.word}\\b`,'gi'),`<span class="ra-hl">${w.word}</span>`);document.getElementById('ra-sentence').innerHTML=hl;}
 function jumpRead(i){readIdx=i;updateDots('ra-dots',WORDS.length,i,jumpRead);renderRead();}
 function nextRead(){if(readIdx<WORDS.length-1){readIdx++;renderRead();}else{bigConfetti();setTimeout(goNext,700);}}
 
