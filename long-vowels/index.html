@@ -141,6 +141,10 @@ nav {
 .pat-2::before { background: var(--blue); }
 .pat-3 { background: var(--pink-light); border-color: var(--pink); }
 .pat-3::before { background: var(--pink); }
+.pat-4 { background: var(--yellow-light); border-color: var(--yellow); }
+.pat-4::before { background: var(--yellow); }
+.pat-5 { background: var(--lavender-light); border-color: var(--lavender); }
+.pat-5::before { background: var(--lavender); }
 
 .pattern-icon {
   width: 84px; height: 84px; margin: 0 auto 14px;
@@ -150,6 +154,8 @@ nav {
 .pat-1 .pattern-icon { background: var(--mint-soft); color: #2a9c80; }
 .pat-2 .pattern-icon { background: var(--blue-soft); color: #3a6fa8; }
 .pat-3 .pattern-icon { background: var(--pink-soft); color: #d0508a; }
+.pat-4 .pattern-icon { background: var(--yellow-soft); color: #a07810; }
+.pat-5 .pattern-icon { background: var(--lavender-light); color: #6a4fc0; }
 
 .pattern-card h3 { font-family: 'Baloo 2', cursive; font-size: 19px; font-weight: 800; color: var(--dark); margin-bottom: 6px; }
 .pattern-card .pat-words { font-size: 12px; font-weight: 700; color: var(--text-soft); letter-spacing: 0.3px; margin-bottom: 10px; }
@@ -163,7 +169,10 @@ nav {
 }
 .pattern-card.is-live:hover .pat-arrow { transform: translateX(3px); }
 .pat-1.is-live:hover .pat-arrow { background: var(--mint); color: white; }
+.pat-2.is-live:hover .pat-arrow { background: var(--blue); color: white; }
 .pat-3.is-live:hover .pat-arrow { background: var(--pink); color: white; }
+.pat-4.is-live:hover .pat-arrow { background: var(--yellow); color: var(--dark); }
+.pat-5.is-live:hover .pat-arrow { background: var(--lavender); color: white; }
 
 .soon-badge {
   position: absolute; top: 12px; right: 12px;
@@ -277,19 +286,35 @@ footer span { color: rgba(159,224,207,0.85); }
       <div class="pat-arrow">→</div>
     </a>
 
-    <div class="pattern-card pat-2 is-soon">
-      <div class="soon-badge">SOON</div>
+    <a href="ai/" class="pattern-card pat-2 is-live">
       <div class="pattern-icon">ai</div>
       <h3>AI</h3>
-      <div class="pat-words">rain · wait · train</div>
-      <p>Coming soon!</p>
-    </div>
+      <div class="pat-words">rain · train · snail · pail</div>
+      <p>Two vowels, one sound — 'ai' says its name!</p>
+      <div class="pat-arrow">→</div>
+    </a>
 
     <a href="ay/" class="pattern-card pat-3 is-live">
       <div class="pattern-icon">ay</div>
       <h3>AY</h3>
       <div class="pat-words">day · play · say · tray</div>
       <p>Two letters, one sound — 'ay' says its name!</p>
+      <div class="pat-arrow">→</div>
+    </a>
+
+    <a href="ee/" class="pattern-card pat-4 is-live">
+      <div class="pattern-icon">ee</div>
+      <h3>EE</h3>
+      <div class="pat-words">see · tree · sheep · queen</div>
+      <p>Double the e, double the fun — 'ee' says its name!</p>
+      <div class="pat-arrow">→</div>
+    </a>
+
+    <a href="ea/" class="pattern-card pat-5 is-live">
+      <div class="pattern-icon">ea</div>
+      <h3>EA</h3>
+      <div class="pat-words">eat · sea · clean · beach</div>
+      <p>Another way to spell the long e sound!</p>
       <div class="pat-arrow">→</div>
     </a>
 
