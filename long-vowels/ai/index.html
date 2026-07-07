@@ -142,7 +142,7 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
 /* MATCH */
 #s-match{background:var(--cream);padding:8px 8px 88px;justify-content:flex-start;padding-top:34px;}
 .match-container{display:flex;flex-direction:column;gap:7px;width:100%;max-width:680px;margin-top:6px;align-items:stretch;}
-.match-col{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;width:100%;}
+.match-col{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;}
 .match-divider{display:none;}
 .m-pic{background:#fff;border-radius:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);border:2.5px solid transparent;transition:all .15s;overflow:hidden;aspect-ratio:1/1;min-height:0;}
 .m-pic:active{transform:scale(.95);}
@@ -166,7 +166,7 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
 .mem-groups{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:500px;}
 .mem-group{display:flex;flex-direction:column;align-items:center;gap:4px;}
 .mem-group-label{font-size:clamp(.55rem,1.15vw,.72rem);font-weight:900;letter-spacing:.4px;padding:3px 12px;border-radius:50px;color:#fff;margin-bottom:2px;}
-.mem-half{display:grid;grid-template-columns:repeat(2,1fr);gap:5px;width:100%;}
+.mem-half{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;width:100%;}
 .mem-card{border-radius:11px;cursor:pointer;position:relative;perspective:600px;transition:transform .13s;}
 .mem-card:active{transform:scale(.93);}
 .mem-card-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .38s cubic-bezier(.4,0,.2,1);border-radius:11px;}
@@ -302,8 +302,8 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
         <span class="home-chip">rain</span><span class="home-chip">train</span>
         <span class="home-chip">snail</span><span class="home-chip">tail</span>
         <span class="home-chip">mail</span><span class="home-chip">sail</span>
-        <span class="home-chip">nail</span><span class="home-chip">pail</span>
-        <span class="home-chip">wait</span><span class="home-chip">paint</span>
+        <span class="home-chip">nail</span><span class="home-chip">wait</span>
+        <span class="home-chip">paint</span>
       </div>
     </div>
     <div class="home-tap">👆 Tap anywhere to start!</div>
@@ -344,7 +344,7 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
   <div class="fi-word" id="fi-word"></div>
   <div class="fi-grid" id="fi-grid"></div>
   <div class="fi-fb" id="fi-fb"></div>
-  <div class="fi-score" id="fi-score">0 / 10</div>
+  <div class="fi-score" id="fi-score">0 / 9</div>
 </div>
 
 <div class="screen" id="s-match">
@@ -355,7 +355,7 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
     <div class="match-divider"></div>
     <div class="match-col" id="match-words"></div>
   </div>
-  <div class="match-score" id="match-score">0 / 10 matched</div>
+  <div class="match-score" id="match-score">0 / 9 matched</div>
 </div>
 
 <div class="screen" id="s-memory">
@@ -366,7 +366,7 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
     <button class="mem-tab-btn" id="mtb-3" onclick="startMemory(3)">🖼️🔤 Pic vs Word</button>
   </div>
   <div class="mem-score-row">
-    <span>Pairs: <strong id="mem-matched">0</strong>/<strong id="mem-total">10</strong></span>
+    <span>Pairs: <strong id="mem-matched">0</strong>/<strong id="mem-total">9</strong></span>
     <span>Tries: <strong id="mem-tries">0</strong></span>
     <button class="mem-restart" onclick="startMemory(currentMemMode)">🔄 Restart</button>
   </div>
@@ -411,7 +411,7 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
   <div class="fl-nav">
     <button class="fl-nav-btn fl-prev" onclick="flashPrev()">◀</button>
     <button class="listen-btn" onclick="event.stopPropagation();speakFlashCurrent()">🔊 Listen</button>
-    <div class="fl-count" id="fl-count">1 / 10</div>
+    <div class="fl-count" id="fl-count">1 / 9</div>
     <button class="fl-nav-btn fl-next" onclick="flashNext()">▶</button>
   </div>
 </div>
@@ -423,7 +423,7 @@ html,body{height:100%;font-family:'Nunito','Arial',sans-serif;font-weight:800;ba
     <div class="lr-score-txt">Score: <strong id="lr-score">0</strong></div>
     <div class="lr-timer-box"><div class="lr-timer-num" id="lr-num">10</div></div>
     <div class="lr-timer-bar-wrap"><div class="lr-timer-bar" id="lr-bar"></div></div>
-    <div class="lr-score-txt" id="lr-qnum">Q 1/10</div>
+    <div class="lr-score-txt" id="lr-qnum">Q 1/9</div>
   </div>
   <div class="lr-card" id="lr-card">
     <div class="lr-illo" id="lr-illo"></div>
@@ -477,7 +477,6 @@ const WORDS=[
   {word:'mail',onset:'m',medial:'l',color:'#9b7ae8'},
   {word:'sail',onset:'s',medial:'l',color:'#00b4c8'},
   {word:'nail',onset:'n',medial:'l',color:'#e85c88'},
-  {word:'pail',onset:'p',medial:'l',color:'#fb8040'},
   {word:'wait',onset:'w',medial:'t',color:'#b85cc8'},
   {word:'paint',onset:'p',medial:'nt',color:'#c44569'}
 ];
@@ -490,7 +489,6 @@ const SENTENCES={
   mail:'Dad gets the mail.',
   sail:'We sail on the lake.',
   nail:'Be careful with the nail.',
-  pail:'I fill the pail with water.',
   wait:'Please wait for me.',
   paint:'I paint a happy face.'
 };
@@ -504,9 +502,9 @@ const PHONICS_TILES=[
   {letter:'m',hint:'mail',bg:'#f0ebfd',color:'#9b7ae8',combo:'m + ai + l = mail'},
   {letter:'s',hint:'sail',bg:'#e8f2fd',color:'#00b4c8',combo:'s + ai + l = sail'},
   {letter:'n',hint:'nail',bg:'#fde8f2',color:'#e85c88',combo:'n + ai + l = nail (also the ending sound in rain, train)'},
-  {letter:'p',hint:'pail',bg:'#fdeee4',color:'#fb8040',combo:'p + ai + l = pail (also p + ai + nt = paint)'},
+  {letter:'p',hint:'paint',bg:'#fdeee4',color:'#fb8040',combo:'p + ai + nt = paint'},
   {letter:'w',hint:'wait',bg:'#f0ebfd',color:'#b85cc8',combo:'w + ai + t = wait'},
-  {letter:'l',hint:'middle',bg:'#e8f5ec',color:'#52b870',combo:'the ending sound in snail, tail, mail, sail, nail, pail'},
+  {letter:'l',hint:'middle',bg:'#e8f5ec',color:'#52b870',combo:'the ending sound in snail, tail, mail, sail, nail'},
   {letter:'nt',hint:'middle',bg:'#fde8f2',color:'#c44569',combo:'the ending sound in paint'},
   {letter:'ai',hint:'family',bg:'#fef8e0',color:'#e8a030',combo:'ai says its name: /ay/ — like in rain, train, snail'}
 ];
@@ -719,14 +717,14 @@ function handleFind(card,chosen,correct){if(findAnswered)return;findAnswered=tru
 
 /* MATCH */
 let matchSel=null,matchDone=0;
-function initMatch(){matchSel=null;matchDone=0;document.getElementById('match-score').textContent=`0 / ${WORDS.length} matched`;const sP=shuffle([...WORDS]),sW=shuffle([...WORDS]);const pE=document.getElementById('match-pics'),wE=document.getElementById('match-words');pE.innerHTML='';wE.innerHTML='';const colW=(Math.min(window.innerWidth,680)-40)/5;const fz=Math.max(Math.round(colW*.2),10);sP.forEach(w=>{const c=document.createElement('div');c.className='m-pic';c.dataset.word=w.word;c.innerHTML=imgTag(w.word);c.addEventListener('click',()=>handleMatchPic(c,w.word));pE.appendChild(c);});sW.forEach(w=>{const c=document.createElement('div');c.className='m-word';c.dataset.word=w.word;c.style.fontSize=fz+'px';c.style.color=w.color;c.textContent=w.word;c.addEventListener('click',()=>handleMatchWord(c,w.word));wE.appendChild(c);});}
+function initMatch(){matchSel=null;matchDone=0;document.getElementById('match-score').textContent=`0 / ${WORDS.length} matched`;const sP=shuffle([...WORDS]),sW=shuffle([...WORDS]);const pE=document.getElementById('match-pics'),wE=document.getElementById('match-words');pE.innerHTML='';wE.innerHTML='';const colW=(Math.min(window.innerWidth,640)-36)/3;const fz=Math.max(Math.round(colW*.24),12);sP.forEach(w=>{const c=document.createElement('div');c.className='m-pic';c.dataset.word=w.word;c.innerHTML=imgTag(w.word);c.addEventListener('click',()=>handleMatchPic(c,w.word));pE.appendChild(c);});sW.forEach(w=>{const c=document.createElement('div');c.className='m-word';c.dataset.word=w.word;c.style.fontSize=fz+'px';c.style.color=w.color;c.textContent=w.word;c.addEventListener('click',()=>handleMatchWord(c,w.word));wE.appendChild(c);});}
 function handleMatchPic(card,word){if(card.classList.contains('matched'))return;document.querySelectorAll('.m-pic.selected').forEach(c=>c.classList.remove('selected'));card.classList.add('selected');matchSel={word,el:card};}
 function handleMatchWord(card,word){if(card.classList.contains('matched'))return;if(!matchSel){showToast('Tap a picture first!');return;}if(matchSel.word===word){matchSel.el.classList.remove('selected');matchSel.el.classList.add('matched');card.classList.add('matched');matchSel=null;matchDone++;spawnSparkle(card.getBoundingClientRect().left+30,card.getBoundingClientRect().top+26);document.getElementById('match-score').textContent=`${matchDone} / ${WORDS.length} matched`;if(matchDone===WORDS.length)setTimeout(()=>{bigConfetti();setTimeout(goNext,900);},350);}else{[matchSel.el,card].forEach(el=>{el.classList.add('ws');setTimeout(()=>el.classList.remove('ws'),450);});matchSel.el.classList.remove('selected');matchSel=null;showToast('Try again!');}}
 
 /* MEMORY */
 let memLock=false,memSelA=null,memSelB=null,memMatchedCount=0,memTries=0,currentMemMode=1;
 function initMemory(){startMemory(currentMemMode);}
-function startMemory(mode){currentMemMode=mode;memLock=false;memSelA=null;memSelB=null;memMatchedCount=0;memTries=0;document.getElementById('mem-matched').textContent='0';document.getElementById('mem-total').textContent=WORDS.length;document.getElementById('mem-tries').textContent='0';document.querySelectorAll('.mem-tab-btn').forEach(b=>b.classList.remove('active-mode'));document.getElementById(`mtb-${mode}`).classList.add('active-mode');const lA=document.getElementById('mem-label-a'),lB=document.getElementById('mem-label-b');if(mode===1){lA.textContent='🖼️ Group A';lB.textContent='🖼️ Group B';}else if(mode===2){lA.textContent='🔤 Group A';lB.textContent='🔤 Group B';}else{lA.textContent='🖼️ Pictures';lB.textContent='🔤 Words';}const gridA=document.getElementById('mem-grid-a'),gridB=document.getElementById('mem-grid-b');gridA.innerHTML='';gridB.innerHTML='';const gW=(Math.min(window.innerWidth,500)-28)/2;const cSz=Math.min(Math.floor((gW-5)/2),78);const nFz=Math.round(cSz*.36),wFz=Math.round(cSz*.2);const sA=shuffle([...WORDS]),sB=shuffle([...WORDS]);const typeA=mode===2?'word':'pic',typeB=mode===1?'pic':'word';const fcA=mode===2?'fb':'fa',fcB=mode===1?'fa':(mode===2?'fb':'fc');sA.forEach((w,i)=>{const card=buildMemCard(w,i+1,typeA,fcA,cSz,nFz,wFz,'group-a');card.addEventListener('click',()=>handleMemA(card));gridA.appendChild(card);});sB.forEach((w,i)=>{const card=buildMemCard(w,i+1,typeB,fcB,cSz,nFz,wFz,'group-b');card.addEventListener('click',()=>handleMemB(card));gridB.appendChild(card);});memLock=true;document.querySelectorAll('#mem-grid-a .mem-card,#mem-grid-b .mem-card').forEach(c=>c.classList.add('flipped'));setTimeout(()=>{document.querySelectorAll('#mem-grid-a .mem-card:not(.matched),#mem-grid-b .mem-card:not(.matched)').forEach(c=>c.classList.remove('flipped'));memLock=false;},2000);}
+function startMemory(mode){currentMemMode=mode;memLock=false;memSelA=null;memSelB=null;memMatchedCount=0;memTries=0;document.getElementById('mem-matched').textContent='0';document.getElementById('mem-total').textContent=WORDS.length;document.getElementById('mem-tries').textContent='0';document.querySelectorAll('.mem-tab-btn').forEach(b=>b.classList.remove('active-mode'));document.getElementById(`mtb-${mode}`).classList.add('active-mode');const lA=document.getElementById('mem-label-a'),lB=document.getElementById('mem-label-b');if(mode===1){lA.textContent='🖼️ Group A';lB.textContent='🖼️ Group B';}else if(mode===2){lA.textContent='🔤 Group A';lB.textContent='🔤 Group B';}else{lA.textContent='🖼️ Pictures';lB.textContent='🔤 Words';}const gridA=document.getElementById('mem-grid-a'),gridB=document.getElementById('mem-grid-b');gridA.innerHTML='';gridB.innerHTML='';const gW=(Math.min(window.innerWidth,520)-28)/2;const cSz=Math.min(Math.floor((gW-10)/3),74);const nFz=Math.round(cSz*.36),wFz=Math.round(cSz*.24);const sA=shuffle([...WORDS]),sB=shuffle([...WORDS]);const typeA=mode===2?'word':'pic',typeB=mode===1?'pic':'word';const fcA=mode===2?'fb':'fa',fcB=mode===1?'fa':(mode===2?'fb':'fc');sA.forEach((w,i)=>{const card=buildMemCard(w,i+1,typeA,fcA,cSz,nFz,wFz,'group-a');card.addEventListener('click',()=>handleMemA(card));gridA.appendChild(card);});sB.forEach((w,i)=>{const card=buildMemCard(w,i+1,typeB,fcB,cSz,nFz,wFz,'group-b');card.addEventListener('click',()=>handleMemB(card));gridB.appendChild(card);});memLock=true;document.querySelectorAll('#mem-grid-a .mem-card,#mem-grid-b .mem-card').forEach(c=>c.classList.add('flipped'));setTimeout(()=>{document.querySelectorAll('#mem-grid-a .mem-card:not(.matched),#mem-grid-b .mem-card:not(.matched)').forEach(c=>c.classList.remove('flipped'));memLock=false;},2000);}
 function buildMemCard(w,num,type,frontCls,cSz,nFz,wFz,groupCls){const card=document.createElement('div');card.className='mem-card '+groupCls;card.style.width=cSz+'px';card.style.height=cSz+'px';card.dataset.word=w.word;const inner=document.createElement('div');inner.className='mem-card-inner';const front=document.createElement('div');front.className=`mem-front ${frontCls}`;front.style.fontSize=nFz+'px';front.textContent=num;const back=document.createElement('div');back.className='mem-back';if(type==='pic'){const bi=document.createElement('img');bi.alt=w.word;bi.src=IMG_BASE+w.word+'.png';bi.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:11px;display:block;';const wc=w.color,ww=w.word,sz=cSz;bi.onerror=function(){this.style.display='none';back.style.background=wc+'22';back.style.fontSize=Math.round(sz*.2)+'px';back.style.fontWeight='900';back.style.color=wc;back.textContent=ww;};back.appendChild(bi);}else{back.classList.add('word-back');back.style.fontSize=wFz+'px';back.style.color=w.color;back.textContent=w.word;}inner.appendChild(front);inner.appendChild(back);card.appendChild(inner);return card;}
 function handleMemA(card){if(memLock||card.classList.contains('matched'))return;if(memSelA&&memSelA!==card)memSelA.classList.remove('flipped');memSelA=card;card.classList.add('flipped');if(memSelB)checkMemPair();}
 function handleMemB(card){if(memLock||card.classList.contains('matched'))return;if(memSelB&&memSelB!==card)memSelB.classList.remove('flipped');memSelB=card;card.classList.add('flipped');if(memSelA)checkMemPair();}
